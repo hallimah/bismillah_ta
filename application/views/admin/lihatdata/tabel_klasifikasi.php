@@ -5,7 +5,7 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Tingkat Kesejahteraan <small>Kelurahan</small></h2>
+                    <h2>Tingkat Kesejahteraan <small>Penduduk</small></h2>
                     <div class="btn-group pull-right" >
                     <div class="btn-group" aria-controls="example">
                     <button data-toggle="dropdown" aria-controls="datatable" class="btn btn-default dropdown-toggle" id="sel_kec" type="button"> Lihat <span class="caret"></span> </button>
@@ -35,35 +35,59 @@
                   <!--id="datatable" -->
                     <table id="example" class="table table-striped table-bordered">
                     
-                      <thead>
+                    <thead>
                         <tr>
-                        <th>No</th>
-                          <th>Nama Kecamatan </th>
-                          <th>Nama Kelurahan</th>
-                           <th>Kemiskinan</th>
-                         <th>Ketelantaran</th>
-                          <th>Kecacatan</th>
-                          <th>Tingkat Kesejahteraan</th>
-                          <!-- <th>Hasil Fuzzy</th>  -->
+                          <th>No</th>
+                          <th>Kecamatan</th>
+                          <th>Kelurahan</th>
+                          <th>Total Penduduk Kesejahteraan Rendah</th>
+                          <th>Total Penduduk Kesejahteraan Sedang</th>
+                          <th>Total Penduduk Kesejahteraan Tinggi</th>
+                          <th>Klasifikasi</th>
+                          
                         </tr>
                       </thead>
+                     
                       <tbody>
                       <?php $no=1;
-                    //->result()
-                      foreach ($fuzzy as $f) : ?>
-                        <tr>
+                      if (!empty($fuzzy)) { 
+                        foreach ($fuzzy as $ct) : ?>
+                          <tr>
                           <td><?php echo $no++ ?></td>
-                          <td><?php echo $f->nama_kecamatan ?></td>
-                          <td><?php echo $f->nama_desa ?></td> 
-                           <td><?php echo $f->kemiskinan ?></td>
-                           <td><?php echo $f->ketelantaran ?></td>
-                          <td><?php echo $f->kecacatan ?></td>
-                          <td><?php echo $f->keterangan ?></td>
-                           
-                        </tr>
-                        <?php endforeach; ?>
+                          <td><?php echo $ct->nama_kecamatan ?></td>
+                          <td><?php echo $ct->nama_desa ?></td>
+                          <td><?php echo $ct->rendah ?></td>
+                          <td><?php echo $ct->sedang ?></td>
+                          <td><?php echo $ct->tinggi ?></td>
+                          <td>
+                          <?php 
+                          //(($data->min <= $ct->rendah) && ($ct->total_bobot <= $data->max))
+                            // foreach($tingkat as $data){
+                            //   if(($ct->rendah && $ct->sedang && $ct->tinggi) <= $data->persen ){
+                            //     echo $data->nama_variabel;
+                            //     break;
+                            //   }
+                            // }
+
+                            foreach ($kali_kec as $kec) {
+                              if ($ct->nama_kecamatan==$kec->nama_kecamatan) {
+                                // if( <= )
+                                foreach ($tingkat as $data) {
+                                  if (($ct->rendah + $ct->sedang + $ct->tinggi) <= ($data->persen*$kec->total_penduduk)) {
+                                    echo $data->nama_variabel;
+                                    // echo $data->persen*$kec->total_penduduk;
+                                  break;
+                                  }
+                                }
+                              }
+                            }
+                           ?>
+                           </td>
+                          </tr>
+                          <?php endforeach;  }?>
+                     
+                      
                       </tbody>
-                  
                     </table>
                   </div>
                 </div>

@@ -35,35 +35,61 @@
                   <!--id="datatable" -->
                     <table id="example" class="table table-striped table-bordered">
                     
-                      <thead>
+                    <thead>
                         <tr>
                         <th>No</th>
-                          <th>Nama Kecamatan </th>
-                          <th>Nama Kelurahan</th>
-                           <th>Kemiskinan</th>
-                         <th>Ketelantaran</th>
-                          <th>Kecacatan</th>
-                          <th>Tingkat Kesejahteraan</th>
-                          <!-- <th>Hasil Fuzzy</th>  -->
+                        <th>Nama</th>
+                          <!-- <th>NIK</th> -->
+                          <th>Kecamatan</th>
+                          <th>Kelurahan</th>
+                          <th>Jumlah Tangungan</th>
+                          <th>Keterangan Rumah</th>
+                          <th>Jumlah Aset</th>
+                          <th>Program Sosial</th>
+                          <th>Bobot Tanggungan</th>
+                          <th>Bobot Keterangan Rumah</th>
+                          <th>Bobot Jumlah Aset</th>
+                          <th>Bobot Program Sosial</th>
+                          <th>Total Bobot</th>
+                          <th>Klasifikasi</th>
+                          
                         </tr>
                       </thead>
+                     
                       <tbody>
                       <?php $no=1;
-                    //->result()
-                    //   foreach ($fuzzy as $f) : ?>
-                        <tr>
-                          <!-- <td>php echo $no++ ?></td>
-                          <td>php echo $f->nama_kecamatan ?></td>
-                          <td>php echo $f->nama_desa ?></td> 
-                           <td>php echo $f->kemiskinan ?></td>
-                           <td>php echo $f->ketelantaran ?></td>
-                          <td>php echo $f->kecacatan ?></td>
-                          <td>php echo $f->keterangan ?></td> -->
-                           
-                        </tr>
-                        <!-- <php endforeach; ?> -->
+                      if (!empty($klasifikasi)) { 
+                        foreach ($klasifikasi as $ct) : ?>
+                          <tr>
+                          <td><?php echo $no++ ?></td>
+                          <td><?php echo $ct->nama_krt ?></td>
+                          <td><?php echo $ct->nama_kecamatan ?></td>
+                          <td><?php echo $ct->nama_desa ?></td>
+                          <td><?php echo $ct->jumlah_art ?></td>
+                          <td><?php echo $ct->keterangan_rumah ?></td>
+                          <td><?php echo $ct->jumlah_kepemilikan_aset ?></td>
+                          <td><?php echo $ct->program_sosial ?></td>
+                          <td><?php echo $ct->bobot_tanggungan ?></td>
+                          <td><?php echo $ct->bobot_keterangan_rumah ?></td>
+                          <td><?php echo $ct->bobot_jumlah_aset ?></td>
+                          <td><?php echo $ct->bobot_program_sosial ?></td>
+                          <td><?php echo $ct->total_bobot ?></td>
+                          <td>
+                          <?php echo $ct->klasifikasi
+                            // foreach($tingkat as $data){
+                            //   if(($data->min <= $ct->total_bobot) && ($ct->total_bobot <= $data->max)){
+                            //     echo $data->nama;
+                            //     break;
+                            //   }
+                            // }
+                           ?>
+                           </td>
+                         
+                          </tr>
+                          <?php endforeach;  }?>
+                     
+                      
                       </tbody>
-                  
                     </table>
                   </div>
                 </div>

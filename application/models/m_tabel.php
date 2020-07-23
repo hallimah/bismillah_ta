@@ -15,11 +15,13 @@ class M_Tabel extends CI_Model{
     }
 
     /**model tampil data */
-    public function tampil_data($limit, $start){
+    public function tampil_data($limit, $start){ //
         $this->db->limit($limit, $start);
-        $res=array();
+       $res=array();
         $this->db->select("*");
-        $this->db->from("tb_penduduk");
+        $this->db->from("tb_penduduk_pengenalan_tempat");
+        $this->db->join("tb_kecamatan","tb_kecamatan.kecamatan_id=tb_penduduk_pengenalan_tempat.kecamatan");
+        $this->db->join("tb_desa","tb_desa.id_desa=tb_penduduk_pengenalan_tempat.kelurahan");
         $query = $this->db->get();
 
         if ($query->num_rows() > 0) {
@@ -29,12 +31,32 @@ class M_Tabel extends CI_Model{
             // return $data;
             $res=$query->result();
         }
-        return $res;
+        return $query->result();
     }
     
     /**model input data */
-    public function input_data($data,$table){
-        $this->db->insert($table,$data);
+    public function input_data($data,$data2,$data4,$data_klasifikasi){
+        $this->db->trans_start();
+     // $this->db->distinct();
+      $d=$this->db->insert('tb_penduduk_pengenalan_tempat',$data);
+      $id=$this->db->insert_id();
+
+      $data2['kk']=$id;
+      $this->db->insert('tb_penduduk_keterangan_rumah',$data2);
+      $rumah_id=$this->db->insert_id();
+    //   $data3['kk']=$id;
+    //   $this->db->insert('tb_penduduk_anggota',$data3);
+      $data4['kk']=$id;
+      $this->db->insert('tb_penduduk_kepemilikan_aset',$data4);
+      $aset_id=$this->db->insert_id();
+
+      $data_klasifikasi['tempat_id']=$id;
+      $data_klasifikasi['rumah_id']=$rumah_id;
+      $data_klasifikasi['aset_id']=$aset_id;
+      $this->db->insert('tb_klasifikasi_penduduk',$data_klasifikasi);
+
+      $this->db->trans_complete();
+      return $this->db->insert_id();
     }
 
     /**model hapus data */
@@ -52,6 +74,35 @@ class M_Tabel extends CI_Model{
     public function update_data($where,$data,$table){
         $this->db->where($where);
         $this->db->update($table,$data);
+    }
+
+    function update_data1($where,$data,$table){
+        $this->db->where($where);
+        $this->db->update($table,$data);
+    }
+    function update_data2($where,$data,$table){
+        $this->db->where($where);
+        $this->db->update($table,$data);
+    }
+    function update_data3($where,$data,$table){
+        $this->db->where($where);
+        $this->db->update($table,$data);
+    }
+    function update_data4($where,$where2,$where3,$data,$table){
+        $this->db->where_in($where);
+        $this->db->where_in($where2);
+        $this->db->where_in($where3);
+        $this->db->update($table,$data);
+    }
+
+    /**melihat data penduduk */
+    function menampilkan_tabel_penduduk($id){
+        return $this->db->select('*')->from('tb_klasifikasi_penduduk')
+        ->join('tb_penduduk_kepemilikan_aset','tb_penduduk_kepemilikan_aset.id=tb_klasifikasi_penduduk.aset_id')
+        ->join('tb_penduduk_keterangan_rumah','tb_penduduk_keterangan_rumah.id=tb_klasifikasi_penduduk.rumah_id')
+        ->join('tb_penduduk_pengenalan_tempat','tb_penduduk_pengenalan_tempat.id=tb_klasifikasi_penduduk.tempat_id')
+        ->where('tb_penduduk_pengenalan_tempat.id',$id)->get()->result();
+      
     }
 
     /**model detail data */
@@ -178,9 +229,55 @@ class M_Tabel extends CI_Model{
         return $hasil;
     }
 
+    function variabel_penduduk(){
+//        $p= $this->db->select('*')->from('tb_sub_variabel')->join('tb_variabel','tb_variabel.variabel_id=tb_sub_variabel.sub_variabel_id','right')->get()->result();
+//      //return $this->db->select('*')->from('tb_variabel')->get()->result();
+
+// return $p;
+
+        $this->db->select('*');
+        $this->db->from('tb_sub_variabel');
+        $this->db->join('tb_variabel','tb_variabel.variabel_id=tb_sub_variabel.sub_variabel_id');
+        $this->db->where('sub_id AND sub_variabel_id');
+        $this->db->order_by('sub_variabel_id','DESC');
+        $p=$this->db->get()->result();
+        return $p;
+
+//               $this->db->select('tb_variabel.variabel_id,tb_variabel.nama_variabel, tb_sub_variabel.nama,tb_sub_variabel.skor,tb_sub_variabel.sub_id');
+// $this->db->from('tb_sub_variabel');
+// // $this->db->where('sub_variabel_id',$id);
+// $this->db->join('tb_variabel','tb_variabel.variabel_id=tb_sub_variabel.sub_variabel_id');
+// $this->db->group_by('nama_variabel,sub_id');
+
+// $q=$this->db->get()->result();
+// return $q;
 
 
+    }
 
+    function sub_variabel_penduduk(){
+     //  return $this->db->get('tb_sub_variabel')->result();
+        // return $this->db->select('*')->from('tb_sub_variabel')
+        // ->join('tb_variabel','tb_variabel.variabel_id=tb_sub_variabel.sub_variabel_id')
+        // ->where('sub_variabel_id',$id)->get()->result();
+       
+      // return $this->db->select('*')->from('tb_sub_variabel')->get()->result();
+//       $this->db->select('tb_variabel.variabel_id,tb_variabel.nama_variabel, tb_sub_variabel.nama,tb_sub_variabel.sub_id');
+// $this->db->from('tb_sub_variabel');
+// // $this->db->where('sub_variabel_id',$id);
+// $this->db->join('tb_variabel','tb_variabel.variabel_id=tb_sub_variabel.sub_variabel_id');
+// $this->db->group_by('nama_variabel,sub_id');
+
+// $q=$this->db->get()->result();
+// return $q;
+
+
+    }
+
+    function klasifikasi(){
+        $this->db->select("tb_penduduk_pengenalan_tempat.kk,tb_penduduk_pengenalan_tempat.nama_krt,
+        tb_penduduk_keterangan_rumah.status_tempat_tinggal+tb_penduduk_keterangan_rumah.status_lahan_tempat_tinggal)");
+    }
 }
 
 ?>

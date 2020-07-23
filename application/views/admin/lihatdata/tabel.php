@@ -35,9 +35,9 @@
                           <td><?php echo $ct->kecamatan ?></td>
                           <td><?php echo $ct->jenis_pmks?></td>
                           <td>
-                          <a class="btn btn-success btn-xs" title="Lihat Data" href="<?php echo base_url('c_tabel/detail/'.$ct->penduduk_id) ?>"><i class="fa fa-search-plus"></i></a>
-                          <a class="btn btn-info btn-xs" title="Edit Data" href="<?php echo base_url('c_tabel/edit_pmks/'.$ct->penduduk_id) ?>"><i class="fa fa-pencil"></i></a>
-                          <a onclick="return confirm('anda yakin?')" title="Hapus Data" class="btn btn-danger btn-xs" href="<?php echo base_url('c_tabel/hapus/'.$ct->penduduk_id) ?>"><i class="fa fa-trash-o"></i></a>
+                          <a class="btn btn-success btn-xs" title="Lihat Data" href="<?php echo base_url('c_tabel/detail/'.$ct->id) ?>"><i class="fa fa-search-plus"></i></a>
+                          <a class="btn btn-info btn-xs" title="Edit Data" href="<?php echo base_url('c_tabel/edit_pmks/'.$ct->id) ?>"><i class="fa fa-pencil"></i></a>
+                          <a onclick="return confirm('anda yakin?')" title="Hapus Data" class="btn btn-danger btn-xs" href="<?php echo base_url('c_tabel/hapus/'.$ct->id) ?>"><i class="fa fa-trash-o"></i></a>
     </td>
                           </tr>
                           <?php endforeach;  }?>

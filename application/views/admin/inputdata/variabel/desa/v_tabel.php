@@ -6,53 +6,35 @@
       </div>
     </div>
     <div class="clearfix"></div>
-    <div class="row">
-      <div class="">
-      <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Tabel<small>Variabel</small></h2>
-
-                    <!-- <div class="form-group pull-right">
-                     <a class="btn btn-primary" href="<php echo base_url('c_variabel/tambah_var_desa/') ?>">Tambah</a>
-                    </div> -->
-
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <table class="table table-hover" id="datatable">
-                      <thead>
-                        <tr>
-                          <th>No.</th>
-                          <th>Nama Variabel</th>
-                          <!-- <th>Jenis</th> -->
-                          <th>Nilai Linguistik</th>
-                          <th>Edit</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                      <?php $i=1;
-                      foreach ($c_variabel as $k) { ?>
-                        <tr>
-                          <th><?php echo $i++ ?></th>
-                          <td><?php echo $k->nama_variabel ?></td>
-                          <!-- <td><php echo $k->jenis_io ?></td> -->
-                          <td><?php echo $k->a ?>,<?php echo $k->b ?>,<?php echo $k->c ?></td>
-                          <td>
-                            <a class="btn btn-info btn-xs" title="Edit Data" href="<?php echo base_url('c_variabel/edit_variabel_desa/'.$k->variabel_id) ?>"><i class="fa fa-pencil"></i></a>
-                            <!-- <a onclick="return confirm('anda yakin?')" title="Hapus Data" class="btn btn-danger btn-xs" 
-                            href="<php echo base_url('c_variabel/delete/'.$k->variabel_id) ?>"><i class="fa fa-trash-o"></i></a> -->
-                          </td>
-                        </tr>
-                      <?php } ?>
-                        
-                      </tbody>
-                    </table>
-
-                  </div>
-                </div>
+    <div class="x_panel">
+        
+        <form action="<?php echo base_url();?>c_variabel/varDesa" method="post">
+        <div class="x_title">
+          <h2>Tambah <small>Variabel</small></h2>
+          <div class="form-group pull-right">
+                  <button type="submit" id="send" class="btn btn-primary">Update</button>
+                  <a class="btn btn-danger" href="<?php echo base_url('c_variabel/VariabelDesa') ?>">Batal</a>
               </div>
+          <div class="clearfix"></div>
+        </div>
+        <!--ROW 1-->
+        <?php foreach ($c_variabel as $key) { ?>
+        <div class="x_content">
+          <div class="row">
+            <div class="form-group col-md-6 col-xs-12">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12"><?php echo $key['nama_variabel']?></label>
+              <div class="col-md-9 col-sm-9 col-xs-12">
+                <input type="hidden" name="variabel_id[]" value="<?php echo $key['variabel_id'] ?>" placeholder="" class="form-control">
+                <input type="text" name="min[]" value="<?php echo $key['min'] ?>" placeholder="nilai" class="form-control">
+                <!-- <input type="hidden" name="nama_variabel[]" value="<php echo $key['nama_variabel'] ?>" placeholder="Nama Kriteria" class="form-control"> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <?php } ?>
+        <!--END ROW 1-->
+        </form>
+        <?php echo $this->session->flashdata('pesan') ?>
       </div>
-    </div>
   </div>
 </div>

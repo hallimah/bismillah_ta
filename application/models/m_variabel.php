@@ -51,17 +51,21 @@ class M_Variabel extends CI_Model{
       return $hasil;
     }
 
-    function update_variabel_penduduk($variabel_id,$nama_variabel,$jenis_io){
-      $query= $this->db->query("UPDATE `tb_variabel` SET nama_variabel='$nama_variabel', jenis_io='$jenis_io' WHERE variabel_id='$variabel_id' ");
-      if ($query) {
-        $max=$this->db->query("SELECT variabel_id as variabel_id FROM tb_variabel");
+    function update_variabel_penduduk($where,$array,$table){ //$variabel_id,$nama_variabel,$jenis_io
+      // $query= $this->db->query("UPDATE `tb_variabel` SET nama_variabel='$nama_variabel', jenis_io='$jenis_io' WHERE variabel_id='$variabel_id' ");
+      // if ($query) {
+      //   $max=$this->db->query("SELECT variabel_id as variabel_id FROM tb_variabel");
      
-      }
-      return $max->row_array();
+      // }
+      // return $max->row_array();
+      $this->db->where($where);
+      $this->db->update($table,$array);
+
     }
 
-    function update_sub_variabel_penduduk($sub_variabel_id,$nama,$skor){
-      $query = $this->db->update("UPDATE `tb_sub_variabel` SET nama='$nama', skor='$skor' WHERE sub_variabel_id='$sub_variabel_id'");
+    function update_sub_variabel_penduduk($sub_id,$sub_variabel_id,$nama,$skor){
+       $query = $this->db->query("UPDATE `tb_sub_variabel` SET nama='$nama', skor='$skor' WHERE sub_id='$sub_id' AND sub_variabel_id='$sub_variabel_id'");
+      
     }
 
     public function varKecamatan(){
@@ -79,8 +83,8 @@ class M_Variabel extends CI_Model{
 
   public function varDesa(){
     $this->db->select('*');
-        $this->db->from('tb_sub_var_desa');
-        $this->db->join('tb_variabel_desa','tb_variabel_desa.variabel_id=tb_sub_var_desa.sub_id');
+        $this->db->from('tb_variabel_desa'); //tb_sub_var_desa
+        // $this->db->join('tb_variabel_desa','tb_variabel_desa.variabel_id=tb_sub_var_desa.sub_id');
         $q= $this->db->get();
         return $q;;
 }
@@ -154,10 +158,10 @@ function insert_var_desa($nama_variabel, $jenis_io){
  }
 
  /**edit variabel desa */
- function edit_variabel_desa($id){
+ function edit_variabel_desa(){
   $this->db->select('*');
   $this->db->from('tb_variabel_kecamatan');
-  $this->db->where('variabel_id',$id);
+  // $this->db->where('variabel_id',$id);
   $q= $this->db->get();
   return $q;
  }
@@ -314,6 +318,32 @@ $q=$this->db->query("UPDATE mamdani_kecamatan m JOIN tb_variabel_kecamatan tk ON
 
 
   /***********************end coba select tb_penduduk then insert in mamdani_kecamatan *******************/
+
+/**-------------------------------------------PEMBOBOTAN */
+function pembobotan_penduduk(){
+  return $this->db->select('*')->from('tb_bobot_penduduk')->get()->result_array();
+}
+
+function update_bobot_penduduk($id,$nama,$bobot){
+  $query = $this->db->query("UPDATE `tb_bobot_penduduk` SET nama='$nama', bobot='$bobot' WHERE id='$id'");
+ 
+}
+
+function update_persen(){
+  return $this->db->query("UPDATE tb_bobot_penduduk tb SET tb.persen=tb.bobot/100 WHERE id");
+}
+
+function update_persen_kelurahan(){
+  return $this->db->query("UPDATE tb_variabel_desa tb SET tb.persen=tb.min/100 WHERE variabel_id");
+}
+
+
+function tb_tingkat_kesejahteraan(){
+  return $this->db->select('*')->get('tb_tingkat_kesejahteraan')->result_array();
+}
+/**--------------------------------------------------END PEMBOBOTAN */
+
+
 }
 
 ?>

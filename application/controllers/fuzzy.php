@@ -11,35 +11,35 @@ class Fuzzy extends CI_Controller{
 	}
 	
 	public function view(){
-		$data=$this->mamdani->insert_or_update();
-		 $this->mamdani->hasil_kemiskinan();
-		 $this->mamdani->hasil_ketelantaran();
-		 $this->mamdani->hasil_kecacatan();
-			
-			redirect('fuzzy/view2');
+		
+		//	$this->mamdani->count_perkelurahan();
+			redirect('fuzzy/view_klasifikasi');
 	}
 
-	public function view2(){
-		 $this->mamdani->keterangan();
-		redirect('fuzzy/view_klasifikasi');
-	}
+
 
 	public function view_klasifikasi(){
-		$config = array();
-        $config["base_url"] = base_url() . "fuzzy/view";
-        $config["per_page"] = $this->m_tabel->total_kelurahan();
-        $config["uri_segment"] = 3;
+		// $config = array();
+        // $config["base_url"] = base_url() . "fuzzy/view";
+        // $config["per_page"] = $this->m_tabel->total_kelurahan();
+        // $config["uri_segment"] = 3;
 
-        $this->pagination->initialize($config);
+        // $this->pagination->initialize($config);
 
-		$page = ($this->uri->segment(3)) ? $this->uri->segment(4) : 0; 
-		$fuzzy['fuzzy']=$this->mamdani->fuzzy($config["per_page"], $page);
-			  
-		$fuzzy['tahun']=$this->mamdani->select_tahun_klasifikasi_kelurahan();
+		// $page = ($this->uri->segment(3)) ? $this->uri->segment(4) : 0; 
+		//$fuzzy['fuzzy']=$this->mamdani->fuzzy($config["per_page"], $page);
+
+		$fuzzy['fuzzy']=$this->mamdani->fuzzy();
+		$fuzzy['tingkat']= $this->mamdani->klasifikasi_desa();
+		$fuzzy['kali_kec']=$this->mamdani->get_total_penduduk_kecamatan();
+		//$fuzzy['kali_kec']=$this->mamdani->get_total_penduduk_kecamatan();
+		$fuzzy['tahun']=$this->mamdani->select_tahun_klasifikasi();
 		
 			$this->load->view('templates/header');
 			$this->load->view('admin/lihatdata/tabel_klasifikasi',$fuzzy);
 			$this->load->view('templates/footer');
+
+			//  var_dump($f);die;
 	}
 
 	public function viewKecamatan(){
@@ -79,13 +79,30 @@ class Fuzzy extends CI_Controller{
 	}
 
 	function viewPenduduk(){
-		redirect('fuzzy/viewPenduduk2');
+		$this->mamdani->bobot_tanggungan();
+		$this->mamdani->bobot_keterangan_rumah();
+		$this->mamdani->bobot_jumlah_aset();
+		$this->mamdani->bobot_program_sosial();
+		$this->mamdani->total_bobot();
+
+		$klasifikasi['klasifikasi']=$this->mamdani->getdata();
+		$klasifikasi['klas']=$this->mamdani->klasifikasi3();
+				
+		foreach ($klasifikasi['klasifikasi'] as $key) {
+		$id=$key->id;
+		$tot= $key->total_bobot;
+		foreach($klasifikasi['klas'] as $data){
+			if(($data->min <= $key->total_bobot) && ($key->total_bobot <= $data->max)){
+				//   $ting[]= $data->nama; 
+				$this->db->query("UPDATE tb_klasifikasi_penduduk SET klasifikasi='$data->nama' where id='$key->id'  ");
+			break;
+		}
+	}
 	}
 
-	function viewPenduduk2(){
-		redirect('fuzzy/view_hasil_klasifikasi_penduduk');
-
+		redirect('fuzzy/klasifikasi');
 	}
+
 
 	function view_hasil_klasifikasi_penduduk(){
 		$config = array();
@@ -93,15 +110,17 @@ class Fuzzy extends CI_Controller{
         $config["per_page"] = $this->m_tabel->total_kelurahan();
         $config["uri_segment"] = 3;
 
-        // $this->pagination->initialize($config);
+		$page = ($this->uri->segment(3)) ? $this->uri->segment(4) : 0; 
+		$klasifikasi['klasifikasi']=$this->mamdani->getdata($config["per_page"], $page);
+	
+		// $klasifikasi['tingkat']= $this->mamdani->klasifikasi3();
 
-		// $page = ($this->uri->segment(3)) ? $this->uri->segment(4) : 0; 
-		// $fuzzy['fuzzy']=$this->mamdani->viewPenduduk($config["per_page"], $page);
-		
-		 $fuzzy['tahun']=$this->mamdani->select_tahun_klasifikasi_kecamatan();
+	
+
+		 $klasifikasi['tahun']=$this->mamdani->select_tahun_klasifikasi();
 	
 		$this->load->view('templates/header');
-		$this->load->view('admin/lihatdata/tabel_klasifikasi_penduduk');
+		$this->load->view('admin/lihatdata/tabel_klasifikasi_penduduk',$klasifikasi);
 		$this->load->view('templates/footer');
 
 	}
@@ -109,44 +128,39 @@ class Fuzzy extends CI_Controller{
 
 	/***********************coba select tb_penduduk then insert in mamdani_kecamatan *******************/
 	function select_tb_penduduk(){
-		$this->load->model('m_variabel');
-	//	$this->m_variabel->get_kecamatan();
-	//	$this->m_variabel->get_tb_penduduk();
+		$this->load->model('mamdani');
+		//$klasifikasi['klasifikasi']=$this->mamdani->getdata();
+		$klasifikasi['jumlah_aset']=$this->mamdani->jumlah_aset();
+		$klasifikasi['tingkat']= $this->mamdani->klasifikasi3();
 
-	//$dat['p']=$this->m_variabel->multi_query();
-		 $dat['pecah']=$this->m_variabel->view();
-		$this->load->view('admin/perhitunganfuzzy/coba_tabel',$dat);
-
-		// foreach ($dat['pecah'] as $key) {
-		// 	$nama_kecamatan= $key->nama_kecamatan;
-		// 	$kemiskinan = $key->kemiskinan;
-		// 	$ketelantaran = $key->ketelantaran;
-		// 	$kecacatan = $key->kecacatan;
-		// 	$variabel_id = $key->variabel_id;
-		// 	$nama_variabel = $key->nama_variabel;
-		// 	$sub_variabel_id = $key->sub_variabel_id;
-		// 	$jenis_oi = $key->jenis_io;
-		// 	$sub_id = $key->sub_id;
-		// 	$nama = $key->nama;
-		// }
-
-		// if ($variabel_id && $nama_variabel=='kemiskinan' && $sub_variabel_id) {
-		// 	if ($kemiskinan /  >= ) {
-		// 		$hasil_kemiskinan = 
-		// 	}
-			
-		// }else{
-		// 	false;
-		// }
-
-		// $arr = array('kemiskinan' => $kemiskinan,
-		// 	'hasil_kemiskinan' => $hasil_kemiskinan );
-
-		// var_dump($dat);
+		$this->load->view('templates/header');
+		$this->load->view('admin/lihatdata/tabel_klasifikasi_penduduk',$klasifikasi);
+		$this->load->view('templates/footer');
+		// var_dump($jml_aset);
 		// die;
 
 	}
 	
 	/***********************END coba select tb_penduduk then insert in mamdani_kecamatan *******************/
-	
+
+
+	function klasifikasi(){
+		$klasifikasi['data']=$this->mamdani->getdata();
+		$klasifikasi['klas']=$this->mamdani->klasifikasi3();
+				
+		foreach ($klasifikasi['data'] as $key) {
+		$id=$key->id;
+		$tot= $key->total_bobot;
+		foreach($klasifikasi['klas'] as $data){
+			if(($data->min <= $key->total_bobot) && ($key->total_bobot <= $data->max)){
+				//   $ting[]= $data->nama; 
+				$this->db->query("UPDATE tb_klasifikasi_penduduk SET klasifikasi='$data->nama' where id='$key->id'  ");
+			break;
+		}
+	}
+	}
+	redirect('fuzzy/view_hasil_klasifikasi_penduduk');
+}
+
+
 }

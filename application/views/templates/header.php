@@ -35,6 +35,26 @@
     <!-- Custom Theme Style -->
     <link href="<?php echo base_url() ?>assets/build/css/custom.min.css" rel="stylesheet">
 
+    <style>
+    .input_data_penduduk_scroll{
+      overflow-x:scroll;
+      height:500px;
+    }
+    .tabel{
+      min-width:300px;
+      /* border-collapse:collapse;
+      width:90%; */
+    }
+    .lebar{
+      min-width:300px;
+      text-align:center;
+    }
+    .lebar-sedikit{
+      min-width:100px;
+      text-align:center;
+    }
+    </style>
+
 
   </head>
 
@@ -71,7 +91,7 @@
                   <li><a href="<?php echo base_url()?>admin/dashboard"><i class="fa fa-home"></i> Dashboard</a></li>
                   <li><a><i class="fa fa-edit"></i> Input Data <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="<?php echo base_url()?>c_tabel/input_penduduk">Data Penduduk</a></li>
+                      <!-- <li><a href="<php echo base_url()?>c_tabel/input_penduduk">Data Penduduk</a></li> -->
                       <li><a href="<?php echo base_url()?>c_tabel/view_input">Data PMKS</a></li>
                       <li><a> Variabel <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
@@ -85,7 +105,7 @@
                   <li><a><i class="fa fa-desktop"></i> Lihat Data <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="<?php echo base_url()?>c_tabel/tabel">Data PMKS</a></li>
-                      <li><a href="<?php echo base_url()?>fuzzy/viewKecamatan">Hasil Klasifikasi</a></li>
+                      <li><a href="<?php echo base_url()?>fuzzy/viewPenduduk">Hasil Klasifikasi</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Unduh Data <span class="fa fa-chevron-down"></span></a>

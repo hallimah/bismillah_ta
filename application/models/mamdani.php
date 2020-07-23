@@ -70,7 +70,6 @@ class mamdani extends CI_Model{
          }
           return false;
 
-    
      }
  
     
@@ -107,8 +106,8 @@ class mamdani extends CI_Model{
          return $sql->result();
      }
  
-     public function select_tahun_klasifikasi_kelurahan(){
-      $sql=$this->db->query('SELECT DISTINCT(tahun_klasifikasi) FROM mamdani 
+     public function select_tahun_klasifikasi(){
+      $sql=$this->db->query('SELECT DISTINCT(tahun_klasifikasi) FROM tb_klasifikasi_penduduk 
       WHERE tahun_klasifikasi BETWEEN DATE_SUB(NOW(),INTERVAL 1 YEAR)AND NOW()');
         return $sql->result();
      }
@@ -121,12 +120,22 @@ class mamdani extends CI_Model{
  
  
      public function fuzzy(){
-      $this->db->select('*');
-      $this->db->from('mamdani');
-      $this->db->where('tahun_klasifikasi BETWEEN DATE_SUB(NOW(),INTERVAL 1 YEAR)AND NOW()');
-      $p=$this->db->get()->result();
-      return $p;
+      // $this->db->select('*');
+      // $this->db->from('mamdani');
+      // $this->db->where('tahun_klasifikasi BETWEEN DATE_SUB(NOW(),INTERVAL 1 YEAR)AND NOW()');
+      // $p=$this->db->get()->result();
+      // return $p;
+      $this->db->select('nama_kecamatan, nama_desa, 
+      sum(if(klasifikasi="rendah",1,0)) as rendah, sum(if(klasifikasi="sedang",1,0)) as sedang,
+      sum(if(klasifikasi="tinggi",1,0)) as tinggi'); //,tahun_masuk as tahun_klasifikasi
+        $this->db->from('tb_klasifikasi_penduduk');
+        $this->db->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan');
+        $this->db->join('tb_desa','tb_desa.id_desa=tb_klasifikasi_penduduk.kelurahan');
+        $this->db->group_by('nama_kecamatan, nama_desa,tahun_klasifikasi'); //,tahun_klasifikasi
+        return $query=$this->db->get()->result();
+
      }
+
  
      public function excel_kecamatan(){
        return $this->db->get('mamdani_kecamatan')->result();
@@ -305,5 +314,71 @@ class mamdani extends CI_Model{
  
   }
 
+  function getdata(){
+  return $this->db->select('*')->from('tb_klasifikasi_penduduk')
+  ->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan')
+  ->join('tb_desa','tb_desa.id_desa=tb_klasifikasi_penduduk.kelurahan')
+  ->join('tb_penduduk_pengenalan_tempat','tb_penduduk_pengenalan_tempat.id=tb_klasifikasi_penduduk.tempat_id')
+  ->get()->result();
+  }
+
+  /***********************************************************************PROSES KLASIFIKASI */
+
+  /**menghitung bobot */
+  function bobot_tanggungan(){
+    $this->db->query("UPDATE tb_klasifikasi_penduduk kp JOIN tb_bobot_penduduk bp SET kp.bobot_tanggungan=kp.jumlah_tanggungan*bp.persen WHERE bp.id=2");
+  }
+  function bobot_keterangan_rumah(){
+    $this->db->query("UPDATE tb_klasifikasi_penduduk kp JOIN tb_bobot_penduduk bp SET kp.bobot_keterangan_rumah=kp.keterangan_rumah*bp.persen WHERE bp.id=1");
+  }
+  function bobot_jumlah_aset(){
+    $this->db->query("UPDATE tb_klasifikasi_penduduk kp JOIN tb_bobot_penduduk bp SET kp.bobot_jumlah_aset=kp.jumlah_kepemilikan_aset*bp.persen WHERE bp.id=3");
+  }
+  function bobot_program_sosial(){
+    $this->db->query("UPDATE tb_klasifikasi_penduduk kp JOIN tb_bobot_penduduk bp SET kp.bobot_program_sosial=kp.program_sosial*bp.persen WHERE bp.id=4");
+  }
+
+  function total_bobot(){
+    $this->db->query("UPDATE tb_klasifikasi_penduduk kp JOIN(
+			SELECT id, sum(total_bobot) total_bobot FROM(
+			SELECT id,bobot_tanggungan total_bobot FROM tb_klasifikasi_penduduk UNION ALL
+			SELECT id,bobot_keterangan_rumah FROM tb_klasifikasi_penduduk UNION ALL 
+			SELECT id,bobot_jumlah_aset FROM tb_klasifikasi_penduduk UNION ALL
+			SELECT id,bobot_program_sosial FROM tb_klasifikasi_penduduk 
+		)g GROUP BY id)a ON kp.id=a.id SET kp.total_bobot=a.total_bobot");
+  }
+
+  function bobot(){
+  return $this->db->select('*')->from('tb_bobot_penduduk')->get()->result();
+  }
+
+  function klasifikasi3(){
+    return $this->db->select('*')->from('tb_tingkat_kesejahteraan')->get()->result();
+  }
+
+  function klasifikasi_desa(){
+    return $this->db->select('*')->from('tb_variabel_desa')->get()->result();
+  }
+
+  function get_total_penduduk_kecamatan(){
+    return $this->db->select('*')->from('tb_kecamatan')->get()->result();
+  }
+
+  function jumlah_aset(){
+    return $this->db->select('*')->from('tb_klasifikasi_penduduk')
+    ->join('tb_penduduk_kepemilikan_aset','tb_penduduk_kepemilikan_aset.id=tb_klasifikasi_penduduk.aset_id')
+    ->join('tb_penduduk_keterangan_rumah','tb_penduduk_keterangan_rumah.id=tb_klasifikasi_penduduk.rumah_id')
+    ->join('tb_penduduk_pengenalan_tempat','tb_penduduk_pengenalan_tempat.id=tb_klasifikasi_penduduk.tempat_id')->get()->result();
+  }
+
+  
+  /**END menghitung bobot */
+
+
+  function klas(){
+
+$data= array();
+  $this->db->query('UPDATE tb_klasifikasi_penduduk');
+  }
   
 }

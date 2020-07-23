@@ -7,7 +7,7 @@
     </div>
     <div class="clearfix"></div>
       <div class="x_panel">
-      <?php foreach ($c_variabel as $key) { ?>
+        <?php foreach ($c_variabel as $key) { ?>
         <form action="<?php echo base_url();?>c_variabel/update_var_desa1" method="post">
         <div class="x_title">
           <h2>Tambah <small>Variabel</small></h2>

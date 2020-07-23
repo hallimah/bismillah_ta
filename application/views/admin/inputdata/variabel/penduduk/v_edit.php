@@ -62,14 +62,14 @@
                       <input type="hidden" class="form-control 0" value="<?php echo $key->sub_variabel_id ?>" name="sub_variabel_id[]" required>
                       <input type="hidden" class="form-control 0" value="<?php echo $key->sub_id ?>" name="sub_id[]" required>
                       <input type="text" class="form-control 0" value="<?php echo $key->nama ?>" name="nama[]" required></td>
-                    <td><input type="text" class="form-control 0" value="<?php echo $key->skor ?>" name="skor[]" required></td>
+                    <td><input type="number" class="form-control 0" value="<?php echo $key->skor ?>" name="skor[]" required></td>
                   </tr>
                   <?php }?>
                 </tbody>                
               </table>
               
-              <a id="tambah" class="btn btn-primary" onclick="tambah();">+</a>
-              <a id="kurang" class="btn btn-primary" onclick="kurang();">-</a>
+              <a id="tambah_var" class="btn btn-primary" onclick="tambah_var();">+</a>
+              <a id="kurang_var" class="btn btn-primary" onclick="kurang_var();">-</a>
             </div>
             <!--END grup 2 tabel-->
             
