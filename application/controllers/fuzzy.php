@@ -88,22 +88,25 @@ class Fuzzy extends CI_Controller{
 		$klasifikasi['klasifikasi']=$this->mamdani->getdata();
 		$klasifikasi['klas']=$this->mamdani->klasifikasi3();
 				
-		foreach ($klasifikasi['klasifikasi'] as $key) {
-		$id=$key->id;
-		$tot= $key->total_bobot;
-		foreach($klasifikasi['klas'] as $data){
-			if(($data->min <= $key->total_bobot) && ($key->total_bobot <= $data->max)){
-				//   $ting[]= $data->nama; 
-				$this->db->query("UPDATE tb_klasifikasi_penduduk SET klasifikasi='$data->nama' where id='$key->id'  ");
-			break;
-		}
-	}
+		redirect('fuzzy/view_hasil_klasifikasi_penduduk');
 	}
 
-		redirect('fuzzy/klasifikasi');
-	}
+// function klasifikasi5(){
+// 	foreach ($klasifikasi['klasifikasi'] as $key) {
+// 		$id=$key->id;
+// 		$tot= $key->total_bobot;
+// 		foreach($klasifikasi['klas'] as $data){
+// 			if(($data->min <= $key->total_bobot) && ($key->total_bobot <= $data->max)){
+// 				 // $ting[]= $data->nama; 
+// 			$this->db->query("UPDATE tb_klasifikasi_penduduk SET klasifikasi='$data->nama' where id='$key->id'  ");
+// 			break;
+// 		}
+// 	}
+// 	}
 
-
+	
+// 	//redirect('fuzzy/view_hasil_klasifikasi_penduduk');
+// }
 	function view_hasil_klasifikasi_penduduk(){
 		$config = array();
         $config["base_url"] = base_url() . "fuzzy/viewPenduduk";
@@ -113,9 +116,19 @@ class Fuzzy extends CI_Controller{
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(4) : 0; 
 		$klasifikasi['klasifikasi']=$this->mamdani->getdata($config["per_page"], $page);
 	
-		// $klasifikasi['tingkat']= $this->mamdani->klasifikasi3();
+		 $klasifikasi['tingkat']= $this->mamdani->klasifikasi3();
 
-	
+		 foreach ($klasifikasi['klasifikasi'] as $key) {
+			$id=$key->id;
+			$tot= $key->total_bobot;
+			foreach($klasifikasi['tingkat'] as $data){
+				if(($data->min <= $key->total_bobot) && ($key->total_bobot <= $data->max)){
+					//   $ting[]= $data->nama; 
+				$this->db->query("UPDATE tb_klasifikasi_penduduk SET klasifikasi='$data->nama' where id='$key->id'  ");
+				break;
+			}
+		}
+		}
 
 		 $klasifikasi['tahun']=$this->mamdani->select_tahun_klasifikasi();
 	
