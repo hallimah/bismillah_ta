@@ -15,12 +15,12 @@ class m_login extends CI_Model{
     /**c_user hasil  klasifikasi */
     public function klasifikasi(){
         $this->db->select("*");
-        $q=$this->db->get("mamdani_kecamatan");
+        $q=$this->db->get("tb_klasifikasi_penduduk");
         return $q;
     }
     public function klasifikasi_desa(){
         $this->db->select("*");
-        $q=$this->db->get("mamdani");
+        $q=$this->db->get("tb_klasifikasi_penduduk");
         return $q;
     }
 

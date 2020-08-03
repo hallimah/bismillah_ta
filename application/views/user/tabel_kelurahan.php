@@ -16,34 +16,55 @@
                   <div class="x_content">
                   <!--id="datatable" -->
                     <table id="datatable" class="table table-striped table-bordered">
-                    
-                      <thead>
-                      <tr>
-                        <th>No</th>
-                          <th>Nama Kecamatan </th>
-                          <th>Nama Kelurahan</th>
-                           <th>Kemiskinan</th>
-                         <th>Ketelantaran</th>
-                          <th>Kecacatan</th>
-                          <th>Tingkat Kesejahteraan</th>
-                          <!-- <th>Hasil Fuzzy</th>  -->
+                    <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>Kecamatan</th>
+                          <th>Desa</th>
+                          <th>Total Penduduk Kesejahteraan Rendah</th>
+                          <th>Total Penduduk Kesejahteraan Sedang</th>
+                          <th>Total Penduduk Kesejahteraan Tinggi</th>
+                          <th>Klasifikasi</th>
+                          
                         </tr>
                       </thead>
+                     
                       <tbody>
                       <?php $no=1;
-                    //->result()
-                      foreach ($fuzzy as $f) : ?>
-                        <tr>
+                      if (!empty($fuzzy)) { 
+                        foreach ($fuzzy as $ct) : ?>
+                          <tr>
                           <td><?php echo $no++ ?></td>
-                          <td><?php echo $f->nama_kecamatan ?></td>
-                          <td><?php echo $f->nama_desa ?></td> 
-                           <td><?php echo $f->kemiskinan ?></td>
-                           <td><?php echo $f->ketelantaran ?></td>
-                          <td><?php echo $f->kecacatan ?></td>
-                          <td><?php echo $f->keterangan ?></td>
-                           
-                        </tr>
-                        <?php endforeach; ?>
+                          <td><?php echo $ct->nama_kecamatan ?></td>
+                          <td><?php echo $ct->nama_desa ?></td>
+                          <td><?php echo $ct->rendah ?></td>
+                          <td><?php echo $ct->sedang ?></td>
+                          <td><?php echo $ct->tinggi ?></td>
+                          <td>
+                          <?php 
+
+                            foreach ($kali_kec as $kec) {
+                              if ($ct->nama_kecamatan==$kec->nama_kecamatan) {
+                                // if( <= )
+                                foreach ($kali_desa as $desa) {
+                                  if ($ct->nama_desa==$desa->nama_desa) {
+                                    foreach ($tingkat as $data) {
+                                      if (($ct->rendah + $ct->sedang + $ct->tinggi) <= ($data->persen*$desa->total_penduduk)) {
+                                        echo $data->nama_variabel;
+                                        // echo $data->persen*$kec->total_penduduk;
+                                      break;
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                           ?>
+                           </td>
+                          </tr>
+                          <?php endforeach;  }?>
+                     
+                      
                       </tbody>
                     </table>
                   </div>

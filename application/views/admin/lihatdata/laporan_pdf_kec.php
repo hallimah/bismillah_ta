@@ -168,15 +168,11 @@ hr{
                 </div>
                 <div class="col50">
                     <label for="">Tahun </label><br>
-                    <label for="">Kemiskinan </label><br>
-                    <label for="">Ketelantaran</label><br>
-                    <label for="">Kecacatan </label><br>
+                    <label for="">Total Penduduk </label><br>
                 </div>
                 <div class="col30">
                 <label>: <?php echo $tahun ?></label><br>
-                <label>: <?php echo $sum_kemiskinan ?> Jiwa</label><br>
-                <label> : <?php echo $sum_ketelantaran ?> Jiwa</label><br>
-                <label>: <?php echo $sum_kecacatan ?> Jiwa</label><br>
+                <label>: <?php echo $total_penduduk ?> Jiwa</label>
                 </div>
             </div>  
         </div>
@@ -193,12 +189,24 @@ hr{
             <?php $no=1;
             foreach ($report as $f) : ?>
             <tr>
-                <td class="th1"><?php echo $no++ ?></td>
+            <td class="th1"><?php echo $no++ ?></td>
                 <td class="th2"><?php echo $f->nama_kecamatan ?></td>
-                <td class="th4"><?php echo $f->kemiskinan ?></td>
-                <td class="th5"><?php echo $f->ketelantaran ?></td>
-                <td class="th6"><?php echo $f->kecacatan ?></td>
-                <td class="th7"><?php echo $f->keterangan ?></td>
+                <td><?php echo $f->rendah ?></td>
+                <td><?php echo $f->sedang ?></td>
+                <td><?php echo $f->tinggi ?></td>
+                <td class="th7">
+                <?php foreach ($kali_kec as $kec) {
+                    if ($f->nama_kecamatan==$kec->nama_kecamatan) {
+                        // if( <= )
+                        foreach ($tingkat as $data) {
+                            if (($f->rendah + $f->sedang + $f->tinggi) <= ($data->persen*$kec->total_penduduk)) {
+                                echo $data->nama_variabel;
+                                // echo $data->persen*$kec->total_penduduk;
+                            break;
+                        }
+                    }
+                }
+            } ?></td>
             </tr>
             <?php endforeach; ?>
         </table>        

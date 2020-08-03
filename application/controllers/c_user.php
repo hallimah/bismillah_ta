@@ -2,24 +2,31 @@
 class C_User extends CI_Controller {
     public function user(){
         $data['total_pmks'] = $this->m_tabel->total_pmks();
-        $data['total_perkecamatan'] = $this->m_tabel->total_perkecamatan();
-		$data['total_jenis'] = $this->m_tabel->total_jenis();
+       $data['total_perkecamatan'] = $this->m_tabel->total_perkecamatan();
+	//	$data['total_perdesa'] = $this->m_tabel->total_jenis();
         $this->load->view('templates/u_header');
-        $this->load->view('user/view',$data);
+        $this->load->view('user/view',$data);//
         $this->load->view('templates/u_footer');
     }
 
     public function klasifikasi_kecamatan(){
-        $data['fuzzy']=$this->m_login->klasifikasi()->result();
+        $fuzzy['fuzzy']= $this->mamdani->viewKecamatan();
+        $fuzzy['tingkat']= $this->mamdani->klasifikasi_wilayah();
+		$fuzzy['kali_kec']=$this->mamdani->get_total_penduduk_kecamatan();
+		$fuzzy['kali_desa']=$this->mamdani->get_total_penduduk_desa();
+        //$data['fuzzy']=$this->m_login->klasifikasi()->result();
         $this->load->view('templates/u_header');
-        $this->load->view('user/tabel',$data);
+        $this->load->view('user/tabel',$fuzzy);
         $this->load->view('templates/u_footer');
     }
 
     public function klasifikasi_kelurahan(){
-        $data['fuzzy']=$this->m_login->klasifikasi_desa()->result();
+        $fuzzy['fuzzy']= $this->mamdani->fuzzy();
+        $fuzzy['tingkat']= $this->mamdani->klasifikasi_wilayah();
+		$fuzzy['kali_kec']=$this->mamdani->get_total_penduduk_kecamatan();
+		$fuzzy['kali_desa']=$this->mamdani->get_total_penduduk_desa();
         $this->load->view('templates/u_header');
-        $this->load->view('user/tabel_kelurahan',$data);
+        $this->load->view('user/tabel_kelurahan',$fuzzy);
         $this->load->view('templates/u_footer');
     }
     

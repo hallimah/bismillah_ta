@@ -6,11 +6,9 @@
   </div>
   <div class="x_panel">
     <div class="x_content">
-    <?php foreach ($penduduk as $key) { ?>
     <form action="<?php echo base_url();?>c_tabel/update_pmks" method="post" class="form-horizontal form-label-left">
-   
+      <?php foreach ($penduduk as $key) { ?>
       <div id="wizard" class="form_wizard wizard_horizontal">
-        
         <ul class="wizard_steps">
           <li>
             <a href="#step-1">
@@ -38,18 +36,16 @@
           </li>
         </ul>
 
-        
         <!--step 1-->
-        
-          <div id="step-1">
-            
+        <div id="step-1">
           <span class="section">1. PENGANALAN TEMPAT</span>
 
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="kota">Kecamatan <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
             <input type="hidden" name="id" value="<?php echo $key->id ?>">
-              <select class="form-control" name="kecamatan" id="category" >
+            <input type="hidden" name="tempat_id" value="<?php echo $key->tempat_id ?>">
+              <select class="form-control" name="kecamatan" id="category" required>
                 <option value="<?php echo $key->kecamatan ?>"><?php echo $key->kecamatan ?></option>
                 <?php foreach ($kategori as $row): ?>
                 <option value="<?php echo $row->kecamatan_id; ?>"><?php echo $row->nama_kecamatan; ?></option>
@@ -60,19 +56,19 @@
           </div>
 
           <div class="item form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="kota">Desa/Kelurahan/Nagari <span class="required">*</span></label>
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="kota" >Desa/Kelurahan/Nagari <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <select class="form-control" id="sub_category" name="kelurahan" >
+            <select class="form-control" id="sub_category" name="kelurahan" required>
                 <option value="">-- PILIH --</option>
               </select>
             </div>
             <?php echo form_error('kelurahan','<div class="text-small text-danger">','</div>') ?>
           </div>
-        
+
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="alamat">Alamat <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="alamat" class="form-control col-md-7 col-xs-12" name="alamat" value="<?php echo $key->alamat ?>" placeholder="Alamat" type="text" />
+              <input id="alamat" class="form-control col-md-7 col-xs-12" name="alamat" placeholder="Alamat" type="text" value="<?php echo $key->alamat ?>" required />
             </div>
             <?php echo form_error('alamat','<div class="text-small text-danger">','</div>') ?>
           </div>
@@ -80,23 +76,34 @@
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tempat_lahir">Nama KRT <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input type="text" name="krt" placeholder="Nama Kepala Rumah Tangga" value="<?php echo $key->nama_krt ?>" class="form-control col-md-7 col-xs-12" />
+              <input type="text" name="krt" placeholder="Nama Kepala Rumah Tangga" class="form-control col-md-7 col-xs-12" value="<?php echo $key->nama_krt ?>" pattern="[A-Za-z]+" required/>
             </div>
             <?php echo form_error('krt','<div class="text-small text-danger">','</div>') ?>
           </div>
 
           <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tempat_lahir">Jenis Kelamin <span class="required">*</span></label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <select name="jenis_kelamin" class="form-control" required>
+              <option value="<?php echo $key->jenis_kelamin?>"><?php echo $key->jenis_kelamin?></option>
+              <option value="L">Laki-Laki</option>
+              <option value="P">Perempuan</option></select>
+            </div>
+            <?php echo form_error('jenis_kelamin','<div class="text-small text-danger">','</div>') ?>
+          </div>
+
+          <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tanggal_lahir">Jumlah ART <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-            <input id="art" class="form-control col-md-7 col-xs-12" name="jml_art" value="<?php echo $key->jumlah_art ?>" placeholder="Jumlah Anggota Rumah Tangga" type="text" />
+            <input id="art" class="form-control col-md-7 col-xs-12" name="jml_art" placeholder="Jumlah Anggota Rumah Tangga" type="text" value="<?php echo $key->jumlah_art?>" pattern="[0-9]+"/>
             </div>
-            <?php echo form_error('art','<div class="text-small text-danger">','</div>') ?>
+            <?php echo form_error('jml_art','<div class="text-small text-danger">','</div>') ?>
           </div>
           
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="kota">No. KK <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="kk" class="form-control col-md-7 col-xs-12" value="<?php echo $key->kk ?>" name="kk" placeholder="No. KK" type="text"/>
+              <input id="kk" class="form-control col-md-7 col-xs-12" name="kk" placeholder="No. KK" type="text" value="<?php echo $key->kk ?>" pattern="[0-9]+"/>
             </div>
             <?php echo form_error('kk','<div class="text-small text-danger">','</div>') ?>
           </div>
@@ -104,57 +111,58 @@
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="kota">No. NIK <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="kk" class="form-control col-md-7 col-xs-12" name="nik" value="<?php echo $key->nik ?>" placeholder="No. NIK" type="text"/>
+              <input id="kk" class="form-control col-md-7 col-xs-12" name="nik" placeholder="No. NIK" type="text" value="<?php echo $key->nik ?>" pattern="[0-9]+" />
             </div>
             <?php echo form_error('nik','<div class="text-small text-danger">','</div>') ?>
           </div>
-   
+          
         </div>
-        
-        
         <!--END step 1-->
 
         <!--step 2-->
-        
-          <div id="step-2">
+        <div id="step-2">
+          <span class="section">2. KETERANGAN PERUMAHAN</span>
           
-            <span class="section">2. KETERANGAN PERUMAHAN</span>
-        
-            <div class="item form-group">
-              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="kk">Status Bangunan Tempat Tinggal <span class="required">*</span></label>
-              <div class="col-md-6 col-sm-6 col-xs-12">
-              <input type="hidden" name="kk_rumah" value="<?php echo $key->id ?>">
+          <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="kk">Status Bangunan Tempat Tinggal <span class="required">*</span></label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+            <input type="hidden" name="kk_rumah" value="<?php echo $key->id ?>">
               <input type="hidden" name="id_rumah" value="<?php echo $key->kk ?>">
-                <select class="form-control" name="status_bangunan" >
-                <option value="<?php echo $key->status_tempat_tinggal ?>"><?php echo $key->status_tempat_tinggal ?></option>
-                  <option value="1">Milik Sendiri(1)</option>
-                  <option value="2">Kontrak/Sewa(2)</option>
-                  <option value="3">Bebas Sewa(3)</option>
-                  <option value="4">Dinas(4)</option>
-                  <option value="5">Lainnya(5)</option>
-                </select>
-              </div>
+              <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 1"); ?>
+              <select class="form-control" name="status_bangunan" >
+              <option value="<?php echo $key->status_tempat_tinggal ?>"><?php echo $key->status_tempat_tinggal ?></option>
+                <?php foreach ($sub_variabel->result() as $k) { ?>
+                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <?php } ?>    
+              </select>
+            </div>
               <?php echo form_error('status_bangunan','<div class="text-small text-danger">','</div>') ?>
-            </div>
+          </div>
             
-            <div class="item form-group">
-              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nik">Status Lahan Tempat Tinggal <span class="required">*</span></label>
-              <div class="col-md-6 col-sm-6 col-xs-12">
-                <select class="form-control" name="status_lahan" >
-                <option value="<?php echo $key->status_lahan_tempat_tinggal ?>"><?php echo $key->status_lahan_tempat_tinggal ?></option>
-                  <option value="1">Milik Sendiri(1)</option>
-                  <option value="2">Milik Orang Lain(2)</option>
-                  <option value="3">Tanah Negara(3)</option>
-                  <option value="4">Lainnya(4)</option>
-                </select>
-              </div>
-              <?php echo form_error('status_lahan','<div class="text-small text-danger">','</div>') ?>
+          <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="kk">Status Lahan Tempat Tinggal <span class="required">*</span></label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 2"); ?>
+              <select class="form-control" name="status_lahan" >
+              <option value="<?php echo $key->status_lahan_tempat_tinggal ?>"><?php echo $key->status_lahan_tempat_tinggal ?></option>
+                <?php foreach ($sub_variabel->result() as $k) { ?>
+                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <?php } ?>    
+              </select>
             </div>
+              <?php echo form_error('status_lahan','<div class="text-small text-danger">','</div>') ?>
+          </div>
           
             <div class="item form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="luas_lantai">Luas Lantai <span class="required">*</span></label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="kk" class="form-control col-md-7 col-xs-12" value="<?php echo $key->luas_lantai ?>" name="luas_lantai" placeholder="Luas Lantai m2" type="text"/>
+              <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 3"); ?>
+              <select class="form-control" name="luas_lantai" >
+              <option value="<?php echo $key->luas_lantai ?>"><?php echo $key->luas_lantai ?></option>
+                <?php foreach ($sub_variabel->result() as $k) { ?>
+                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <?php } ?>    
+              </select>
               </div>
                 <?php echo form_error('luas_lantai','<div class="text-small text-danger">','</div>') ?>
             </div>
@@ -162,47 +170,40 @@
             <div class="item form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="jenis_kelamin">Jenis Lantai Terluas <span class="required">*</span></label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-                <select class="form-control" name="jenis_lantai" >
-                <option value="<?php echo $key->jenis_lantai_terluas ?>"><?php echo $key->jenis_lantai_terluas ?></option>
-                  <option value="1">Marmer/Granit(1)</option>
-                  <option value="2">Keramik(2)</option>
-                  <option value="3">Parket/Vinil/Permadani(3)</option>
-                  <option value="4">Ubin/Tegel/Teraso(4)</option>
-                  <option value="5">Kayu/Papan Kualitas Tinggi(5)</option>
-                  <option value="6">Sementara/Bata Merah(6)</option>
-                  <option value="7">Bambu(7)</option>
-                  <option value="8">Kayu/Papan Kualitas Rendah(8)</option>
-                  <option value="9">Tanah(9)</option>
-                  <option value="10">Lainnya(10)</option>
-                </select>
-              </div>
+              <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 4"); ?>
+              <select class="form-control" name="jenis_lantai" >
+              <option value="<?php echo $key->jenis_lantai_terluas ?>"><?php echo $key->jenis_lantai_terluas ?></option>
+                <?php foreach ($sub_variabel->result() as $k) { ?>
+                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <?php } ?>    
+              </select>
+            </div>
               <?php echo form_error('jenis_lantai','<div class="text-small text-danger">','</div>') ?>
             </div>
 
             <div class="item form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="jenis_dinding">Jenis Dinding Terluas <span class="required">*</span></label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-                <select class="form-control" name="jenis_dinding" >
-                <option value="<?php echo $key->jenis_dinding_terluas ?>"><?php echo $key->jenis_dinding_terluas ?></option>
-                  <option value="1">Tembok(1)</option>
-                  <option value="2">Plesteran anyaman bambu atau kawat(2)</option>
-                  <option value="3">Kayu(3)</option>
-                  <option value="4">Anyaman bambu(4)</option>
-                  <option value="5">Batang Kayu(5)</option>
-                  <option value="6">Bambu(6)</option>
-                  <option value="7">Lainnya(7)</option>
-                </select>
-              </div>
+              <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 5"); ?>
+              <select class="form-control" name="jenis_dinding" >
+              <option value="<?php echo $key->jenis_dinding_terluas ?>"><?php echo $key->jenis_dinding_terluas ?></option>
+                <?php foreach ($sub_variabel->result() as $k) { ?>
+                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <?php } ?>    
+              </select>
+            </div>
               <?php echo form_error('jenis_dinding','<div class="text-small text-danger">','</div>') ?>
             </div>
 
             <div class="item form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tanggal_lahir">Kondisi Dinding <span class="required">*</span></label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-                <select class="form-control" name="kondisi_dinding" >
-                <option value="<?php echo $key->kondisi_dinding ?>"><?php echo $key->kondisi_dinding ?></option>
-                  <option value="1">bagus/kualitas tinggi(1)</option>
-                  <option value="2">jelek/kualitas rendah</option>
+              <select class="form-control" name="kondisi_dinding" >
+              <option value="<?php echo $key->kondisi_dinding ?>"><?php echo $key->kondisi_dinding ?></option>
+              <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 6");
+              foreach ($sub_variabel->result() as $k) { ?>
+                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+              <?php } ?>
                 </select>
               </div>
               <?php echo form_error('kondisi_dinding','<div class="text-small text-danger">','</div>') ?>
@@ -211,18 +212,12 @@
             <div class="item form-group">
               <label for="alamat_asal" class="control-label col-md-3">Jenis Atap Terluas</label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-                <select class="form-control" name="jenis_atap" >
-                <option value="<?php echo $key->jenis_atap_terluas ?>"><?php echo $key->jenis_atap_terluas ?></option>
-                  <option value="1">beton/genteng beton(1)</option>
-                  <option value="2">genteng keramik(2)</option>
-                  <option value="3">genteng metal(3)</option>
-                  <option value="4">genteng tanah liat(4)</option>
-                  <option value="5">asbes(5)</option>
-                  <option value="6">seng(6)</option>
-                  <option value="7">sirap(7)</option>
-                  <option value="8">bambu(8)</option>
-                  <option value="9">jerami/ijuk/daun-daunan/rumbia(9)</option>
-                  <option value="10">lainnya(10)</option>
+              <select class="form-control" name="jenis_atap" >
+              <option value="<?php echo $key->jenis_atap_terluas ?>"><?php echo $key->jenis_atap_terluas ?></option>
+              <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 7");
+              foreach ($sub_variabel->result() as $k) { ?>
+                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+              <?php } ?>
                 </select>
               </div>
               <?php echo form_error('jenis_atap','<div class="text-small text-danger">','</div>') ?>
@@ -231,40 +226,26 @@
             <div class="item form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="kota">Kondisi Atap <span class="required">*</span></label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-                <select class="form-control" name="kondisi_atap" >
-                <option value="<?php echo $key->kondisi_dinding ?>"><?php echo $key->kondisi_dinding ?></option>
-                  <option value="1">bagus/kualitas tinggi(1)</option>
-                  <option value="2">jelek/kualitas rendah(2)</option>
+              <select class="form-control" name="kondisi_atap" >
+              <option value="<?php echo $key->kondisi_atap ?>"><?php echo $key->kondisi_atap ?></option>
+              <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 16");
+              foreach ($sub_variabel->result() as $k) { ?>
+                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+              <?php } ?>
                 </select>
               </div>
               <?php echo form_error('kondisi_atap','<div class="text-small text-danger">','</div>') ?>
             </div>
-        
-            <!-- <div class="item form-group">
-              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="jumlah_kamar_tidur">Jumlah Kamar Tidur <span class="required">*</span></label>
-              <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="kk" class="form-control col-md-7 col-xs-12" name="jumlah_kamar_tidur" placeholder="Jumlah Kamar Tidur" type="text"/>
-              </div>
-              <php echo form_error('jumlah_kamar_tidur','<div class="text-small text-danger">','</div>') ?>
-            </div> -->
 
             <div class="item form-group">
               <label for="kelurahan" class="control-label col-md-3 col-sm-3 col-xs-12">Sumber Air Minum <span class="required">*</span></label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-                <select class="form-control" name="sumber_air_minum" >
-                <option value="<?php echo $key->sumber_air_minum ?>"><?php echo $key->sumber_air_minum ?></option>
-                  <option value="1">air kemasan bermerk(1)</option>
-                  <option value="2">air isi ulang(2)</option>
-                  <option value="3">leding meteran(3)</option>
-                  <option value="4">leding eceran(4)</option>
-                  <option value="5">sumur bor/pompa(5)</option>
-                  <option value="6">sumur terlindung(6)</option>
-                  <option value="7">sumur tak terlindung(7)</option>
-                  <option value="8">mata air terlindung(8)</option>
-                  <option value="9">mata air tak terlindung(9)</option>
-                  <option value="10">air sungai/danau/waduk(10)</option>
-                  <option value="11">air hujan(11)</option>
-                  <option value="12">lainnya(12)</option>
+              <select class="form-control" name="sumber_air_minum" >
+              <option value="<?php echo $key->sumber_air_minum ?>"><?php echo $key->sumber_air_minum ?></option>
+              <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 8");
+              foreach ($sub_variabel->result() as $k) { ?>
+                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+              <?php } ?>
                 </select>
               </div>
               <?php echo form_error('sumber_air_minum','<div class="text-small text-danger">','</div>') ?>
@@ -275,9 +256,10 @@
               <div class="col-md-6 col-sm-6 col-xs-12">
                 <select class="form-control" name="cara_memperoleh_air" >
                 <option value="<?php echo $key->cara_memperoleh_air_minum ?>"><?php echo $key->cara_memperoleh_air_minum ?></option>
-                  <option value="1">membeli ecerean(1)</option>
-                  <option value="2">jelek/kuaitas rendah(2)</option>
-                  <option value="3">tidak membeli(3)</option>
+                <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 9");
+              foreach ($sub_variabel->result() as $k) { ?>
+                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+              <?php } ?>
                 </select>
               </div>
               <?php echo form_error('cara_memperoleh_air','<div class="text-small text-danger">','</div>') ?>
@@ -286,11 +268,12 @@
             <div class="item form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">Sumber Penerangan Utama<span class="required">*</span></label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-                <select class="form-control" name="sumber_penerangan" >
-                <option value="<?php echo $key->sumber_penerangan_utama ?>"><?php echo $key->sumber_penerangan_utama ?></option>
-                  <option value="1">listrik PLN(1)</option>
-                  <option value="2">listrik non PLN(2)</option>
-                  <option value="3">bukan listrik(3)</option>
+              <select class="form-control" name="sumber_penerangan" >
+              <option value="<?php echo $key->sumber_penerangan_utama ?>"><?php echo $key->sumber_penerangan_utama ?></option>
+              <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 10");
+              foreach ($sub_variabel->result() as $k) { ?>
+                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+              <?php } ?>
                 </select>
               </div>
               <?php echo form_error('sumber_penerangan','<div class="text-small text-danger">','</div>') ?>
@@ -299,14 +282,12 @@
             <div class="item form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">Sumber Penerangan Utama Jika PLN<span class="required">*</span></label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-                <select class="form-control" name="daya" >
-                <option value="<?php echo $key->daya_terpasang ?>"><?php echo $key->daya_terpasang ?></option>
-                  <option value="1">450 watt(1)</option>
-                  <option value="2">900 watt(2)</option>
-                  <option value="3">1.300 watt(3)</option>
-                  <option value="4">2.200 watt(4)</option>
-                  <option value="5">>2.200 watt(5)</option>
-                  <option value="6">tanpa meteran(6)</option>
+              <select class="form-control" name="daya" >
+              <option value="<?php echo $key->daya_terpasang ?>"><?php echo $key->daya_terpasang ?></option>
+              <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id =11");
+              foreach ($sub_variabel->result() as $k) { ?>
+                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+              <?php } ?>
                 </select>
               </div>
               <?php echo form_error('daya','<div class="text-small text-danger">','</div>') ?>
@@ -315,17 +296,12 @@
             <div class="item form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">Bahan Energi Utama untuk Memasak<span class="required">*</span></label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-                <select class="form-control" name="bahan_memasak" >
-                <option value="<?php echo $key->bahan_bakar_memasak ?>"><?php echo $key->bahan_bakar_memasak ?></option>
-                  <option value="1">listrik(1)</option>
-                  <option value="2">gas > 3 kg(2)</option>
-                  <option value="3">gas 3 kg(3)</option>
-                  <option value="4">gas kota/boigas(4)</option>
-                  <option value="5">minyak tanah(5)</option>
-                  <option value="6">briket(6)</option>
-                  <option value="7">arang(7)</option>
-                  <option value="8">kayu bakar(8)</option>
-                  <option value="9">tidak memasak dirumah(9)</option>
+              <select class="form-control" name="bahan_memasak" >
+              <option value="<?php echo $key->bahan_bakar_memasak ?>"><?php echo $key->bahan_bakar_memasak ?></option>
+              <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 12");
+              foreach ($sub_variabel->result() as $k) { ?>
+                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+              <?php } ?>
                 </select>
               </div>
               <?php echo form_error('bahan_memasak','<div class="text-small text-danger">','</div>') ?>
@@ -334,12 +310,12 @@
             <div class="item form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">Fasilitas Buang Air Besar<span class="required">*</span></label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-                <select class="form-control" name="fasilitas_bab" >
-                <option value="<?php echo $key->penggunaan_fasilitas_bab ?>"><?php echo $key->penggunaan_fasilitas_bab ?></option>
-                  <option value="1">sendiri(1)</option>
-                  <option value="2">bersama(2)</option>
-                  <option value="3">umum(3)</option>
-                  <option value="4">tidak ada(4)</option>
+              <select class="form-control" name="fasilitas_bab" >
+              <option value="<?php echo $key->penggunaan_fasilitas_bab ?>"><?php echo $key->penggunaan_fasilitas_bab ?></option>
+              <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 13");
+              foreach ($sub_variabel->result() as $k) { ?>
+                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+              <?php } ?>
                 </select>
               </div>
               <?php echo form_error('fasilitas_bab','<div class="text-small text-danger">','</div>') ?>
@@ -350,10 +326,10 @@
               <div class="col-md-6 col-sm-6 col-xs-12">
                 <select class="form-control" name="jenis_kloset" >
                 <option value="<?php echo $key->jenis_kloset ?>"><?php echo $key->jenis_kloset ?></option>
-                  <option value="1">leher angsa(1)</option>
-                  <option value="2">plengsengan(2)</option>
-                  <option value="3">cemplung/cubluk(3)</option>
-                  <option value="4">tidak pakai(4)</option>
+                <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 14");
+              foreach ($sub_variabel->result() as $k) { ?>
+                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+              <?php } ?>
                 </select>
               </div>
               <?php echo form_error('jenis_kloset','<div class="text-small text-danger">','</div>') ?>
@@ -362,21 +338,19 @@
             <div class="item form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">Tempat Pembuangan Akhir Tinja<span class="required">*</span></label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-                <select class="form-control" name="tempat_pembuangan_akhir_tinja" >
-                <option value="<?php echo $key->tempat_pembuangan_akhir_tinja ?>"><?php echo $key->tempat_pembuangan_akhir_tinja ?></option>
-                  <option value="1">tangki(1)</option>
-                  <option value="2">SPAL(2)</option>
-                  <option value="3">lubang tanah(3)</option>
-                  <option value="4">kolam/sawah/sungai/danau/laut(5)</option>
-                  <option value="5">pantai/lapangan/kebun(5)</option>
-                  <option value="6">lainnya(6)</option>
+              <select class="form-control" name="tempat_pembuangan_akhir_tinja" >
+              <option value="<?php echo $key->tempat_pembuangan_akhir_tinja ?>"><?php echo $key->tempat_pembuangan_akhir_tinja ?></option>
+              <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 15");
+              foreach ($sub_variabel->result() as $k) { ?>
+                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+              <?php } ?>
                 </select>
               </div>
               <?php echo form_error('tempat_pembuangan_akhir_tinja','<div class="text-small text-danger">','</div>') ?>
             </div>
+          
 
         </div>
-        
         <!--END step 2-->
 
 
@@ -738,13 +712,12 @@
         </div>
         
         <!--END step 3-->
-      
+
       </div>
-      
+     
       <!-- End SmartWizard Content -->
-      
+              <?php }?>
       </form>
-      <?php } ?>
     </div>
   </div>
 </div>

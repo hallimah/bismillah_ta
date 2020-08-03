@@ -11,7 +11,7 @@
                     <button data-toggle="dropdown" aria-controls="datatable" class="btn btn-default dropdown-toggle" id="sel_kec" type="button"> Lihat <span class="caret"></span> </button>
                           <ul class="dropdown-menu">
                           <li><a href="<?php echo base_url().'fuzzy/viewKecamatan'; ?>"> Kecamatan</a></li>
-                            <li><a href="<?php echo base_url().'fuzzy/view_klasifikasi'; ?>"> Kelurahan</a></li>
+                            <li><a href="<?php echo base_url().'fuzzy/view'; ?>"> Desa</a></li>
                             <li><a href="<?php echo base_url().'fuzzy/viewPenduduk'; ?>"> Penduduk </a></li>
                           </ul>
                         </div>
@@ -19,7 +19,7 @@
                     <button data-toggle="dropdown" aria-controls="datatable" class="btn btn-warning dropdown-toggle" id="sel_kec" type="button"> <i class="fa fa-file-pdf-o"></i> <span class="caret"></span> </button>
                           <ul class="dropdown-menu">
                           <?php foreach ($tahun as $row): ?>
-          <li><a href="<?php echo base_url('c_report/laporan_klasifikasi_kelurahan/'.$row->tahun_klasifikasi) ?>"> <?php echo $row->tahun_klasifikasi; ?></a></li>
+          <li><a href="<?php echo base_url('c_report/unduh_laporan_klasifikasi_penduduk/'.$row->tahun_klasifikasi) ?>"> <?php echo $row->tahun_klasifikasi; ?></a></li>
           <?php endforeach;?>
                           </ul>
                         </div>

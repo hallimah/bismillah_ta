@@ -17,7 +17,7 @@
 
       <div class="btn-group">
         <a class="btn btn-primary active" href="<?php echo base_url().'c_report/dataklasifikasiKecamatan'; ?>">Kecamatan</a>
-        <a class="btn btn-primary" href="<?php echo base_url().'c_report/dataklasifikasiKelurahan'; ?>">Kelurahan</a>
+        <a class="btn btn-primary" href="<?php echo base_url().'c_report/dataklasifikasiKelurahan'; ?>">Desa</a>
       </div>
     </div>
   </div>
@@ -32,9 +32,10 @@
                         <tr>
                           <th>No</th>
                           <th>Tahun Klasifikasi</th>
-                          <th>Jumlah kemiskinan</th>
-                          <th>Jumlah Ketelantaran</th>
-                          <th>Jumlah Kecacatan</th>
+                          <th>Kecamatan</th>
+                          <th>Total Penduduk Kesejahteraan Rendah</th>
+                          <th>Total Penduduk Kesejahteraan Sedang</th>
+                          <th>Total Penduduk Kesejahteraan Tinggi</th>
                           <th>Cetak</th>
                           
                         </tr>
@@ -48,9 +49,10 @@
                       <tr>
                        <td><?php  echo $no++ ?> </td>
                        <td><?php echo $row->tahun_klasifikasi ?></td>
-                       <td><?php echo $row->kemiskinan ?></td>
-                       <td><?php echo $row->ketelantaran ?></td>
-                       <td><?php echo $row->kecacatan ?></td>
+                       <td><?php echo $row->nama_kecamatan ?></td>
+                       <td><?php echo $row->rendah ?></td>
+                       <td><?php echo $row->sedang ?></td>
+                       <td><?php echo $row->tinggi ?></td>
                        <td>
                           <a class="btn btn-danger btn-xs" title="Lihat Data" href="<?php echo base_url('c_report/export_pdf_select_kecamatan/'.$row->tahun_klasifikasi) ?>"><i class="fa fa-file-pdf-o"></i></a>
                           <a class="btn btn-success btn-xs" title="Lihat Data" href="<?php echo base_url('c_report/export_excel_klasifikasi_kec_per_tahun/'.$row->tahun_klasifikasi) ?>"><i class="fa fa-file-excel-o"></i></a>

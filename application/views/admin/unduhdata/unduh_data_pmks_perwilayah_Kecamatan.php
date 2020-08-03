@@ -11,7 +11,7 @@
                      <i class="fa fa-file-pdf-o"></i> Pilih<span class="caret"></span> </button>
                           <ul class="dropdown-menu">
                           <?php foreach ($tahun as $row): ?>
-          <li><a href="<?php echo base_url('c_report/export_pdf_pmks_kec_pertahun/'.$row->tahun_masuk) ?>"> <?php echo $row->tahun_masuk; ?></a></li>
+          <li><a href="<?php echo base_url('c_report/export_pdf_pmks_kec_pertahun/'.$row->tahun_input) ?>"> <?php echo $row->tahun_input; ?></a></li>
           <?php endforeach;?>
                           </ul>
                         </div>
@@ -20,7 +20,7 @@
                      <i class="fa fa-file-excel-o"></i> Pilih<span class="caret"></span> </button>
                           <ul class="dropdown-menu">
                           <?php foreach ($tahun as $row): ?>
-          <li><a href="<?php echo base_url('c_report/export_excel_pmks_per_tahun/'.$row->tahun_masuk) ?>"> <?php echo $row->tahun_masuk; ?></a></li>
+          <li><a href="<?php echo base_url('c_report/export_excel_pmks_per_tahun/'.$row->tahun_input) ?>"> <?php echo $row->tahun_input; ?></a></li>
           <?php endforeach;?>
                           </ul>
                         </div>
@@ -51,12 +51,12 @@
                       ?>
                       <tr>
                        <td><?php  echo $no++ ?> </td>
-                       <td><?php echo $row['tahun_masuk'] ?></td>
+                       <td><?php echo $row['tahun_input'] ?></td>
                        <td><?php echo $row['nama_kecamatan'] ?></td>
                        <td><?php echo $row['perempuan'] ?></td>
                        <td><?php echo $row['lakilaki'] ?></td>
                        <td>
-                          <a class="btn btn-success btn-xs" title="Lihat Data" href="<?php echo base_url('c_report/export_data_pmks_per_kecamatan/'.$row['nama_kecamatan'].'/'.$row['tahun_masuk']) ?>"><i class="fa fa-file-excel-o"></i></a>
+                          <a class="btn btn-success btn-xs" title="Lihat Data" href="<?php echo base_url('c_report/export_data_pmks_per_kecamatan/'.$row['nama_kecamatan'].'/'.$row['tahun_input']) ?>"><i class="fa fa-file-excel-o"></i></a>
                         </td>
                       </tr>
                        <?php endforeach;  ?>

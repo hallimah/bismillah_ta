@@ -159,7 +159,7 @@ hr{
                     <label for="">Kode Kota </label><br>
                     <label for="">Kota </label><br>
                     <label for="">Total Kecamatan </label><br>
-                    <label for="">Total Kelurahan </label><br>
+                    <label for="">Total Desa </label><br>
                 </div>
                 <div class="col30">
                 <label>: 28</label><br>
@@ -169,15 +169,11 @@ hr{
                 </div>
                 <div class="col50">
                     <label for="">Tahun </label><br>
-                    <label for="">Kemiskinan </label><br>
-                    <label for="">Ketelantaran</label><br>
-                    <label for="">Kecacatan </label><br>
+                    <label for="">Total Penduduk </label>
                 </div>
                 <div class="col30">
                 <label>: <?php echo $tahun ?></label><br>
-                <label>: <?php echo $sum_kemiskinan ?> Jiwa</label><br>
-                <label> : <?php echo $sum_ketelantaran ?> Jiwa</label><br>
-                <label>: <?php echo $sum_kecacatan ?> Jiwa</label><br>
+                <label>: <?php echo $total_penduduk ?></label><br>
                 </div>
             </div>  
         </div>
@@ -186,9 +182,10 @@ hr{
             <tr>
                 <th class="th1">No</th>
                 <th class="th2">Nama Kecamatan </th>
-                <th class="th4">Kemiskinan</th>
-                <th class="th5">Ketelantaran</th>
-                <th class="th6">Kecacatan</th>
+                <th class="th3">Nama Desa </th>
+                <th class="th4">Total Penduduk Kesejahteraan Rendah</th>
+                <th class="th5">Total Penduduk Kesejahteraan Sedang</th>
+                <th class="th6">Total Penduduk Kesejahteraan Tinggi</th>
                 <th class="th7">Tingkat Kesejahteraan</th>
             </tr>
             <?php $no=1;
@@ -196,10 +193,23 @@ hr{
             <tr>
                 <td class="th1"><?php echo $no++ ?></td>
                 <td class="th2"><?php echo $f->nama_kecamatan ?></td>
-                <td class="th4"><?php echo $f->kemiskinan ?></td>
-                <td class="th5"><?php echo $f->ketelantaran ?></td>
-                <td class="th6"><?php echo $f->kecacatan ?></td>
-                <td class="th7"><?php echo $f->keterangan ?></td>
+                <td class="th2"><?php echo $f->nama_desa ?></td>
+                <td><?php echo $f->rendah ?></td>
+                <td><?php echo $f->sedang ?></td>
+                <td><?php echo $f->tinggi ?></td>
+                <td class="th7">
+                <?php foreach ($kali_kec as $kec) {
+                    if ($f->nama_kecamatan==$kec->nama_kecamatan) {
+                        // if( <= )
+                        foreach ($tingkat as $data) {
+                            if (($f->rendah + $f->sedang + $f->tinggi) <= ($data->persen*$kec->total_penduduk)) {
+                                echo $data->nama_variabel;
+                                // echo $data->persen*$kec->total_penduduk;
+                            break;
+                        }
+                    }
+                }
+            } ?></td>
             </tr>
             <?php endforeach; ?>
         </table>        

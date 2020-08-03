@@ -140,6 +140,25 @@
       <div id="step-2">
         <span class="section">2. KETERANGAN PERUMAHAN</span>
       
+      <?php foreach ($menu as $key) { ?>
+        <div class="item form-group">
+           <?php echo '<label class="control-label col-md-3 col-sm-3 col-xs-12" for="kk">'.$key->nama_variabel.'<span class="required">*</span></label>' ?> 
+            <div class="col-md-6 col-sm-6 col-xs-12">
+            <?php 
+            $a= $key->variabel_id;
+            $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = '$a'");
+            echo '<select class="form-control" name="status_bangunan" >';
+            foreach ($sub_variabel->result() as $k) {
+              echo '<option value="'.$k->skor.'">'.$k->nama.'</option>  ';
+            }
+            echo '</select>';
+            ?>
+
+            </div>
+            <?php echo form_error('status_bangunan','<div class="text-small text-danger">','</div>') ?>
+          </div>
+      <?php } ?>
+
         <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="kk">Status Bangunan Tempat Tinggal <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">

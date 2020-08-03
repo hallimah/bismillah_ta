@@ -12,52 +12,30 @@ class Fuzzy extends CI_Controller{
 	
 	public function view(){
 		
-		//	$this->mamdani->count_perkelurahan();
-			redirect('fuzzy/view_klasifikasi');
-	}
+				$config = array();
+        $config["base_url"] = base_url() . "fuzzy/view";
+        $config["per_page"] = $this->m_tabel->total_kelurahan();
+        $config["uri_segment"] = 3;
 
+        $this->pagination->initialize($config);
 
+		$page = ($this->uri->segment(3)) ? $this->uri->segment(4) : 0; 
+		$fuzzy['fuzzy']=$this->mamdani->fuzzy($config["per_page"], $page);
 
-	public function view_klasifikasi(){
-		// $config = array();
-        // $config["base_url"] = base_url() . "fuzzy/view";
-        // $config["per_page"] = $this->m_tabel->total_kelurahan();
-        // $config["uri_segment"] = 3;
-
-        // $this->pagination->initialize($config);
-
-		// $page = ($this->uri->segment(3)) ? $this->uri->segment(4) : 0; 
-		//$fuzzy['fuzzy']=$this->mamdani->fuzzy($config["per_page"], $page);
-
-		$fuzzy['fuzzy']=$this->mamdani->fuzzy();
-		$fuzzy['tingkat']= $this->mamdani->klasifikasi_desa();
+	//	$fuzzy['fuzzy']=$this->mamdani->fuzzy();
+		$fuzzy['tingkat']= $this->mamdani->klasifikasi_wilayah();
 		$fuzzy['kali_kec']=$this->mamdani->get_total_penduduk_kecamatan();
-		//$fuzzy['kali_kec']=$this->mamdani->get_total_penduduk_kecamatan();
+		$fuzzy['kali_desa']=$this->mamdani->get_total_penduduk_desa();
 		$fuzzy['tahun']=$this->mamdani->select_tahun_klasifikasi();
 		
 			$this->load->view('templates/header');
 			$this->load->view('admin/lihatdata/tabel_klasifikasi',$fuzzy);
 			$this->load->view('templates/footer');
 
-			//  var_dump($f);die;
 	}
+
 
 	public function viewKecamatan(){
-		$data = $this->mamdani->InsertorUpdateDataKecamatan();
-		$this->mamdani->hasil_kemiskinan_kecamatan();
-		$this->mamdani->hasil_ketelantaran_kecamatan();
-		$this->mamdani->hasil_kecacatan_kecamatan();
-		redirect('fuzzy/viewKecamatan2');
-		
-	}
-
-	public function viewKecamatan2(){
-		$this->mamdani->keterangan_kecamatan();
-	
-		redirect('fuzzy/view_klasifikasi_kecamatan');	
-	}
-
-	public function view_klasifikasi_kecamatan(){
 
 		$config = array();
         $config["base_url"] = base_url() . "fuzzy/viewKecamatan";
@@ -68,8 +46,10 @@ class Fuzzy extends CI_Controller{
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(4) : 0; 
 		$fuzzy['fuzzy']=$this->mamdani->viewKecamatan($config["per_page"], $page);
-		
-		$fuzzy['tahun']=$this->mamdani->select_tahun_klasifikasi_kecamatan();
+		$fuzzy['tingkat']= $this->mamdani->klasifikasi_wilayah();
+		$fuzzy['kali_kec']=$this->mamdani->get_total_penduduk_kecamatan();
+
+		$fuzzy['tahun']=$this->mamdani->select_tahun_klasifikasi();
 	
 		$this->load->view('templates/header');
 		$this->load->view('admin/lihatdata/tabel_klasifikasi_kecamatan',$fuzzy);
@@ -85,28 +65,11 @@ class Fuzzy extends CI_Controller{
 		$this->mamdani->bobot_program_sosial();
 		$this->mamdani->total_bobot();
 
-		$klasifikasi['klasifikasi']=$this->mamdani->getdata();
-		$klasifikasi['klas']=$this->mamdani->klasifikasi3();
-				
+		$this->mamdani->klas();
+	
 		redirect('fuzzy/view_hasil_klasifikasi_penduduk');
 	}
 
-// function klasifikasi5(){
-// 	foreach ($klasifikasi['klasifikasi'] as $key) {
-// 		$id=$key->id;
-// 		$tot= $key->total_bobot;
-// 		foreach($klasifikasi['klas'] as $data){
-// 			if(($data->min <= $key->total_bobot) && ($key->total_bobot <= $data->max)){
-// 				 // $ting[]= $data->nama; 
-// 			$this->db->query("UPDATE tb_klasifikasi_penduduk SET klasifikasi='$data->nama' where id='$key->id'  ");
-// 			break;
-// 		}
-// 	}
-// 	}
-
-	
-// 	//redirect('fuzzy/view_hasil_klasifikasi_penduduk');
-// }
 	function view_hasil_klasifikasi_penduduk(){
 		$config = array();
         $config["base_url"] = base_url() . "fuzzy/viewPenduduk";
@@ -115,20 +78,6 @@ class Fuzzy extends CI_Controller{
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(4) : 0; 
 		$klasifikasi['klasifikasi']=$this->mamdani->getdata($config["per_page"], $page);
-	
-		 $klasifikasi['tingkat']= $this->mamdani->klasifikasi3();
-
-		 foreach ($klasifikasi['klasifikasi'] as $key) {
-			$id=$key->id;
-			$tot= $key->total_bobot;
-			foreach($klasifikasi['tingkat'] as $data){
-				if(($data->min <= $key->total_bobot) && ($key->total_bobot <= $data->max)){
-					//   $ting[]= $data->nama; 
-				$this->db->query("UPDATE tb_klasifikasi_penduduk SET klasifikasi='$data->nama' where id='$key->id'  ");
-				break;
-			}
-		}
-		}
 
 		 $klasifikasi['tahun']=$this->mamdani->select_tahun_klasifikasi();
 	

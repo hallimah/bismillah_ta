@@ -12,11 +12,20 @@ class C_Variabel extends CI_Controller{
 
 /**tabel variabel kategori penduduk */
 public function VariabelPenduduk(){
-  $data['c_variabel']=$this->m_variabel->pembobotan_penduduk();
-  $data['kesejahteraan']=$this->m_variabel->tb_tingkat_kesejahteraan();
-//    $data['c_variabel'] = $this->m_variabel->tabel_variabel()->result();
+  // $data['c_variabel']=$this->m_variabel->pembobotan_penduduk();
+  // $data['kesejahteraan']=$this->m_variabel->tb_tingkat_kesejahteraan();
+    $data['c_variabel'] = $this->m_variabel->tabel_variabel()->result();
     $this->load->view('templates/header');
-    $this->load->view('admin/inputdata/variabel/penduduk/input_bobot',$data); //admin/inputdata/variabel/penduduk/v_tabel
+    $this->load->view('admin/inputdata/variabel/penduduk/v_tabel',$data); //input_bobot
+    $this->load->view('templates/footer');
+}
+
+public function bobot_Penduduk(){
+   $data['c_variabel']=$this->m_variabel->pembobotan_penduduk();
+   $data['kesejahteraan']=$this->m_variabel->tb_tingkat_kesejahteraan();
+    $data['kriteria'] = $this->m_variabel->tabel_variabel();
+    $this->load->view('templates/header');
+    $this->load->view('admin/inputdata/variabel/penduduk/input_bobot',$data); //
     $this->load->view('templates/footer');
 }
 
@@ -34,17 +43,12 @@ function insert_var_penduduk(){
 
 
     $nama_variabel = $this->input->post('nama_variabel');
-    $jenis_io = $this->input->post('jenis_io');
-    $a = $this->input->post('a');
-    $b = $this->input->post('b');
-    $c = $this->input->post('c');
-    $d = $this->input->post('d');
-
+ 
     $dt=$this->input->post();
     $nama = $this->input->post('nama');
     $skor = $this->input->post('skor');
 
-    $query = $this->m_variabel->insert($nama_variabel,$jenis_io,$a,$b,$c,$d);
+    $query = $this->m_variabel->insert($nama_variabel);
     $variabel_id = $query['max'];
     $i = 0;
     
@@ -80,7 +84,7 @@ function insert_var_penduduk(){
       // $sub_variabel_id = $this->input->post('sub_variabel_id');
       // $sub_id = $this->input->post('sub_id');
 
-      $array=array('nama_variabel'=>$dt['nama_variabel'],'jenis_io'=>$dt['jenis_io']);
+      $array=array('nama_variabel'=>$dt['nama_variabel']);
       $where=array('variabel_id'=>$dt['variabel_id']);
       $p=$this->m_variabel->update_variabel_penduduk($where,$array,'tb_variabel');
      
@@ -103,7 +107,7 @@ function insert_var_penduduk(){
   $q=$this->db->update_batch('tb_sub_variabel', $batch, 'sub_id');
       // $this->m_variabel->update_variabel_penduduk($where,$array1);
 
-      redirect('c_variabel/VariabelPenduduk');
+      redirect('c_variabel/bobot_Penduduk');
     }
 
     /**tabel variabel kategori kecamatan */
@@ -411,7 +415,7 @@ function update_bobot_penduduk(){
    $this->m_variabel->update_persen();
       $this->session->set_flashdata('pesan','Nilai Kriteria Berhasil Diupdate!');
       
-      redirect('c_variabel/VariabelPenduduk');
+      redirect('c_variabel/bobot_Penduduk');
 }
 
 function varPenduduk(){
@@ -430,7 +434,7 @@ $this->db->update_batch('tb_tingkat_kesejahteraan', $batch, 'id');
 $this->m_variabel->update_persen();
  $this->session->set_flashdata('pesan','Nilai Range Berhasil Diupdate!');
  
- redirect('c_variabel/VariabelPenduduk');
+ redirect('c_variabel/bobot_Penduduk');
 }
 
 function varDesa(){

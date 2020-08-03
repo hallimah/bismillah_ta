@@ -1,5 +1,5 @@
 <?php
-class C_Tabel extends CI_Controller{
+class C_Tabel extends My_Controller{
 
 
     function __construct(){
@@ -41,6 +41,8 @@ class C_Tabel extends CI_Controller{
     /**controller form input data */
     public function view_input(){
         $data['c_tabel']=$this->m_tabel->kategori_kecamatan()->result();
+        $data['menu'] = $this->m_variabel->sub_variabel();
+        $data['title']='c_tabel';
        // $data['variabel']=$this->m_tabel->variabel_penduduk();
      ///   $data['sub_variabel']=$this->m_tabel->sub_variabel_penduduk();
         $this->load->view('templates/header');
@@ -52,10 +54,10 @@ class C_Tabel extends CI_Controller{
     /* controller tambah data*/
     public function tambah_data(){
 
-        // $this->_rules();
-        // if($this->form_validation->run()==FALSE){
-        //     $this->view_input();
-        // }else{
+        $this->_rules();
+        if($this->form_validation->run()==FALSE){
+            $this->view_input();
+        }else{
             // $provinsi = $this->input->post('provinsi');
             // $kota = $this->input->post('kota');
             $kecamatan = $this->input->post('kecamatan');
@@ -63,10 +65,13 @@ class C_Tabel extends CI_Controller{
             // $sls = $this->input->post('sls');
             $alamat = $this->input->post('alamat');
             $krt = $this->input->post('krt');
+            $jenis_kelamin = $this->input->post('jenis_kelamin');
             $jml_art = $this->input->post('jml_art');
             // $jml_keluarga = $this->input->post('jml_keluarga');
             $kk = $this->input->post('kk');
             $nik = $this->input->post('nik');
+
+            $post= $this->input->post();
 
             $status_bangunan = $this->input->post('status_bangunan');
             $status_lahan = $this->input->post('status_lahan');
@@ -145,7 +150,7 @@ class C_Tabel extends CI_Controller{
             $raskin1 = $this->input->post('raskin1');
             $kur = $this->input->post('kur');
 
-            $asset_bergerak=$tabung_gas+$lemari_es+$ac+$pemanas_air+$telpon+$televisi+$emas+$komputer+$sepeda+$sepeda_motor+$monil+$perahu+$motor_tempel+$perahu_motor +$kapal;
+            $asset_bergerak=$tabung_gas+$lemari_es+$ac+$pemanas_air+$telpon+$televisi+$emas+$komputer+$sepeda+$sepeda_motor+$monil+$perahu;
             $asset_tidak_bergerak=$lahan+$rumah_ditempat_lain;
 
             $total_aset=$asset_bergerak+$asset_tidak_bergerak;
@@ -160,6 +165,7 @@ class C_Tabel extends CI_Controller{
                 // 'nama_sls' => $sls,
                 'alamat' => $alamat,
                 'nama_krt'=>$krt,
+                'jenis_kelamin'=>$jenis_kelamin,
                 'jumlah_art'=>$jml_art,
                 // 'jumlah_keluarga'=>$jml_keluarga,
                 'kk' => $kk,
@@ -237,14 +243,14 @@ class C_Tabel extends CI_Controller{
            $this->m_tabel->input_data($data,$data2,$data4,$data_klasifikasi);
             $this->session->set_flashdata('pesan','data sukses ditambahkan');
             redirect('c_tabel/tabel');
-        //} 
+        } 
     }
     /* end controller tambah tabel*/
 
     
 
      /* controller form edit data*/
-     public function edit_pmks($id){
+     public function edit_pmks($id = null){
         $data['penduduk']=$this->m_tabel->menampilkan_tabel_penduduk($id);
         $data['kategori']=$this->m_tabel->kategori_kecamatan()->result();
        // $data['pmks']=$this->m_tabel->kategori_pmks()->result();
@@ -258,13 +264,21 @@ class C_Tabel extends CI_Controller{
     /* end controller form edit data*/
 
     /* controller update data*/
-    public function update_pmks(){
+    public function update_pmks($id=null){
+        // $this->_rules();
+        // if($this->form_validation->run()==FALSE){
+            
+        //     $this->edit_pmks();
+        // }else{
             $id             = $this->input->post('id');
+
+            $tempat_id = $this->input->post('tempat_id');
             $kecamatan = $this->input->post('kecamatan');
             $kelurahan = $this->input->post('kelurahan');
             // $sls = $this->input->post('sls');
             $alamat = $this->input->post('alamat');
             $krt = $this->input->post('krt');
+            $jenis_kelamin = $this->input->post('jenis_kelamin');
             $jml_art = $this->input->post('jml_art');
             // $jml_keluarga = $this->input->post('jml_keluarga');
             $kk = $this->input->post('kk');
@@ -324,7 +338,7 @@ class C_Tabel extends CI_Controller{
             $raskin1 = $this->input->post('raskin1');
             $kur = $this->input->post('kur');
 
-            $asset_bergerak=$tabung_gas+$lemari_es+$ac+$pemanas_air+$telpon+$televisi+$emas+$komputer+$sepeda+$sepeda_motor+$monil+$perahu+$motor_tempel+$perahu_motor +$kapal;
+            $asset_bergerak=$tabung_gas+$lemari_es+$ac+$pemanas_air+$telpon+$televisi+$emas+$komputer+$sepeda+$sepeda_motor+$monil+$perahu;
             $asset_tidak_bergerak=$lahan+$rumah_ditempat_lain;
 
             $total_aset=$asset_bergerak+$asset_tidak_bergerak;
@@ -339,6 +353,7 @@ class C_Tabel extends CI_Controller{
                 // 'nama_sls' => $sls,
                 'alamat' => $alamat,
                 'nama_krt'=>$krt,
+                'jenis_kelamin'=>$jenis_kelamin,
                 'jumlah_art'=>$jml_art,
                 // 'jumlah_keluarga'=>$jml_keluarga,
                 'kk' => $kk,
@@ -383,17 +398,19 @@ class C_Tabel extends CI_Controller{
        'jumlah_tanggungan'=>$jml_art,'keterangan_rumah'=>$total,
        'jumlah_kepemilikan_aset'=>$total_aset,'program_sosial'=>$total_jaminan_sosial,'tahun_klasifikasi'=>date('Y'));
          
-
+        //   $where=array('id'=>$id,'aset_id'=>$id_aset,'rumah_id'=>$id_rumah,'tempat_id'=>$tempat_id);
           $where=array('id'=>$id);
           $where2=array('kk'=>$id_rumah);
-          $where3 = array('kk' => $id_aset );
+          $where3 = array('kk' => $id_aset);
 
           $this->m_tabel->update_data1($where,$data,'tb_penduduk_pengenalan_tempat');
           $this->m_tabel->update_data2($where2,$data2,'tb_penduduk_keterangan_rumah');
           $this->m_tabel->update_data3($where3,$data4,'tb_penduduk_kepemilikan_aset');
           $this->m_tabel->update_data4($where,$where2,$where3,$data_klasifikasi,'tb_klasifikasI_penduduk');
-           // $this->m_tabel->update_data($where, $data,$where2,$data2,$where3,$data4);
+//            $this->m_tabel->update_data($where, $data,$where2,$data2,$where3,$data4,$data_klasifikasi);
+          //  $this->m_tabel->update_data($where, $data,$data2,$data4,$data_klasifikasi);
             redirect('c_tabel/tabel');
+      //  }
         
     }
     /* end controller update data*/
@@ -401,26 +418,27 @@ class C_Tabel extends CI_Controller{
 
     /**validasi tambah data */
     public function _rules(){
-        $this->form_validation->set_rules('nama','Nama','required|alpha');
+        $this->form_validation->set_rules('alamat','Alamat','required');
         $this->form_validation->set_rules('jenis_kelamin','Jenis Kelamin','required');
-        $this->form_validation->set_rules('tempat_lahir','Tempat Lahir','required|alpha');
-        $this->form_validation->set_rules('tanggal_lahir','Tanggal Lahir','required');
-        $this->form_validation->set_rules('nik','Nomor Induk Keluarga','required|numeric|max_length[16]|min_length[16]');
-        $this->form_validation->set_rules('kk','Kartu Keluarga','required|numeric|max_length[16]|min_length[16]');
-        $this->form_validation->set_rules('alamat_asal','Alamat Asal','required');
+        $this->form_validation->set_rules('krt','Nama Kepala Keluarga','required|alpha');
+         $this->form_validation->set_rules('jml_art','Jumlah Anggota Rumah Tangga','required');
+        $this->form_validation->set_rules('nik','Nomor Induk Keluarga','required|numeric'); //|max_length[16]|min_length[16]
+        $this->form_validation->set_rules('kk','Kartu Keluarga','required|numeric'); //|max_length[16]|min_length[16]
+        // $this->form_validation->set_rules('alamat_asal','Alamat Asal','required');
         $this->form_validation->set_rules('kelurahan','Kelurahan','required');
         $this->form_validation->set_rules('kecamatan','Kecamatan','required');
-        $this->form_validation->set_rules('kota','Kota','required');
-        $this->form_validation->set_rules('jenis_pmks','Jenis PMKS','required');
-        $this->form_validation->set_rules('tahun_masuk','Tahun Masuk','required');
+        // $this->form_validation->set_rules('kota','Kota','required');
+        // $this->form_validation->set_rules('jenis_pmks','Jenis PMKS','required');
+        // $this->form_validation->set_rules('tahun_masuk','Tahun Masuk','required');
 
     }
     /**end validasi tambah data */
 
     /* controller hapus data*/
     public function hapus($id){
-        $where = array('penduduk_id' => $id );
-        $this->m_tabel->hapus_data($where, 'tb_penduduk');
+        // $where = array('penduduk_id' => $id );
+        // $this->m_tabel->hapus_data($where, 'tb_penduduk');
+        $this->m_tabel->hapus_data($id);
         redirect('c_tabel/tabel');
     }
     /* end controller hapus data*/
@@ -429,7 +447,7 @@ class C_Tabel extends CI_Controller{
     /**view data */
     public function detail($penduduk_id){
         $this->load->model('m_tabel');
-        $detail = $this->m_tabel->detail_tabel($penduduk_id);
+        $data['detail'] = $this->m_tabel->detail_tabel($penduduk_id);
        // $data['detail'] = $detail;
 
         $this->load->view('templates/header');

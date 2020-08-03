@@ -159,7 +159,7 @@ hr{
                     <label for="">Kode Kota </label><br>
                     <label for="">Kota </label><br>
                     <label for="">Total Kecamatan </label><br>
-                    <label for="">Total Kelurahan </label><br>
+                    <label for="">Total Desa </label><br>
                 </div>
                 <div class="col30">
                 <label>: 28</label><br>
@@ -184,7 +184,7 @@ hr{
         <tr>
                 <th class="th1">No</th>
                 <th class="th2">Nama Kecamatan </th>
-                <th class="th2">Nama Kelurahan </th>
+                <th class="th2">Nama Desa </th>
                 <th class="th5">Total Laki-Laki</th>
                 <th class="th6">Total Perempuan</th>
                 <!-- <th class="th7">Tingkat Kesejahteraan</th> -->

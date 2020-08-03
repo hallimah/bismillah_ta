@@ -14,7 +14,7 @@ class M_Variabel extends CI_Model{
         $this->db->select('*');
         $this->db->from('tb_variabel');
        // $this->db->join('tb_variabel','tb_variabel.variabel_id=tb_sub_variabel.sub_id');
-        $q= $this->db->get();
+        $q= $this->db->get()->result();
         return $q;
 
     }
@@ -90,8 +90,8 @@ class M_Variabel extends CI_Model{
 }
 
 /**tambah variabel penduduk c_variabel */
-function insert($nama_variabel, $jenis_io){
- $query= $this->db->query("INSERT INTO `tb_variabel` VALUES (NULL,'$nama_variabel','$jenis_io') ");
+function insert($nama_variabel){
+ $query= $this->db->query("INSERT INTO `tb_variabel` VALUES (NULL,'$nama_variabel') ");
  if ($query) {
    $max=$this->db->query("SELECT MAX(variabel_id) as max FROM tb_variabel");
 
@@ -343,6 +343,11 @@ function tb_tingkat_kesejahteraan(){
 }
 /**--------------------------------------------------END PEMBOBOTAN */
 
+
+/**membuat sub variabel dinamis */
+function sub_variabel(){
+  return $this->db->get('tb_variabel')->result();
+}
 
 }
 

@@ -27,8 +27,8 @@ class Admin extends CI_Controller {
 		$data['total_kecamatan'] = $this->m_tabel->total_kecamatan();
 		$data['total_laki'] = $this->m_tabel->total_laki();
 		$data['total_perempuan'] = $this->m_tabel->total_perempuan();
-		$data['total_perkecamatan'] = $this->m_tabel->total_perkecamatan();
-		$data['total_jenis'] = $this->m_tabel->total_jenis();
+		// $data['total_perkecamatan'] = $this->m_tabel->total_perkecamatan();
+		// $data['total_jenis'] = $this->m_tabel->total_jenis();
 
 		$this->load->view('templates/header');
 		$this->load->view('admin/dashboard',$data);

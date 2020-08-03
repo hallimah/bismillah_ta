@@ -62,7 +62,7 @@
                    <li><a><i class="fa fa-table"></i> Hasil Klasifikasi <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="<?php echo base_url()?>c_user/klasifikasi_kecamatan">Kecamatan</a></li>
-                      <li><a href="<?php echo base_url()?>c_user/klasifikasi_kelurahan">Kelurahan</a></li>
+                      <li><a href="<?php echo base_url()?>c_user/klasifikasi_kelurahan">Desa</a></li>
                     </ul>
                   </li>
                 </ul>

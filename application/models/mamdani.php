@@ -93,12 +93,13 @@ class mamdani extends CI_Model{
 //      }
  
      public function viewKecamatan(){
-       $this->db->select('*');
-       $this->db->from('mamdani_kecamatan');
-       $this->db->where('tahun_klasifikasi BETWEEN DATE_SUB(NOW(),INTERVAL 1 YEAR)AND NOW()');
-       $p=$this->db->get()->result();
-       return $p;
-      // return $this->db->get('mamdani_kecamatan')->result();
+      $this->db->select('nama_kecamatan,
+      sum(if(klasifikasi="rendah",1,0)) as rendah, sum(if(klasifikasi="sedang",1,0)) as sedang,
+      sum(if(klasifikasi="tinggi",1,0)) as tinggi'); //,tahun_masuk as tahun_klasifikasi
+        $this->db->from('tb_klasifikasi_penduduk');
+        $this->db->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan');
+        $this->db->group_by('nama_kecamatan, tahun_klasifikasi'); //,tahun_klasifikasi
+        return $query=$this->db->get()->result();
      }
      
      public function select_tahun(){
@@ -112,11 +113,11 @@ class mamdani extends CI_Model{
         return $sql->result();
      }
  
-     public function select_tahun_klasifikasi_kecamatan(){
-       $sql=$this->db->query('SELECT DISTINCT(tahun_klasifikasi) FROM mamdani_kecamatan 
-       WHERE tahun_klasifikasi BETWEEN DATE_SUB(NOW(),INTERVAL 1 YEAR)AND NOW()');
-         return $sql->result();
-     }
+    //  public function select_tahun_klasifikasi_kecamatan(){
+    //    $sql=$this->db->query('SELECT DISTINCT(tahun_klasifikasi) FROM mamdani_kecamatan 
+    //    WHERE tahun_klasifikasi BETWEEN DATE_SUB(NOW(),INTERVAL 1 YEAR)AND NOW()');
+    //      return $sql->result();
+    //  }
  
  
      public function fuzzy(){
@@ -348,6 +349,8 @@ class mamdani extends CI_Model{
 		)g GROUP BY id)a ON kp.id=a.id SET kp.total_bobot=a.total_bobot");
   }
 
+
+
   function bobot(){
   return $this->db->select('*')->from('tb_bobot_penduduk')->get()->result();
   }
@@ -356,12 +359,16 @@ class mamdani extends CI_Model{
     return $this->db->select('*')->from('tb_tingkat_kesejahteraan')->get()->result();
   }
 
-  function klasifikasi_desa(){
+  function klasifikasi_wilayah(){
     return $this->db->select('*')->from('tb_variabel_desa')->get()->result();
   }
 
   function get_total_penduduk_kecamatan(){
     return $this->db->select('*')->from('tb_kecamatan')->get()->result();
+  }
+
+  function get_total_penduduk_desa(){
+    return $this->db->select('*')->from('tb_desa')->get()->result();
   }
 
   function jumlah_aset(){
@@ -377,8 +384,25 @@ class mamdani extends CI_Model{
 
   function klas(){
 
-$data= array();
-  $this->db->query('UPDATE tb_klasifikasi_penduduk');
+    $this->db->trans_start();
+    $penduduk = $this->db->select('*')->from('tb_klasifikasi_penduduk')
+    ->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan')
+    ->join('tb_desa','tb_desa.id_desa=tb_klasifikasi_penduduk.kelurahan')
+    ->join('tb_penduduk_pengenalan_tempat','tb_penduduk_pengenalan_tempat.id=tb_klasifikasi_penduduk.tempat_id')
+    ->get()->result();
+    $klasifikasi= $this->db->select('*')->from('tb_tingkat_kesejahteraan')->get()->result();
+    
+
+    foreach ($penduduk as $pend) {
+      foreach ($klasifikasi as $klas) {
+        if (($klas->min <= $pend->total_bobot) && ($pend->total_bobot <= $klas->max)) {
+          $post= $this->db->query("UPDATE tb_klasifikasi_penduduk SET klasifikasi='$klas->nama' WHERE id = '$pend->id'");
+        }
+      }
+    }
+
+    $this->db->trans_complete();
+    print_r($post);
   }
   
 }

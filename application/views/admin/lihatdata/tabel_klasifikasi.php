@@ -11,7 +11,7 @@
                     <button data-toggle="dropdown" aria-controls="datatable" class="btn btn-default dropdown-toggle" id="sel_kec" type="button"> Lihat <span class="caret"></span> </button>
                           <ul class="dropdown-menu">
                           <li><a href="<?php echo base_url().'fuzzy/viewKecamatan'; ?>"> Kecamatan</a></li>
-                            <li><a href="<?php echo base_url().'fuzzy/view_klasifikasi'; ?>"> Kelurahan</a></li>
+                            <li><a href="<?php echo base_url().'fuzzy/view'; ?>"> Desa</a></li>
                             <li><a href="<?php echo base_url().'fuzzy/viewPenduduk'; ?>"> Penduduk </a></li>
                           </ul>
                         </div>
@@ -39,7 +39,7 @@
                         <tr>
                           <th>No</th>
                           <th>Kecamatan</th>
-                          <th>Kelurahan</th>
+                          <th>Desa</th>
                           <th>Total Penduduk Kesejahteraan Rendah</th>
                           <th>Total Penduduk Kesejahteraan Sedang</th>
                           <th>Total Penduduk Kesejahteraan Tinggi</th>
@@ -61,22 +61,19 @@
                           <td><?php echo $ct->tinggi ?></td>
                           <td>
                           <?php 
-                          //(($data->min <= $ct->rendah) && ($ct->total_bobot <= $data->max))
-                            // foreach($tingkat as $data){
-                            //   if(($ct->rendah && $ct->sedang && $ct->tinggi) <= $data->persen ){
-                            //     echo $data->nama_variabel;
-                            //     break;
-                            //   }
-                            // }
 
                             foreach ($kali_kec as $kec) {
                               if ($ct->nama_kecamatan==$kec->nama_kecamatan) {
                                 // if( <= )
-                                foreach ($tingkat as $data) {
-                                  if (($ct->rendah + $ct->sedang + $ct->tinggi) <= ($data->persen*$kec->total_penduduk)) {
-                                    echo $data->nama_variabel;
-                                    // echo $data->persen*$kec->total_penduduk;
-                                  break;
+                                foreach ($kali_desa as $desa) {
+                                  if ($ct->nama_desa==$desa->nama_desa) {
+                                    foreach ($tingkat as $data) {
+                                      if (($ct->rendah + $ct->sedang + $ct->tinggi) <= ($data->persen*$desa->total_penduduk)) {
+                                        echo $data->nama_variabel;
+                                        // echo $data->persen*$kec->total_penduduk;
+                                      break;
+                                      }
+                                    }
                                   }
                                 }
                               }

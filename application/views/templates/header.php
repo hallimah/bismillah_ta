@@ -93,13 +93,8 @@
                     <ul class="nav child_menu">
                       <!-- <li><a href="<php echo base_url()?>c_tabel/input_penduduk">Data Penduduk</a></li> -->
                       <li><a href="<?php echo base_url()?>c_tabel/view_input">Data PMKS</a></li>
-                      <li><a> Variabel <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                          <li><a href="<?php echo base_url()?>c_variabel/VariabelKecamatan">Variabel Kecamatan</a></li>
-                          <li><a href="<?php echo base_url()?>c_variabel/VariabelDesa">Variabel Kelurahan</a></li>
-                          <li><a href="<?php echo base_url()?>c_variabel/VariabelPenduduk">Variabel Penduduk</a></li>
-                        </ul>
-                      </li>
+                      <li><a href="<?php echo base_url()?>c_variabel/VariabelDesa">Wilayah</a></li>
+                      <li><a href="<?php echo base_url()?>c_variabel/bobot_Penduduk">Penduduk</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Lihat Data <span class="fa fa-chevron-down"></span></a>

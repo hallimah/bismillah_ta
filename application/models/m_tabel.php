@@ -60,9 +60,15 @@ class M_Tabel extends CI_Model{
     }
 
     /**model hapus data */
-    public function hapus_data($where, $table){
-        $this->db->where($where);
-        $this->db->delete($table);
+    public function hapus_data($id){ //$where, $table
+        // $this->db->where($where);
+        // $this->db->delete($table);
+        
+        $this->db->query("DELETE tb_klasifikasi_penduduk,tb_penduduk_pengenalan_tempat, tb_penduduk_kepemilikan_aset,tb_penduduk_keterangan_rumah
+        FROM tb_klasifikasi_penduduk,tb_penduduk_pengenalan_tempat, tb_penduduk_kepemilikan_aset,tb_penduduk_keterangan_rumah
+        WHERE tb_penduduk_pengenalan_tempat.id,=tb_klasifikasi_penduduk.id
+        AND tb_penduduk_kepemilikan_aset.id=tb_klasifikasi_penduduk.id AND tb_klasifikasi_penduduk.id=tb_penduduk_keterangan_rumah.id
+        AND tb_klasifikasi_penduduk.id= '$id' ");
     }
 
     /**model edit data */
@@ -70,11 +76,44 @@ class M_Tabel extends CI_Model{
         return $this->db->get_where($table,$where);
     }
 
-    /**model update data */
-    public function update_data($where,$data,$table){
-        $this->db->where($where);
-        $this->db->update($table,$data);
+    // /**model update data */
+    // public function update_data($where,$data,$table){
+    //     $this->db->where($where);
+    //     $this->db->update($table,$data);
+    // }
+
+    // public function update_data($where, $data,$data2,$data3,$data4){
+    //     $this->db->trans_start();
+    //     $this->db->where($where);
+    //     $this->db->update($data,'tb_');
+    //     $this->db->trans_complete();
+    // }
+
+    public function update_data($where,$data,$data2,$data4,$data_klasifikasi){
+        $this->db->trans_start();
+     // $this->db->distinct();
+     $this->db->where($where);
+      $d=$this->db->update('tb_penduduk_pengenalan_tempat',$data);
+      $id=$this->db->insert_id();
+
+      $data2['kk']=$id;
+      $this->db->insert('tb_penduduk_keterangan_rumah',$data2);
+      $rumah_id=$this->db->insert_id();
+    //   $data3['kk']=$id;
+    //   $this->db->insert('tb_penduduk_anggota',$data3);
+      $data4['kk']=$id;
+      $this->db->insert('tb_penduduk_kepemilikan_aset',$data4);
+      $aset_id=$this->db->insert_id();
+
+      $data_klasifikasi['tempat_id']=$id;
+      $data_klasifikasi['rumah_id']=$rumah_id;
+      $data_klasifikasi['aset_id']=$aset_id;
+      $this->db->insert('tb_klasifikasi_penduduk',$data_klasifikasi);
+
+      $this->db->trans_complete();
+      return $this->db->insert_id();
     }
+
 
     function update_data1($where,$data,$table){
         $this->db->where($where);
@@ -95,6 +134,11 @@ class M_Tabel extends CI_Model{
         $this->db->update($table,$data);
     }
 
+    // function update_data($id,$tabel1,$tabel2,$tabel3,$tabel4){
+    //     $this->db->query();
+
+    // }
+
     /**melihat data penduduk */
     function menampilkan_tabel_penduduk($id){
         return $this->db->select('*')->from('tb_klasifikasi_penduduk')
@@ -107,8 +151,15 @@ class M_Tabel extends CI_Model{
 
     /**model detail data */
     public function detail_tabel($id = NULL){
-        $query = $this->db->get_where('tb_penduduk', array('penduduk_id'=>$id))->row();
-        return $query;
+        // $query = $this->db->get_where('tb_klasifikasi_penduduk', array('id'=>$id))->row();
+        // return $query;
+        return $this->db->select('*')->from('tb_klasifikasi_penduduk')
+        ->join('tb_penduduk_kepemilikan_aset','tb_penduduk_kepemilikan_aset.id=tb_klasifikasi_penduduk.aset_id')
+        ->join('tb_penduduk_keterangan_rumah','tb_penduduk_keterangan_rumah.id=tb_klasifikasi_penduduk.rumah_id')
+        ->join('tb_penduduk_pengenalan_tempat','tb_penduduk_pengenalan_tempat.id=tb_klasifikasi_penduduk.tempat_id')
+        ->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan')
+        ->join('tb_desa','tb_desa.id_desa=tb_klasifikasi_penduduk.kelurahan')
+        ->where(array('tb_klasifikasi_penduduk.id'=>$id))->get()->row();
     }
 
     /**serch */
@@ -158,7 +209,7 @@ class M_Tabel extends CI_Model{
 
     /**model total data */
     public function total_pmks(){
-        $query = $this->db->query("SELECT * FROM tb_penduduk");
+        $query = $this->db->query("SELECT * FROM tb_penduduk_pengenalan_tempat");
         $total = $query->num_rows();
         return $total;
     }
@@ -175,13 +226,13 @@ class M_Tabel extends CI_Model{
         return $total;
     }
     public function total_laki(){
-        $query = $this->db->query("SELECT * FROM tb_penduduk WHERE jenis_kelamin='L' order by penduduk_id DESC");
+        $query = $this->db->query("SELECT * FROM tb_penduduk_pengenalan_tempat WHERE jenis_kelamin='L' order by id DESC");
         $total = $query->num_rows();
         return $total;
     }
 
     public function total_perempuan(){
-        $query = $this->db->query("SELECT * FROM tb_penduduk WHERE jenis_kelamin='P' order by penduduk_id DESC");
+        $query = $this->db->query("SELECT * FROM tb_penduduk_pengenalan_tempat WHERE jenis_kelamin='P' order by id DESC");
         $total = $query->num_rows();
         return $total;
     }
@@ -190,12 +241,11 @@ class M_Tabel extends CI_Model{
 
     /**total pmks */
     public function total_jenis(){
-        $this->db->select('tb_pmks.jenis_pmks, count(tb_pmks.jenis_pmks) as total');
-        $this->db->from('tb_penduduk');
-        $this->db->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_penduduk.kecamatan');
-        $this->db->join('tb_desa','tb_desa.id_desa=tb_penduduk.kelurahan');
-       $this->db->join('tb_pmks','tb_pmks.pmks_id=tb_penduduk.jenis_pmks');
-       $this->db->group_by('jenis_pmks');
+        $this->db->select('tb_kecamatan.nama_kecamatan, count(tb_desa.nama_desa) as total');
+        $this->db->from('tb_klasifikasi_penduduk');
+        $this->db->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan');
+        $this->db->join('tb_desa','tb_desa.id_desa=tb_klasifikasi_penduduk.kelurahan');
+        $this->db->group_by('nama_kecamatan,nama_desa');
         $query = $this->db->get();
         return $query->result();
     }
@@ -206,8 +256,8 @@ class M_Tabel extends CI_Model{
     
     public function total_perkecamatan(){
         $this->db->select('tb_kecamatan.nama_kecamatan, count(tb_kecamatan.nama_kecamatan) as total');
-        $this->db->from('tb_penduduk');
-        $this->db->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_penduduk.kecamatan');
+        $this->db->from('tb_klasifikasi_penduduk');
+        $this->db->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan');
         $this->db->group_by('nama_kecamatan');
         $query = $this->db->get();
         return $query->result();
