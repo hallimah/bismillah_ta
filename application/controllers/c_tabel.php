@@ -411,6 +411,7 @@ class C_Tabel extends My_Controller{
           //  $this->m_tabel->update_data($where, $data,$data2,$data4,$data_klasifikasi);
             redirect('c_tabel/tabel');
       //  }
+      var_dump($where2);die;
         
     }
     /* end controller update data*/
