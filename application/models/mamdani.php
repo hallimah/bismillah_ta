@@ -94,8 +94,8 @@ class mamdani extends CI_Model{
  
      public function viewKecamatan(){
       $this->db->select('nama_kecamatan,
-      sum(if(klasifikasi="rendah",1,0)) as rendah, sum(if(klasifikasi="sedang",1,0)) as sedang,
-      sum(if(klasifikasi="tinggi",1,0)) as tinggi'); //,tahun_masuk as tahun_klasifikasi
+      sum(if(klasifikasi="Hampir Miskin",1,0)) as rendah, sum(if(klasifikasi="Miskin",1,0)) as sedang,
+      sum(if(klasifikasi="Sangat Miskin",1,0)) as tinggi'); //,tahun_masuk as tahun_klasifikasi
         $this->db->from('tb_klasifikasi_penduduk');
         $this->db->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan');
         $this->db->group_by('nama_kecamatan, tahun_klasifikasi'); //,tahun_klasifikasi
@@ -127,8 +127,8 @@ class mamdani extends CI_Model{
       // $p=$this->db->get()->result();
       // return $p;
       $this->db->select('nama_kecamatan, nama_desa, 
-      sum(if(klasifikasi="rendah",1,0)) as rendah, sum(if(klasifikasi="sedang",1,0)) as sedang,
-      sum(if(klasifikasi="tinggi",1,0)) as tinggi'); //,tahun_masuk as tahun_klasifikasi
+      sum(if(klasifikasi="Hampir Miskin",1,0)) as rendah, sum(if(klasifikasi="Miskin",1,0)) as sedang,
+      sum(if(klasifikasi="Sangat Miskin",1,0)) as tinggi'); //,tahun_masuk as tahun_klasifikasi
         $this->db->from('tb_klasifikasi_penduduk');
         $this->db->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan');
         $this->db->join('tb_desa','tb_desa.id_desa=tb_klasifikasi_penduduk.kelurahan');

@@ -1,7 +1,7 @@
 <div class="right_col" role="main">
   <div class="page-title">
     <div class="title_left">
-      <h3>Input Data <small>PMKS</small></h3>
+      <h3>Edit Data <small>PMKS</small></h3>
     </div>
   </div>
   <div class="x_panel">
@@ -45,7 +45,7 @@
             <div class="col-md-6 col-sm-6 col-xs-12">
             <input type="hidden" name="id" value="<?php echo $key->id ?>">
             <input type="hidden" name="tempat_id" value="<?php echo $key->tempat_id ?>">
-              <select class="form-control" name="kecamatan" id="category" required>
+              <select class="form-control" name="kecamatan" id="category" required >
                 <option value="<?php echo $key->kecamatan ?>"><?php echo $key->kecamatan ?></option>
                 <?php foreach ($kategori as $row): ?>
                 <option value="<?php echo $row->kecamatan_id; ?>"><?php echo $row->nama_kecamatan; ?></option>
@@ -58,7 +58,7 @@
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="kota" >Desa/Kelurahan/Nagari <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control" id="sub_category" name="kelurahan" required>
+            <select class="form-control" id="sub_category" name="kelurahan" required >
                 <option value="">-- PILIH --</option>
               </select>
             </div>
@@ -126,8 +126,8 @@
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="kk">Status Bangunan Tempat Tinggal <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-            <input type="hidden" name="kk_rumah" value="<?php echo $key->id ?>">
-              <input type="hidden" name="id_rumah" value="<?php echo $key->kk ?>">
+            <input type="hidden" name="kk_rumah" value="<?php echo $key->rumah_id ?>">
+              <!-- <input type="hidden" name="id_rumah" value="<php echo $key->kk ?>"> -->
               <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 1"); ?>
               <select class="form-control" name="status_bangunan" >
               <option value="<?php echo $key->status_tempat_tinggal ?>"><?php echo $key->status_tempat_tinggal ?></option>
@@ -365,8 +365,8 @@
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">a.tabung gas 5,5 kg atau lebih<span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input type="hidden" name="kk_aset" value="<?php echo $key->id ?>">
-              <input type="hidden" name="id_aset" value="<?php echo $key->kk ?>">
+              <input type="hidden" name="kk_aset" value="<?php echo $key->aset_id ?>">
+              <!-- <input type="hidden" name="id_aset" value="<php echo $key->kk ?>"> -->
               <select class="form-control" name="tabung_gas" >
               <option value="<?php echo $key->tabung_gas ?>"><?php echo $key->tabung_gas ?></option>
                 <option value="1">1.ya</option>

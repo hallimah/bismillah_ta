@@ -127,10 +127,8 @@ class M_Tabel extends CI_Model{
         $this->db->where($where);
         $this->db->update($table,$data);
     }
-    function update_data4($where,$where2,$where3,$data,$table){
+    function update_data4($where,$data,$table){
         $this->db->where_in($where);
-        $this->db->where_in($where2);
-        $this->db->where_in($where3);
         $this->db->update($table,$data);
     }
 

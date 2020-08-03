@@ -58,16 +58,12 @@ class C_Tabel extends My_Controller{
         if($this->form_validation->run()==FALSE){
             $this->view_input();
         }else{
-            // $provinsi = $this->input->post('provinsi');
-            // $kota = $this->input->post('kota');
             $kecamatan = $this->input->post('kecamatan');
             $kelurahan = $this->input->post('kelurahan');
-            // $sls = $this->input->post('sls');
             $alamat = $this->input->post('alamat');
             $krt = $this->input->post('krt');
             $jenis_kelamin = $this->input->post('jenis_kelamin');
             $jml_art = $this->input->post('jml_art');
-            // $jml_keluarga = $this->input->post('jml_keluarga');
             $kk = $this->input->post('kk');
             $nik = $this->input->post('nik');
 
@@ -81,7 +77,6 @@ class C_Tabel extends My_Controller{
             $kondisi_dinding = $this->input->post('kondisi_dinding');
             $jenis_atap = $this->input->post('jenis_atap');
             $kondisi_atap = $this->input->post('kondisi_atap');
-            // $jumlah_kamar_tidur = $this->input->post('jumlah_kamar_tidur');
             $sumber_air_minum = $this->input->post('sumber_air_minum');
             $cara_memperoleh_air = $this->input->post('cara_memperoleh_air');
             $sumber_penerangan = $this->input->post('sumber_penerangan');
@@ -94,33 +89,6 @@ class C_Tabel extends My_Controller{
             $total=$status_bangunan+$status_lahan+$jenis_lantai+$jenis_dinding+$kondisi_dinding+$jenis_atap+
             $kondisi_atap+$sumber_air_minum+$cara_memperoleh_air+$sumber_penerangan+$daya+$bahan_masak+
             $fasilitas_bab+$jenis_kloset+$tempat_pembuangan_akhir_tinja;
-
-            // $nik = $this->input->post('nik');
-            // $nama = $this->input->post('nama');
-            // $hubungan_dgn_anggota = $this->input->post('hubungan_dgn_anggota');
-            // $no_urut_keluarga = $this->input->post('no_urut_keluarga');
-            // $jenis_kelamin = $this->input->post('jenis_kelamin');
-            // $usia = $this->input->post('usia');
-            // $status_nikah = $this->input->post('status_nikah');
-            // $memiliki_akta_nikah_cerai = $this->input->post('memiliki_akta_nikah_cerai');
-            // $tercantum_dalam_kk = $this->input->post('tercantum_dalam_kk');
-            // $kartu_identitas = $this->input->post('kartu_identitas');
-            // $status_kehamilan = $this->input->post('status_kehamilan');
-            // $jenis_cacat = $this->input->post('jenis_cacat');
-            // $penyakit_kronis_menahun = $this->input->post('penyakit_kronis_menahun');
-            // $partisipasi_sekolah = $this->input->post('partisipasi_sekolah');
-            // $jenjang_pendidikan_tertinggi = $this->input->post('jenjang_pendidikan_tertinggi');
-            // $kelas_tertinggi = $this->input->post('kelas_tertinggi');
-            // $ijazah_tertinggi = $this->input->post('ijazah_tertinggi');
-            // $bekerja_atau_membantu = $this->input->post('bekerja_atau_membantu');
-            // $lapangan_usaha = $this->input->post('lapangan_usaha');
-            // $kedudukan_dalam_bekerja = $this->input->post('kedudukan_dalam_bekerja');
-            // $keterangan_anggota_keluarga = $this->input->post('keterangan_anggota_keluarga');
-            // $kps_kks = $this->input->post('kps_kks');
-            // $kis_pibjkn = $this->input->post('kis_pbijkn');
-            // $kip_bsm = $this->input->post('kip_bsm');
-            // $pkh = $this->input->post('pkh');
-            // $raskin_rasta = $this->input->post('raskin_rasta');
 
             $tabung_gas = $this->input->post('tabung_gas');
             $lemari_es = $this->input->post('lemari_es');
@@ -137,9 +105,7 @@ class C_Tabel extends My_Controller{
             $lahan = $this->input->post('lahan');
             $rumah_ditempat_lain = $this->input->post('rumah_ditempat_lain');
             $pekerjaan = $this->input->post('pekerjaan');
-            // $ternak = $this->input->post('nama_ternak');
-            // $jumlah_ternak = $this->input->post('jumlah_ternak');
-             $omset_perbulan = $this->input->post('omset_perbulan');
+            $omset_perbulan = $this->input->post('omset_perbulan');
             $kps1 = $this->input->post('kps1');
             $kip1 = $this->input->post('kip1');
             $kis1 = $this->input->post('kis1');
@@ -151,7 +117,7 @@ class C_Tabel extends My_Controller{
             $kur = $this->input->post('kur');
 
             $asset_bergerak=$tabung_gas+$lemari_es+$ac+$pemanas_air+$telpon+$televisi+$emas+$komputer+$sepeda+$sepeda_motor+$monil+$perahu;
-            $asset_tidak_bergerak=$lahan+$rumah_ditempat_lain;
+            $asset_tidak_bergerak=$lahan+$rumah_ditempat_lain+$pekerjaan+$omset_perbulan;
 
             $total_aset=$asset_bergerak+$asset_tidak_bergerak;
             $total_jaminan_sosial=$kps1+$kip1+$kis1+$bpjs_mandiri+$jamsostek+$asuransi_kesehatan_lainnya+$pkh1+$raskin1+$kur;
@@ -194,36 +160,6 @@ class C_Tabel extends My_Controller{
             // 'total'=> $total
          );
 
-        //  for ($i=0; $i <count($nik) ; $i++) { 
-        //     $data3 = array('nik' => $nik[$i],
-        //     'nama'=>$nama[$i],
-        //     'hubungan_dengan_kepala_keluarga'=>$hubungan_dgn_anggota[$i],
-        //     'jenis_kelamin'=>$jenis_kelamin[$i],
-        //     'usia'=>$usia[$i],
-        //     'status_pernikahan'=> $status_nikah[$i],
-        //     'akta_nikah_cerai'=>$memiliki_akta_nikah_cerai[$i],
-        //     'tercantum_dlm_kk'=>$tercantum_dalam_kk[$i],
-        //     'kartu_identitas'=>$kartu_identitas[$i],
-        //     'status_kehamilan'=>$status_kehamilan[$i],
-        //     'jenis_cacat'=>$jenis_cacat[$i],
-        //     'penyakit_kronis'=>$penyakit_kronis_menahun[$i],
-        //     'partisipasi_sekolah'=>$partisipasi_sekolah[$i],
-        //     'jenjang_pendidikan_tertinggi'=>$jenjang_pendidikan_tertinggi[$i],
-        //     'kelas_tertinggi'=>$kelas_tertinggi[$i],
-        //     'ijazah_tertinggi'=>$ijazah_tertinggi[$i],
-        //     'bekerja_atau_membantu'=>$bekerja_atau_membantu[$i],
-        //     'lapangan_pekerjaan_utama'=>$lapangan_usaha[$i],
-        //     'kedudukan_dalam_pekerjaan'=>$kedudukan_dalam_bekerja[$i],
-        //     'keterangan_anggota_keluarga'=>$keterangan_anggota_keluarga[$i],
-        //     'kps_kks'=>$kps_kks[$i],
-        //     'kis_pbijkn'=>$kis_pibjkn[$i],
-        //     'kip_bsm'=>$kip_bsm[$i],
-        //     'pkh'=>$pkh[$i],
-        //     'raskin_rasta'=>$raskin_rasta[$i]
-        //      );
-        //  }
-         
-
          $data4 = array('tabung_gas'=>$tabung_gas,'lemari_es'=>$lemari_es,'ac'=>$ac,
         'pemanas_air'=>$pemanas_air,'telepon'=>$telpon,'televisi'=>$televisi,'emas'=>$emas,'komputer'=>$komputer,
         'sepeda'=>$sepeda,'sepeda_motor'=>$sepeda_motor,'monil'=>$monil,'perahu'=>$perahu,
@@ -264,12 +200,11 @@ class C_Tabel extends My_Controller{
     /* end controller form edit data*/
 
     /* controller update data*/
-    public function update_pmks($id=null){
-        // $this->_rules();
-        // if($this->form_validation->run()==FALSE){
-            
-        //     $this->edit_pmks();
-        // }else{
+    public function update_pmks(){
+        $this->_rules();
+        if($this->form_validation->run()==FALSE){
+            $this->edit_pmks();
+        }else{
             $id             = $this->input->post('id');
 
             $tempat_id = $this->input->post('tempat_id');
@@ -294,7 +229,6 @@ class C_Tabel extends My_Controller{
             $kondisi_dinding = $this->input->post('kondisi_dinding');
             $jenis_atap = $this->input->post('jenis_atap');
             $kondisi_atap = $this->input->post('kondisi_atap');
-            // $jumlah_kamar_tidur = $this->input->post('jumlah_kamar_tidur');
             $sumber_air_minum = $this->input->post('sumber_air_minum');
             $cara_memperoleh_air = $this->input->post('cara_memperoleh_air');
             $sumber_penerangan = $this->input->post('sumber_penerangan');
@@ -325,9 +259,7 @@ class C_Tabel extends My_Controller{
             $lahan = $this->input->post('lahan');
             $rumah_ditempat_lain = $this->input->post('rumah_ditempat_lain');
             $pekerjaan = $this->input->post('pekerjaan');
-            // $ternak = $this->input->post('nama_ternak');
-            // $jumlah_ternak = $this->input->post('jumlah_ternak');
-             $omset_perbulan = $this->input->post('omset_perbulan');
+            $omset_perbulan = $this->input->post('omset_perbulan');
             $kps1 = $this->input->post('kps1');
             $kip1 = $this->input->post('kip1');
             $kis1 = $this->input->post('kis1');
@@ -346,20 +278,15 @@ class C_Tabel extends My_Controller{
        
 
             $data = array(
-                // 'provinsi' => $provinsi,
-                // 'kabupaten' => $kota,
                 'kecamatan' => $kecamatan,
                 'kelurahan' => $kelurahan,
-                // 'nama_sls' => $sls,
                 'alamat' => $alamat,
                 'nama_krt'=>$krt,
                 'jenis_kelamin'=>$jenis_kelamin,
                 'jumlah_art'=>$jml_art,
-                // 'jumlah_keluarga'=>$jml_keluarga,
                 'kk' => $kk,
                 'nik' => $nik,
                 'tahun_input'=> date('Y')
-             //   'created_at'    =>$created_at
             );
 
             $data2 = array('status_tempat_tinggal' => $status_bangunan,
@@ -370,7 +297,6 @@ class C_Tabel extends My_Controller{
             'kondisi_dinding' =>$kondisi_dinding,
             'jenis_atap_terluas'=>$jenis_atap,
             'kondisi_atap'=>$kondisi_atap,
-            // 'jumlah_kamar_tidur'=>$jumlah_kamar_tidur,
             'sumber_air_minum'=>$sumber_air_minum,
             'cara_memperoleh_air_minum'=>$cara_memperoleh_air,
             'sumber_penerangan_utama'=>$sumber_penerangan,
@@ -379,14 +305,12 @@ class C_Tabel extends My_Controller{
             'penggunaan_fasilitas_bab'=>$fasilitas_bab,
             'jenis_kloset'=>$jenis_kloset,
             'tempat_pembuangan_akhir_tinja'=>$tempat_pembuangan_akhir_tinja
-            // 'total'=> $total
          );
 
          $data4 = array('tabung_gas'=>$tabung_gas,'lemari_es'=>$lemari_es,'ac'=>$ac,
          'pemanas_air'=>$pemanas_air,'telepon'=>$telpon,'televisi'=>$televisi,'emas'=>$emas,'komputer'=>$komputer,
          'sepeda'=>$sepeda,'sepeda_motor'=>$sepeda_motor,'monil'=>$monil,'perahu'=>$perahu,
          'lahan'=>$lahan,'properti_lain'=>$rumah_ditempat_lain,'pekerjaan'=>$pekerjaan,
-        //  'nama_ternak'=>$ternak,'jumlah_ternak'=>$jumlah_ternak,
         'omset'=>$omset_perbulan,'peserta_kks_kps'=>$kps1,
          'peserta_kip_bsm'=>$kip1, 'peserta_kis'=>$kis1,'peserta_bpjs'=>$bpjs_mandiri,
          'peserta_jamsostek'=>$jamsostek,'peserta_asuransi_lainnya'=>$asuransi_kesehatan_lainnya,
@@ -400,18 +324,21 @@ class C_Tabel extends My_Controller{
          
         //   $where=array('id'=>$id,'aset_id'=>$id_aset,'rumah_id'=>$id_rumah,'tempat_id'=>$tempat_id);
           $where=array('id'=>$id);
-          $where2=array('kk'=>$id_rumah);
-          $where3 = array('kk' => $id_aset);
+          $where2=array('id'=>$kk_rumah);
+          $where3 = array('id' => $kk_aset);
+          $where4 = array('id'=>$tempat_id);
 
-          $this->m_tabel->update_data1($where,$data,'tb_penduduk_pengenalan_tempat');
+        //   var_dump($tempat_id);die;
+
+          $this->m_tabel->update_data1($where4,$data,'tb_penduduk_pengenalan_tempat');
           $this->m_tabel->update_data2($where2,$data2,'tb_penduduk_keterangan_rumah');
           $this->m_tabel->update_data3($where3,$data4,'tb_penduduk_kepemilikan_aset');
-          $this->m_tabel->update_data4($where,$where2,$where3,$data_klasifikasi,'tb_klasifikasI_penduduk');
+          $this->m_tabel->update_data4($where,$data_klasifikasi,'tb_klasifikasI_penduduk');
 //            $this->m_tabel->update_data($where, $data,$where2,$data2,$where3,$data4,$data_klasifikasi);
           //  $this->m_tabel->update_data($where, $data,$data2,$data4,$data_klasifikasi);
             redirect('c_tabel/tabel');
-      //  }
-    //   var_dump($where2);die;
+        }
+       
         
     }
     /* end controller update data*/
@@ -423,8 +350,8 @@ class C_Tabel extends My_Controller{
         $this->form_validation->set_rules('jenis_kelamin','Jenis Kelamin','required');
         $this->form_validation->set_rules('krt','Nama Kepala Keluarga','required|alpha');
          $this->form_validation->set_rules('jml_art','Jumlah Anggota Rumah Tangga','required');
-        $this->form_validation->set_rules('nik','Nomor Induk Keluarga','required|numeric'); //|max_length[16]|min_length[16]
-        $this->form_validation->set_rules('kk','Kartu Keluarga','required|numeric'); //|max_length[16]|min_length[16]
+        $this->form_validation->set_rules('nik','Nomor Induk Keluarga','required|max_length[16]|numeric'); //|max_length[16]|min_length[16]
+        $this->form_validation->set_rules('kk','Kartu Keluarga','required|max_length[16]|numeric'); //|max_length[16]|min_length[16]
         // $this->form_validation->set_rules('alamat_asal','Alamat Asal','required');
         $this->form_validation->set_rules('kelurahan','Kelurahan','required');
         $this->form_validation->set_rules('kecamatan','Kecamatan','required');
