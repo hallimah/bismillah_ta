@@ -120,12 +120,14 @@
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="kk">Status Bangunan Tempat Tinggal <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 1"); ?>
-              <select class="form-control" name="status_bangunan" >
+              <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 1");
+               ?>
+              <select class="form-control" name="status_bangunan" id="sb">
                 <?php foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id ?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
                 <?php } ?>    
-              </select>
+              </select>   
+              
             </div>
               <?php echo form_error('status_bangunan','<div class="text-small text-danger">','</div>') ?>
           </div>
@@ -136,7 +138,7 @@
               <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 2"); ?>
               <select class="form-control" name="status_lahan" >
                 <?php foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
                 <?php } ?>    
               </select>
             </div>
@@ -149,7 +151,7 @@
               <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 3"); ?>
               <select class="form-control" name="luas_lantai" >
                 <?php foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
                 <?php } ?>    
               </select>
               </div>
@@ -162,7 +164,7 @@
               <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 4"); ?>
               <select class="form-control" name="jenis_lantai" >
                 <?php foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
                 <?php } ?>    
               </select>
             </div>
@@ -175,7 +177,7 @@
               <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 5"); ?>
               <select class="form-control" name="jenis_dinding" >
                 <?php foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
                 <?php } ?>    
               </select>
             </div>
@@ -188,7 +190,7 @@
               <select class="form-control" name="kondisi_dinding" >
               <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 6");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                 </select>
               </div>
@@ -201,7 +203,7 @@
               <select class="form-control" name="jenis_atap" >
               <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 7");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                 </select>
               </div>
@@ -214,7 +216,7 @@
               <select class="form-control" name="kondisi_atap" >
               <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 16");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                 </select>
               </div>
@@ -227,7 +229,7 @@
               <select class="form-control" name="sumber_air_minum" >
               <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 8");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                 </select>
               </div>
@@ -240,7 +242,7 @@
                 <select class="form-control" name="cara_memperoleh_air" >
                 <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 9");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                 </select>
               </div>
@@ -253,7 +255,7 @@
               <select class="form-control" name="sumber_penerangan" >
               <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 10");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                 </select>
               </div>
@@ -266,7 +268,7 @@
               <select class="form-control" name="daya" >
               <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id =11");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                 </select>
               </div>
@@ -279,7 +281,7 @@
               <select class="form-control" name="bahan_memasak" >
               <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 12");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                 </select>
               </div>
@@ -292,7 +294,7 @@
               <select class="form-control" name="fasilitas_bab" >
               <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 13");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                 </select>
               </div>
@@ -305,7 +307,7 @@
                 <select class="form-control" name="jenis_kloset" >
                 <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 14");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                 </select>
               </div>
@@ -318,7 +320,7 @@
               <select class="form-control" name="tempat_pembuangan_akhir_tinja" >
               <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 15");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                 </select>
               </div>
@@ -341,9 +343,9 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">a.tabung gas 5,5 kg atau lebih<span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <select class="form-control" name="tabung_gas" >
-              <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 17");
+              <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel_aset WHERE sub_variabel_id = 17");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
               </select>
             </div>
@@ -353,57 +355,57 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">b.lemari es/kulkas<span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
             <select class="form-control" name="lemari_es" >
-            <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 18");
+            <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel_aset WHERE sub_variabel_id = 18");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                   </select>
             </div>
           </div>
-
+<!-- 
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">c.AC<span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
             <select class="form-control" name="ac" >
-            <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 19");
+            <php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 19");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
-              <?php } ?>
+                <option value="<php echo $k->skor?>"><php echo $k->nama .'('.$k->skor.')' ?></option>
+              <php } ?>
                   </select>
             </div>
-          </div>
+          </div> -->
 
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">d.pemanas air(water heater)<span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
             <select class="form-control" name="pemanas_air" >
-            <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 20");
+            <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel_aset WHERE sub_variabel_id = 20");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                   </select>
             </div>
           </div>
 
-          <div class="item form-group">
+          <!-- <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">e.telepon rumah(PTSN)<span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
             <select class="form-control" name="telpon" >
-            <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 21");
+            <php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 21");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
-              <?php } ?>
+                <option value="<php echo $k->skor?>"><php echo $k->nama .'('.$k->skor.')' ?></option>
+              <php } ?>
                   </select>
             </div>
-          </div>
+          </div> -->
 
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">f.televisi<span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
             <select class="form-control" name="televisi" >
-            <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 22");
+            <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel_aset WHERE sub_variabel_id = 22");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                   </select>
             </div>
@@ -413,9 +415,9 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">g.emas/perhiasan & tabungan (senilai 10 gram emas)<span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
             <select class="form-control" name="emas" >
-            <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 23");
+            <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel_aset WHERE sub_variabel_id = 23");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                   </select>
             </div>
@@ -425,9 +427,9 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">h.komputer/leptop<span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
             <select class="form-control" name="komputer" >
-            <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 24");
+            <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel_aset WHERE sub_variabel_id = 24");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                   </select>
             </div>
@@ -437,9 +439,9 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">i.sepeda<span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
             <select class="form-control" name="sepeda" >
-            <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 25");
+            <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel_aset WHERE sub_variabel_id = 25");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                   </select>
             </div>
@@ -449,68 +451,37 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">j.sepeda motor<span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
             <select class="form-control" name="sepeda_motor" >
-            <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 26");
+            <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel_aset WHERE sub_variabel_id = 26");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                   </select>
             </div>
           </div>
 
-          <div class="item form-group">
+          <!-- <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">k.mobil/motor tempel/kapal<span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
             <select class="form-control" name="monil" >
-            <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 27");
+            <php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 27");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
-              <?php } ?>
+                <option value="<php echo $k->skor?>"><php echo $k->nama .'('.$k->skor.')' ?></option>
+              <php } ?>
                   </select>
             </div>
-          </div>
+          </div> -->
 
-          <div class="item form-group">
+          <!-- <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">l.perahu/perahu motor<span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
             <select class="form-control" name="perahu" >
-            <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 28");
+            <php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 28");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
-              <?php } ?>
-                  </select>
-            </div>
-          </div>
-
-          <!-- <div class="item form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">m.<span class="required">*</span></label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control" name="motor_tempel" >
-                    <option value="1">1.ya</option>
-                    <option value="2">2.tidak</option>
+                <option value="<php echo $k->skor?>"><php echo $k->nama .'('.$k->skor.')' ?></option>
+              <php } ?>
                   </select>
             </div>
           </div> -->
-
-          <!-- <div class="item form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">n.perahu motor<span class="required">*</span></label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control" name="perahu_motor" >
-                    <option value="3">3.ya</option>
-                    <option value="4">4.tidak</option>
-                  </select>
-            </div>
-          </div> -->
-
-          <!-- <div class="item form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">o.kapal<span class="required">*</span></label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control" name="kapal" >
-                    <option value="1">1.ya</option>
-                    <option value="2">2.tidak</option>
-                  </select>
-            </div>
-          </div> -->
-        
 
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">Aset Tidak Bergerak<span class="required">*</span></label>
@@ -520,9 +491,9 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">a.lahan<span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <select class="form-control" name="lahan" >
-              <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 29");
+              <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel_aset WHERE sub_variabel_id = 29");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                   </select>
             </div>
@@ -532,9 +503,9 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">rumah di tempat lain<span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
             <select class="form-control" name="rumah_ditempat_lain" >
-            <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 30");
+            <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel_aset WHERE sub_variabel_id = 30");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                   </select>
             </div>
@@ -544,54 +515,26 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">pekerjaan<span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
             <select class="form-control" name="pekerjaan" >
-            <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 31");
+            <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel_aset WHERE sub_variabel_id = 31");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
             </select>
             </div>
           </div>
-<!-- 
-          <div class="item form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">Ternak<span class="required">*</span></label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-              <div class="row">
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <select class="form-control" name="nama_ternak" >
-                    <option value="sapi">sapi</option>
-                    <option value="kerbau">kerbau</option>
-                    <option value="kuda">kuda</option>
-                    <option value="babi">babi</option>
-                    <option value="kambing/domba">kambing/domba</option>
-                  </select>
-                </div>
 
-                <div class="col-md-4 col-sm-12 col-xs-12 form-group">
-              
-                  <input type="text" class="form-control col-md-3" name="jumlah_ternak" placeholder="jumlah">
-              
-                  
-                </div>
-                <div class="col-md-2 col-sm-12 col-xs-12 form-group">
-                <label class="control-label">/ekor</label></div>
-              </div>
-              
-            </div>
-            <php echo form_error('omset_perbulan','<div class="text-small text-danger">','</div>') ?>
-          </div> -->
-
-          <div class="item form-group">
+          <!-- <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">Penghasilan per bulan<span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <select class="form-control" name="omset_perbulan" >
-              <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 32");
+              <php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel_aset WHERE sub_variabel_id = 32");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
-              <?php } ?>
+                <option value="<php echo $k->skor?>"><php echo $k->nama .'('.$k->skor.')' ?></option>
+              <php } ?>
               </select>
             </div>
             <?php echo form_error('omset_perbulan','<div class="text-small text-danger">','</div>') ?>
-          </div>
+          </div> -->
 
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">Rumah tangga menjadi peserta program/memiliki kartu program berikut ?<span class="required">*</span></label>
@@ -602,9 +545,9 @@
                 Perlindungan Sosial (KPS)<span class="required">*</span></label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                   <select class="form-control" name="kps1" >
-                  <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 33");
+                  <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel_program_sosial WHERE sub_variabel_id = 33");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                   </select>
                 </div>
@@ -615,9 +558,9 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">b.kartu Indonesia Pintar (KIP)/ Bantuan Siswa Miskin (BSM)<span class="required">*</span></label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                   <select class="form-control" name="kip1" >
-                  <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 34");
+                  <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel_program_sosial WHERE sub_variabel_id = 34");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                   </select>
                 </div>
@@ -628,9 +571,9 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">c.Kartu Indonesia Sehat (KIS)/ BPJS Kesehatan/Jamkesma<span class="required">*</span></label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                   <select class="form-control" name="kis1" >
-                  <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 35");
+                  <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel_program_sosial WHERE sub_variabel_id = 35");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                   </select>
                 </div>
@@ -641,9 +584,9 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">d.BPJS Kesehatan peserta mandiri<span class="required">*</span></label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                   <select class="form-control" name="bpjs_mandiri" >
-                  <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 36");
+                  <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel_program_sosial WHERE sub_variabel_id = 36");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                   </select>
                 </div>
@@ -654,9 +597,9 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">e.Jaminan sosial tenaga kerja (Jamsostek)/ BPJS ketenagakerjaan<span class="required">*</span></label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                   <select class="form-control" name="jamsostek" >
-                  <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 37");
+                  <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel_program_sosial WHERE sub_variabel_id = 37");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                   </select>
                 </div>
@@ -667,9 +610,9 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">f.Asuransi kesehatan lainnya<span class="required">*</span></label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                   <select class="form-control" name="asuransi_kesehatan_lainnya" >
-                  <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 38");
+                  <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel_program_sosial WHERE sub_variabel_id = 38");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                   </select>
                 </div>
@@ -680,9 +623,9 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">g.Program Keluarga Harapan (PKH)<span class="required">*</span></label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                   <select class="form-control" name="pkh1" >
-                  <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 39");
+                  <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel_program_sosial WHERE sub_variabel_id = 39");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                   </select>
                 </div>
@@ -693,9 +636,9 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">h.Beras untuk orang miskin (Raskin)<span class="required">*</span></label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                   <select class="form-control" name="raskin1" >
-                  <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 40");
+                  <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel_program_sosial WHERE sub_variabel_id = 40");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                   </select>
                 </div>
@@ -706,9 +649,9 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tahun_masuk">i.Kredit Usaha Rakyat (KUR)<span class="required">*</span></label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                   <select class="form-control" name="kur" >
-                  <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel WHERE sub_variabel_id = 41");
+                  <?php $sub_variabel= $this->db->query("SELECT * FROM tb_sub_variabel_program_sosial WHERE sub_variabel_id = 41");
               foreach ($sub_variabel->result() as $k) { ?>
-                <option value="<?php echo $k->skor?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
+                <option value="<?php echo $k->sub_id?>"><?php echo $k->nama .'('.$k->skor.')' ?></option>
               <?php } ?>
                   </select>
                 </div>

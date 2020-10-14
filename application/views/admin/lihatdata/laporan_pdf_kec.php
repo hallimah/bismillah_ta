@@ -181,9 +181,9 @@ hr{
             <tr>
                 <th class="th1">No</th>
                 <th class="th2">Nama Kecamatan </th>
-                <th class="th4">Kemiskinan</th>
-                <th class="th5">Ketelantaran</th>
-                <th class="th6">Kecacatan</th>
+                <th>Total Penduduk Hampir Miskin</th>
+                          <th>Total Penduduk Miskin</th>
+                          <th>Total Penduduk Sangat Miskin</th>
                 <th class="th7">Tingkat Kesejahteraan</th>
             </tr>
             <?php $no=1;

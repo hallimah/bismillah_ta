@@ -42,6 +42,8 @@ class C_Tabel extends My_Controller{
     public function view_input(){
         $data['c_tabel']=$this->m_tabel->kategori_kecamatan()->result();
         $data['menu'] = $this->m_variabel->sub_variabel();
+        $data['menu'] = $this->m_variabel->sub_variabel_aset();
+        $data['menu'] = $this->m_variabel->sub_variabel_program_sosial();
         $data['title']='c_tabel';
        // $data['variabel']=$this->m_tabel->variabel_penduduk();
      ///   $data['sub_variabel']=$this->m_tabel->sub_variabel_penduduk();
@@ -86,26 +88,26 @@ class C_Tabel extends My_Controller{
             $jenis_kloset = $this->input->post('jenis_kloset');
             $tempat_pembuangan_akhir_tinja = $this->input->post('tempat_pembuangan_akhir_tinja');
 
-            $total=$status_bangunan+$status_lahan+$jenis_lantai+$jenis_dinding+$kondisi_dinding+$jenis_atap+
-            $kondisi_atap+$sumber_air_minum+$cara_memperoleh_air+$sumber_penerangan+$daya+$bahan_masak+
-            $fasilitas_bab+$jenis_kloset+$tempat_pembuangan_akhir_tinja;
+            // $total=$status_bangunan+$status_lahan+$jenis_lantai+$jenis_dinding+$kondisi_dinding+$jenis_atap+
+            // $kondisi_atap+$sumber_air_minum+$cara_memperoleh_air+$sumber_penerangan+$daya+$bahan_masak+
+            // $fasilitas_bab+$jenis_kloset+$tempat_pembuangan_akhir_tinja;
 
             $tabung_gas = $this->input->post('tabung_gas');
             $lemari_es = $this->input->post('lemari_es');
-            $ac = $this->input->post('ac');
+            // $ac = $this->input->post('ac');
             $pemanas_air = $this->input->post('pemanas_air');
-            $telpon = $this->input->post('telpon');
+            // $telpon = $this->input->post('telpon');
             $televisi = $this->input->post('televisi');
             $emas = $this->input->post('emas');
             $komputer = $this->input->post('komputer');
             $sepeda = $this->input->post('sepeda');
             $sepeda_motor = $this->input->post('sepeda_motor');
-            $monil = $this->input->post('monil');
-            $perahu = $this->input->post('perahu');
+            // $monil = $this->input->post('monil');
+            // $perahu = $this->input->post('perahu');
             $lahan = $this->input->post('lahan');
             $rumah_ditempat_lain = $this->input->post('rumah_ditempat_lain');
             $pekerjaan = $this->input->post('pekerjaan');
-            $omset_perbulan = $this->input->post('omset_perbulan');
+            // $omset_perbulan = $this->input->post('omset_perbulan');
             $kps1 = $this->input->post('kps1');
             $kip1 = $this->input->post('kip1');
             $kis1 = $this->input->post('kis1');
@@ -116,11 +118,11 @@ class C_Tabel extends My_Controller{
             $raskin1 = $this->input->post('raskin1');
             $kur = $this->input->post('kur');
 
-            $asset_bergerak=$tabung_gas+$lemari_es+$ac+$pemanas_air+$telpon+$televisi+$emas+$komputer+$sepeda+$sepeda_motor+$monil+$perahu;
-            $asset_tidak_bergerak=$lahan+$rumah_ditempat_lain+$pekerjaan+$omset_perbulan;
+            // $asset_bergerak=$tabung_gas+$lemari_es+$pemanas_air+$televisi+$emas+$komputer+$sepeda+$sepeda_motor;
+            // $asset_tidak_bergerak=$lahan+$rumah_ditempat_lain+$pekerjaan;
 
-            $total_aset=$asset_bergerak+$asset_tidak_bergerak;
-            $total_jaminan_sosial=$kps1+$kip1+$kis1+$bpjs_mandiri+$jamsostek+$asuransi_kesehatan_lainnya+$pkh1+$raskin1+$kur;
+            // $total_aset=$asset_bergerak+$asset_tidak_bergerak;
+            // $total_jaminan_sosial=$kps1+$kip1+$kis1+$bpjs_mandiri+$jamsostek+$asuransi_kesehatan_lainnya+$pkh1+$raskin1+$kur;
         //    $created_at     = date('Y-m-d');
 
             $data = array(
@@ -160,25 +162,32 @@ class C_Tabel extends My_Controller{
             // 'total'=> $total
          );
 
-         $data4 = array('tabung_gas'=>$tabung_gas,'lemari_es'=>$lemari_es,'ac'=>$ac,
-        'pemanas_air'=>$pemanas_air,'telepon'=>$telpon,'televisi'=>$televisi,'emas'=>$emas,'komputer'=>$komputer,
-        'sepeda'=>$sepeda,'sepeda_motor'=>$sepeda_motor,'monil'=>$monil,'perahu'=>$perahu,
+         $data4 = array('tabung_gas'=>$tabung_gas,'lemari_es'=>$lemari_es,
+        //  'ac'=>$ac,
+        'pemanas_air'=>$pemanas_air,
+        // 'telepon'=>$telpon,
+        'televisi'=>$televisi,'emas'=>$emas,'komputer'=>$komputer,
+        'sepeda'=>$sepeda,'sepeda_motor'=>$sepeda_motor,
+        // 'monil'=>$monil,'perahu'=>$perahu,
         'lahan'=>$lahan,'properti_lain'=>$rumah_ditempat_lain,'pekerjaan'=>$pekerjaan,
-        // 'nama_ternak'=>$ternak,'jumlah_ternak'=>$jumlah_ternak,
-        'omset'=>$omset_perbulan,'peserta_kks_kps'=>$kps1,
+        // 'nama_ternak'=>$ternak,'jumlah_ternak'=>$jumlah_ternak,'omset'=>$omset_perbulan,
+        'peserta_kks_kps'=>$kps1,
         'peserta_kip_bsm'=>$kip1, 'peserta_kis'=>$kis1,'peserta_bpjs'=>$bpjs_mandiri,
         'peserta_jamsostek'=>$jamsostek,'peserta_asuransi_lainnya'=>$asuransi_kesehatan_lainnya,
         'peserta_pkh'=>$pkh1, 'penerima_raskin'=>$raskin1,
         'kur'=>$kur
          );
 
-       $data_klasifikasi=array('kecamatan'=>$kecamatan,'kelurahan'=>$kelurahan,
-       'jumlah_tanggungan'=>$jml_art,'keterangan_rumah'=>$total,
-       'jumlah_kepemilikan_aset'=>$total_aset,'program_sosial'=>$total_jaminan_sosial,'tahun_klasifikasi'=>date('Y'));
+       $data_klasifikasi=array('kecamatan'=>$kecamatan,'kelurahan'=>$kelurahan,'jumlah_tanggungan'=>$jml_art,
+    //    'keterangan_rumah'=>$total,
+    //    'jumlah_kepemilikan_aset'=>$total_aset,'program_sosial'=>$total_jaminan_sosial,
+    'tahun_klasifikasi'=>date('Y')
+    );
          
-           $this->m_tabel->input_data($data,$data2,$data4,$data_klasifikasi);
+           $this->m_tabel->input_data($data,$data2,$data4,$data_klasifikasi); //,$data_klasifikasi
+   
             $this->session->set_flashdata('pesan','data sukses ditambahkan');
-            redirect('c_tabel/tabel');
+            redirect('c_tabel/tabel'); //tabel
         } 
     }
     /* end controller tambah tabel*/
@@ -189,7 +198,7 @@ class C_Tabel extends My_Controller{
      public function edit_pmks($id = null){
         $data['penduduk']=$this->m_tabel->menampilkan_tabel_penduduk($id);
         $data['kategori']=$this->m_tabel->kategori_kecamatan()->result();
-       // $data['pmks']=$this->m_tabel->kategori_pmks()->result();
+        // $data['rumah'] = $this->m_tabel->get_sub_variabel();
 
         $this->load->view('templates/header');
         $this->load->view('admin/lihatdata/edit_pmks', $data);
@@ -200,10 +209,10 @@ class C_Tabel extends My_Controller{
     /* end controller form edit data*/
 
     /* controller update data*/
-    public function update_pmks(){
+    public function update_pmks($id){
         $this->_rules();
         if($this->form_validation->run()==FALSE){
-            $this->edit_pmks();
+            $this->edit_pmks($this->input->post('id'));
         }else{
             $id             = $this->input->post('id');
 
@@ -238,28 +247,28 @@ class C_Tabel extends My_Controller{
             $jenis_kloset = $this->input->post('jenis_kloset');
             $tempat_pembuangan_akhir_tinja = $this->input->post('tempat_pembuangan_akhir_tinja');
 
-            $total=$status_bangunan+$status_lahan+$jenis_lantai+$jenis_dinding+$kondisi_dinding+$jenis_atap+
-            $kondisi_atap+$sumber_air_minum+$cara_memperoleh_air+$sumber_penerangan+$daya+$bahan_masak+
-            $fasilitas_bab+$jenis_kloset+$tempat_pembuangan_akhir_tinja;
+            // $total=$status_bangunan+$status_lahan+$jenis_lantai+$jenis_dinding+$kondisi_dinding+$jenis_atap+
+            // $kondisi_atap+$sumber_air_minum+$cara_memperoleh_air+$sumber_penerangan+$daya+$bahan_masak+
+            // $fasilitas_bab+$jenis_kloset+$tempat_pembuangan_akhir_tinja;
 
             $id_aset = $this->input->post('id_aset');
             $kk_aset = $this->input->post('kk_aset');
             $tabung_gas = $this->input->post('tabung_gas');
             $lemari_es = $this->input->post('lemari_es');
-            $ac = $this->input->post('ac');
+            // $ac = $this->input->post('ac');
             $pemanas_air = $this->input->post('pemanas_air');
-            $telpon = $this->input->post('telpon');
+            // $telpon = $this->input->post('telpon');
             $televisi = $this->input->post('televisi');
             $emas = $this->input->post('emas');
             $komputer = $this->input->post('komputer');
             $sepeda = $this->input->post('sepeda');
             $sepeda_motor = $this->input->post('sepeda_motor');
-            $monil = $this->input->post('monil');
-            $perahu = $this->input->post('perahu');
+            // $monil = $this->input->post('monil');
+            // $perahu = $this->input->post('perahu');
             $lahan = $this->input->post('lahan');
             $rumah_ditempat_lain = $this->input->post('rumah_ditempat_lain');
             $pekerjaan = $this->input->post('pekerjaan');
-            $omset_perbulan = $this->input->post('omset_perbulan');
+            // $omset_perbulan = $this->input->post('omset_perbulan');
             $kps1 = $this->input->post('kps1');
             $kip1 = $this->input->post('kip1');
             $kis1 = $this->input->post('kis1');
@@ -270,11 +279,11 @@ class C_Tabel extends My_Controller{
             $raskin1 = $this->input->post('raskin1');
             $kur = $this->input->post('kur');
 
-            $asset_bergerak=$tabung_gas+$lemari_es+$ac+$pemanas_air+$telpon+$televisi+$emas+$komputer+$sepeda+$sepeda_motor+$monil+$perahu;
-            $asset_tidak_bergerak=$lahan+$rumah_ditempat_lain;
+            // $asset_bergerak=$tabung_gas+$lemari_es+$pemanas_air+$televisi+$emas+$komputer+$sepeda+$sepeda_motor;
+            // $asset_tidak_bergerak=$lahan+$rumah_ditempat_lain;
 
-            $total_aset=$asset_bergerak+$asset_tidak_bergerak;
-            $total_jaminan_sosial=$kps1+$kip1+$kis1+$bpjs_mandiri+$jamsostek+$asuransi_kesehatan_lainnya+$pkh1+$raskin1+$kur;
+            // $total_aset=$asset_bergerak+$asset_tidak_bergerak;
+            // $total_jaminan_sosial=$kps1+$kip1+$kis1+$bpjs_mandiri+$jamsostek+$asuransi_kesehatan_lainnya+$pkh1+$raskin1+$kur;
        
 
             $data = array(
@@ -307,11 +316,16 @@ class C_Tabel extends My_Controller{
             'tempat_pembuangan_akhir_tinja'=>$tempat_pembuangan_akhir_tinja
          );
 
-         $data4 = array('tabung_gas'=>$tabung_gas,'lemari_es'=>$lemari_es,'ac'=>$ac,
-         'pemanas_air'=>$pemanas_air,'telepon'=>$telpon,'televisi'=>$televisi,'emas'=>$emas,'komputer'=>$komputer,
-         'sepeda'=>$sepeda,'sepeda_motor'=>$sepeda_motor,'monil'=>$monil,'perahu'=>$perahu,
+         $data4 = array('tabung_gas'=>$tabung_gas,'lemari_es'=>$lemari_es,
+        //  'ac'=>$ac,
+         'pemanas_air'=>$pemanas_air,
+        //  'telepon'=>$telpon,
+         'televisi'=>$televisi,'emas'=>$emas,'komputer'=>$komputer,
+         'sepeda'=>$sepeda,'sepeda_motor'=>$sepeda_motor,
+        //  'monil'=>$monil,'perahu'=>$perahu,
          'lahan'=>$lahan,'properti_lain'=>$rumah_ditempat_lain,'pekerjaan'=>$pekerjaan,
-        'omset'=>$omset_perbulan,'peserta_kks_kps'=>$kps1,
+        //'omset'=>$omset_perbulan,
+        'peserta_kks_kps'=>$kps1,
          'peserta_kip_bsm'=>$kip1, 'peserta_kis'=>$kis1,'peserta_bpjs'=>$bpjs_mandiri,
          'peserta_jamsostek'=>$jamsostek,'peserta_asuransi_lainnya'=>$asuransi_kesehatan_lainnya,
          'peserta_pkh'=>$pkh1, 'penerima_raskin'=>$raskin1,
@@ -319,24 +333,23 @@ class C_Tabel extends My_Controller{
           );
 
           $data_klasifikasi=array('kecamatan'=>$kecamatan,'kelurahan'=>$kelurahan,
-       'jumlah_tanggungan'=>$jml_art,'keterangan_rumah'=>$total,
-       'jumlah_kepemilikan_aset'=>$total_aset,'program_sosial'=>$total_jaminan_sosial,'tahun_klasifikasi'=>date('Y'));
+       'jumlah_tanggungan'=>$jml_art,
+    //    'keterangan_rumah'=>$total,
+    //    'jumlah_kepemilikan_aset'=>$total_aset,'program_sosial'=>$total_jaminan_sosial,
+       'tahun_klasifikasi'=>date('Y'));
          
-        //   $where=array('id'=>$id,'aset_id'=>$id_aset,'rumah_id'=>$id_rumah,'tempat_id'=>$tempat_id);
-          $where=array('id'=>$id);
-          $where2=array('id'=>$kk_rumah);
-          $where3 = array('id' => $kk_aset);
-          $where4 = array('id'=>$tempat_id);
-
-        //   var_dump($tempat_id);die;
-
-          $this->m_tabel->update_data1($where4,$data,'tb_penduduk_pengenalan_tempat');
-          $this->m_tabel->update_data2($where2,$data2,'tb_penduduk_keterangan_rumah');
-          $this->m_tabel->update_data3($where3,$data4,'tb_penduduk_kepemilikan_aset');
-          $this->m_tabel->update_data4($where,$data_klasifikasi,'tb_klasifikasI_penduduk');
-//            $this->m_tabel->update_data($where, $data,$where2,$data2,$where3,$data4,$data_klasifikasi);
-          //  $this->m_tabel->update_data($where, $data,$data2,$data4,$data_klasifikasi);
-            redirect('c_tabel/tabel');
+        $where=array('klasifikasi_id'=>$id);
+        $where2=array('id'=>$kk_rumah);
+        $where3 = array('id' => $kk_aset);
+        $where4 = array('id'=>$tempat_id);
+        
+        $this->m_tabel->update_data1($where4,$data,'tb_penduduk_pengenalan_tempat');
+        $this->m_tabel->update_data2($where2,$data2,'tb_penduduk_keterangan_rumah');
+        $this->m_tabel->update_data3($where3,$data4,'tb_penduduk_kepemilikan_aset');
+        $this->m_tabel->update_data4($where,$data_klasifikasi,'tb_klasifikasi_penduduk'); //,$where2,$where3,$where4
+       $this->m_tabel->update_total_bobot_klasifikasi($this->input->post('id'));
+        
+        redirect('c_tabel/tabel'); //tabel
         }
        
         
@@ -348,12 +361,12 @@ class C_Tabel extends My_Controller{
     public function _rules(){
         $this->form_validation->set_rules('alamat','Alamat','required');
         $this->form_validation->set_rules('jenis_kelamin','Jenis Kelamin','required');
-        $this->form_validation->set_rules('krt','Nama Kepala Keluarga','required|alpha');
+        $this->form_validation->set_rules('krt','Nama Kepala Keluarga','required');
          $this->form_validation->set_rules('jml_art','Jumlah Anggota Rumah Tangga','required');
         $this->form_validation->set_rules('nik','Nomor Induk Keluarga','required|max_length[16]|numeric'); //|max_length[16]|min_length[16]
         $this->form_validation->set_rules('kk','Kartu Keluarga','required|max_length[16]|numeric'); //|max_length[16]|min_length[16]
         // $this->form_validation->set_rules('alamat_asal','Alamat Asal','required');
-        $this->form_validation->set_rules('kelurahan','Kelurahan','required');
+        $this->form_validation->set_rules('kelurahan','Desa','required');
         $this->form_validation->set_rules('kecamatan','Kecamatan','required');
         // $this->form_validation->set_rules('kota','Kota','required');
         // $this->form_validation->set_rules('jenis_pmks','Jenis PMKS','required');
@@ -376,6 +389,9 @@ class C_Tabel extends My_Controller{
     public function detail($penduduk_id){
         $this->load->model('m_tabel');
         $data['detail'] = $this->m_tabel->detail_tabel($penduduk_id);
+        $data['rumah'] = $this->m_tabel->get_sub_variabel();
+        $data['aset'] = $this->m_tabel->get_sub_variabel_aset();
+        $data['program'] = $this->m_tabel->get_sub_variabel_program();
        // $data['detail'] = $detail;
 
         $this->load->view('templates/header');
@@ -437,7 +453,70 @@ class C_Tabel extends My_Controller{
     function klasifikasi(){
         $data=$this->m_tabel->klasifikasi();
 
+    }
+
+    function buat_total_rumah($id){
+        $detail = $this->m_tabel->detail_tabel($id);
+        $rumah= $this->m_tabel->get_sub_variabel();
+
        
+            foreach ($rumah as $k) {
+                if ($k->sub_id== $detail->status_tempat_tinggal) {
+                     $status_tempat_tinggal= $k->skor;
+                }
+                if ($k->sub_id== $detail->status_lahan_tempat_tinggal) {
+                     $status_lahan= $k->skor;
+                }
+                if ($k->sub_id== $detail->luas_lantai) {
+                     $luas_lantai= $k->skor;
+                }
+                if ($k->sub_id== $detail->jenis_lantai_terluas) {
+                    $jenis_lantai= $k->skor;
+               }
+               if ($k->sub_id== $detail->jenis_dinding_terluas) {
+                   $jenis_dinding= $k->skor;
+                }
+                if ($k->sub_id== $detail->kondisi_dinding) {
+                    $kondisi_dinding= $k->skor;
+               }
+               if ($k->sub_id== $detail->jenis_atap_terluas) {
+                    $jenis_atap= $k->skor;
+                }
+                if ($k->sub_id== $detail->kondisi_atap) {
+                    $kondisi_atap= $k->skor;
+               }
+               if ($k->sub_id== $detail->sumber_air_minum) {
+                    $sumber_air_minum= $k->skor;
+                }
+                if ($k->sub_id== $detail->cara_memperoleh_air_minum) {
+                    $cara_memperoleh_air= $k->skor;
+               }
+               if ($k->sub_id== $detail->sumber_penerangan_utama) {
+                    $sumber_penerangan= $k->skor;
+                }
+                if ($k->sub_id== $detail->daya_terpasang) {
+                    $daya= $k->skor;
+               }
+               if ($k->sub_id== $detail->bahan_bakar_memasak) {
+                    $bahan_masak= $k->skor;
+                }
+                if ($k->sub_id== $detail->penggunaan_fasilitas_bab) {
+                    $fasilitas_bab= $k->skor;
+                }
+                if ($k->sub_id== $detail->jenis_kloset) {
+                    $jenis_kloset= $k->skor;
+               }
+               if ($k->sub_id== $detail->tempat_pembuangan_akhir_tinja) {
+                    $tempat_pembuangan_akhir_tinja= $k->skor;
+                }
+            }
+
+            $update_total_rumah= $status_tempat_tinggal+$status_lahan+$luas_lantai+$jenis_lantai+$jenis_dinding+$kondisi_dinding+$jenis_atap+$kondisi_atap+$sumber_air_minum+$cara_memperoleh_air+$sumber_penerangan+$daya+$bahan_masak+$fasilitas_bab+$jenis_kloset+$tempat_pembuangan_akhir_tinja;
+            $this->m_tabel->update_rumah($update_total_rumah);
+        
+
+        // var_dump($status_tempat_tinggal);die;
+
     }
 }
 

@@ -3,7 +3,16 @@ class C_User extends CI_Controller {
     public function user(){
         $data['total_pmks'] = $this->m_tabel->total_pmks();
        $data['total_perkecamatan'] = $this->m_tabel->total_perkecamatan();
-	//	$data['total_perdesa'] = $this->m_tabel->total_jenis();
+    //	$data['total_perdesa'] = $this->m_tabel->total_jenis();
+    $this->load->library('leaflet');
+		$config = array(
+			'center'         => '-6.9741651,109.139655', // Center of the map -7.099529908714814,109.17594909667969
+			'zoom'           => 12, // Map zoom
+			);
+		$this->leaflet->initialize($config);
+
+        $data['map'] =  $this->leaflet->create_map();
+        
         $this->load->view('templates/u_header');
         $this->load->view('user/view',$data);//
         $this->load->view('templates/u_footer');

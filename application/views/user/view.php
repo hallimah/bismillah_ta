@@ -36,14 +36,16 @@
         </div>
       </div>
       
-      <div class="col-md-9">
+      <div class="col-md-9 col-sm-8 col-xs-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>World Map</h2>
+          <h2>Peta<small>Kabupaten Tegal</small></h2>
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
-            <div id="echart_world_map" style="height:450px;"></div>
+            <!-- <div id="echart_world_map" style="height:450px;"></div> -->
+            <?php echo $map['html']; ?>
+            <?php echo $map['js']; ?>
           </div>
         </div>
       </div>

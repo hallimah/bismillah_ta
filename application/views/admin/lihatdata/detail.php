@@ -8,8 +8,15 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="x_panel">
+              
                   <div class="x_title">
                     <h2>Detail <small>Penduduk Miskin</small></h2>
+
+                    <div class="pull-right">
+                    <a class="btn btn-danger" href="<?php echo base_url('c_report/laporan_detail_penduduk/'.$detail->id) ?>">
+                    <i class="fa fa-file-pdf-o" ></i></a>
+                    <a class="btn btn-primary" href="<?php echo base_url('c_tabel/tabel') ?>">Kembali</a>
+                    </div>
                   
                     <div class="clearfix"></div>
                   </div>
@@ -96,67 +103,133 @@
                             <tbody>
                               <tr>
                                 <td>Status Tempat Tinggal</td>
-                                <td><?php echo $detail->status_tempat_tinggal ?></td>
+                                <?php foreach ($rumah as $key) { 
+                                if ($key->sub_id == $detail->status_tempat_tinggal) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                               <tr>
                                 <td>Status Lahan</td>
-                                <td><?php echo $detail->status_lahan_tempat_tinggal ?></td>
+                                <?php foreach ($rumah as $key) { 
+                                if ($key->sub_id == $detail->status_lahan_tempat_tinggal) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
+                                            
                               </tr>
                               <tr>
                                 <td>Luas Lantai</td>
-                                <td><?php echo $detail->luas_lantai ?></td>
+                                <?php foreach ($rumah as $key) { 
+                                if ($key->sub_id == $detail->luas_lantai) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                               <tr>
                                 <td>Jenis Lantai</td>
-                                <td><?php echo $detail->jenis_lantai_terluas ?></td>
+                                <?php foreach ($rumah as $key) { 
+                                if ($key->sub_id == $detail->jenis_lantai_terluas) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                               <tr>
                                 <td>Jenis Dinding </td>
-                                <td><?php echo $detail->jenis_dinding_terluas ?></td>
+                                <?php foreach ($rumah as $key) { 
+                                if ($key->sub_id == $detail->jenis_dinding_terluas) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
+                                
                               </tr>
                               <tr>
                                 <td>Kondisi Dinding</td>
-                                <td><?php echo $detail->kondisi_dinding ?></td>
+                                <?php foreach ($rumah as $key) { 
+                                if ($key->sub_id == $detail->kondisi_dinding) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                               <tr>
                                 <td>Jenis Atap</td>
-                                <td><?php echo $detail->jenis_atap_terluas ?></td>
+                                <?php foreach ($rumah as $key) { 
+                                if ($key->sub_id == $detail->jenis_atap_terluas) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                               <tr>
                                 <td>Kondisi Atap</td>
-                                <td><?php echo $detail->kondisi_atap ?></td>
+                                <?php foreach ($rumah as $key) { 
+                                if ($key->sub_id == $detail->kondisi_atap) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                               <tr>
                                 <td>Sumber Air Minum</td>
-                                <td><?php echo $detail->sumber_air_minum ?></td>
+                                <?php foreach ($rumah as $key) { 
+                                if ($key->sub_id == $detail->sumber_air_minum) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                               <tr>
                                 <td>Cara Memperoleh Air</td>
-                                <td><?php echo $detail->cara_memperoleh_air_minum ?></td>
+                                <?php foreach ($rumah as $key) { 
+                                if ($key->sub_id == $detail->cara_memperoleh_air_minum) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                               <tr>
                                 <td>Sumber Penerangan Utama</td>
-                                <td><?php echo $detail->sumber_penerangan_utama ?></td>
+                                <?php foreach ($rumah as $key) { 
+                                if ($key->sub_id == $detail->sumber_penerangan_utama) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                               <tr>
                                 <td>Daya Listrik</td>
-                                <td><?php echo $detail->daya_terpasang ?></td>
+                                <?php foreach ($rumah as $key) { 
+                                if ($key->sub_id == $detail->daya_terpasang) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                               <tr>
                                 <td>Bahan Bakar Memasak</td>
-                                <td><?php echo $detail->bahan_bakar_memasak ?></td>
+                                <?php foreach ($rumah as $key) { 
+                                if ($key->sub_id == $detail->bahan_bakar_memasak) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                               <tr>
                                 <td>Fasilitas BAB</td>
-                                <td><?php echo $detail->penggunaan_fasilitas_bab ?></td>
+                                <?php foreach ($rumah as $key) { 
+                                if ($key->sub_id == $detail->penggunaan_fasilitas_bab) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                               <tr>
                                 <td>Jenis Kloset</td>
-                                <td><?php echo $detail->jenis_kloset ?></td>
+                                <?php foreach ($rumah as $key) { 
+                                if ($key->sub_id == $detail->jenis_kloset) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                               <tr>
                                 <td>Tempat Pembuangan Akhir Tinja</td>
-                                <td><?php echo $detail->tempat_pembuangan_akhir_tinja ?></td>
+                                <?php foreach ($rumah as $key) { 
+                                if ($key->sub_id == $detail->tempat_pembuangan_akhir_tinja) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                             </tbody>
                           </table>
@@ -164,97 +237,216 @@
                         <!-- /.col -->
                       </div>
                       <!-- /.row -->
-
-  <!-- Table row -->
-  <div class="row">
+                      
+                      <!-- Table row -->
+                      <div class="row">
                         <div class="col-xs-12 invoice-header">
                           <h3>3. Kepemilikan Aset & Program Sosial</h3>
                         </div>
-                        <div class="col-xs-12 table">
-
-                          <table class="table table-striped">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <table  class="table">
                             <thead>
                               <tr>
                                 <th>Aset Bergerak</th>
-                                <th>Keterangan </th>
-                                <th> </th>
-                                <th>Aset Tidak Bergerak</th>
-                                <th>Keterangan </th>
-                                <th> </th>
-                                <th>Program Pemerintah</th>
                                 <th>Keterangan </th>
                               </tr>
                             </thead>
                             <tbody>
                               <tr>
-                                <td>Status Tempat Tinggal</td>
-                                <td><?php echo $detail->status_tempat_tinggal ?></td>
-                                <td></td>
-                                <td>Status Tempat Tinggal</td>
-                                <td><?php echo $detail->status_tempat_tinggal ?></td>
-                                <td></td>
-                                <td>Status Tempat Tinggal</td>
-                                <td><?php echo $detail->status_tempat_tinggal ?></td>
+                              <td>Tabung Gas 5,5 atau Lebih</td>
+                                <?php foreach ($aset as $key) { 
+                                if ($key->sub_id == $detail->tabung_gas) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
+                              </tr>
+
+                              <tr>
+                              <td>Lemari Es/Kulkas</td>
+                              <?php foreach ($aset as $key) { 
+                                if ($key->sub_id == $detail->lemari_es) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
+                              </tr>
+
+                              <tr>
+                              <td>Pemanas Air</td>
+                              <?php foreach ($aset as $key) { 
+                                if ($key->sub_id == $detail->pemanas_air) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
+                              </tr>
+
+                              <tr>
+                              <td>Televisi</td>
+                              <?php foreach ($aset as $key) { 
+                                if ($key->sub_id == $detail->televisi) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
+                              </tr>
+                              
+                              <tr>
+                              <td>Emas</td>
+                              <?php foreach ($aset as $key) { 
+                                if ($key->sub_id == $detail->emas) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
+                              </tr>
+
+                              <tr>
+                              <td>Komputer</td>
+                              <?php foreach ($aset as $key) { 
+                                if ($key->sub_id == $detail->komputer) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
+                              </tr>
+                              
+                              <tr>
+                              <td>Sepeda</td>
+                              <?php foreach ($aset as $key) { 
+                                if ($key->sub_id == $detail->sepeda) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
+                              </tr>
+
+                              <tr>
+                              <td>Sepeda Motor</td>
+                              <?php foreach ($aset as $key) { 
+                                if ($key->sub_id == $detail->sepeda_motor) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
+                              </tr>
+
+                            </tbody>
+                          </table>
+
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>Aset Tidak Bergerak</th>
+                                <th>Keterangan </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                              <td>Lahan</td>
+                              <?php foreach ($aset as $key) { 
+                                if ($key->sub_id == $detail->lahan) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
+                              </tr>
+
+                              <tr>
+                              <td>Properti Lain</td>
+                              <?php foreach ($aset as $key) { 
+                                if ($key->sub_id == $detail->properti_lain) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
+                              </tr>
+
+                              <tr>
+                              <td>Pekerjaan</td>
+                              <?php foreach ($aset as $key) { 
+                                if ($key->sub_id == $detail->pekerjaan) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+
+                       
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>Program Pemerintah</th>
+                                <th>Keterangan </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                              <td>Kartu Keluarga Sejahtera (KKS)/ Kartu Perlindungan Sosial (KPS)</td>
+                              <?php foreach ($program as $key) { 
+                                if ($key->sub_id == $detail->peserta_kks_kps) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                               <tr>
-                                <td>Status Lahan</td>
-                                <td><?php echo $detail->status_lahan_tempat_tinggal ?></td>
+                              <td>kartu Indonesia Pintar (KIP)/ Bantuan Siswa Miskin (BSM)</td>
+                              <?php foreach ($program as $key) { 
+                                if ($key->sub_id == $detail->peserta_kip_bsm) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                               <tr>
-                                <td>Luas Lantai</td>
-                                <td><?php echo $detail->luas_lantai ?></td>
+                              <td>Kartu Indonesia Sehat (KIS)/ BPJS Kesehatan/Jamkesdma</td>
+                              <?php foreach ($program as $key) { 
+                                if ($key->sub_id == $detail->peserta_kis) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                               <tr>
-                                <td>Jenis Lantai</td>
-                                <td><?php echo $detail->jenis_lantai_terluas ?></td>
+                              <td>BPJS Kesehatan peserta mandiri</td>
+                              <?php foreach ($program as $key) { 
+                                if ($key->sub_id == $detail->peserta_bpjs) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                               <tr>
-                                <td>Jenis Dinding </td>
-                                <td><?php echo $detail->jenis_dinding_terluas ?></td>
+                              <td>aminan sosial tenaga kerja (Jamsostek)/ BPJS ketenagakerjaan</td>
+                              <?php foreach ($program as $key) { 
+                                if ($key->sub_id == $detail->peserta_jamsostek) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                               <tr>
-                                <td>Kondisi Dinding</td>
-                                <td><?php echo $detail->kondisi_dinding ?></td>
+                              <td>Asuransi kesehatan lainnya</td>
+                              <?php foreach ($program as $key) { 
+                                if ($key->sub_id == $detail->peserta_asuransi_lainnya) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                               <tr>
-                                <td>Jenis Atap</td>
-                                <td><?php echo $detail->jenis_atap_terluas ?></td>
+                              <td>Program Keluarga Harapan (PKH)</td>
+                              <?php foreach ($program as $key) { 
+                                if ($key->sub_id == $detail->peserta_pkh) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                               <tr>
-                                <td>Kondisi Atap</td>
-                                <td><?php echo $detail->kondisi_atap ?></td>
+                              <td>Beras untuk orang miskin (Raskin)</td>
+                              <?php foreach ($program as $key) { 
+                                if ($key->sub_id == $detail->penerima_raskin) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                               <tr>
-                                <td>Sumber Air Minum</td>
-                                <td><?php echo $detail->sumber_air_minum ?></td>
-                              </tr>
-                              <tr>
-                                <td>Cara Memperoleh Air</td>
-                                <td><?php echo $detail->cara_memperoleh_air_minum ?></td>
-                              </tr>
-                              <tr>
-                                <td>Sumber Penerangan Utama</td>
-                                <td><?php echo $detail->sumber_penerangan_utama ?></td>
-                              </tr>
-                              <tr>
-                                <td>Daya Listrik</td>
-                                <td><?php echo $detail->daya_terpasang ?></td>
-                              </tr>
-                              <tr>
-                                <td>Bahan Bakar Memasak</td>
-                                <td><?php echo $detail->bahan_bakar_memasak ?></td>
-                              </tr>
-                              <tr>
-                                <td>Fasilitas BAB</td>
-                                <td><?php echo $detail->penggunaan_fasilitas_bab ?></td>
-                              </tr>
-                              <tr>
-                                <td>Jenis Kloset</td>
-                                <td><?php echo $detail->jenis_kloset ?></td>
-                              </tr>
-                              <tr>
-                                <td>Tempat Pembuangan Akhir Tinja</td>
-                                <td><?php echo $detail->tempat_pembuangan_akhir_tinja ?></td>
+                              <td>Kredit Usaha Rakyat (KUR)</td>
+                              <?php foreach ($program as $key) { 
+                                if ($key->sub_id == $detail->kur) { ?>
+                                  <td><?php echo $key->nama ?></td>   
+                                <?php }
+                                 } ?>
                               </tr>
                             </tbody>
                           </table>

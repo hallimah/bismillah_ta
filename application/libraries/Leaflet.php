@@ -16,7 +16,7 @@ class Leaflet
 {
 	protected 	$ci;
 	var $tileLayer ="http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png";
-	var $attribution = '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>';
+	var $attribution = 'Kabupaten Tegal';
 
 	// Map State Options
 	var $center             ="-0.959, 100.39716";

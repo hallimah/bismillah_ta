@@ -20,8 +20,7 @@ class Admin extends CI_Controller {
 	 */
 	public function dashboard()
 	{
-		
-
+		$data['grafik']=$this->m_tabel->grafik();
 		$data['total_pmks'] = $this->m_tabel->total_pmks();
 		$data['total_kelurahan'] = $this->m_tabel->total_kelurahan();
 		$data['total_kecamatan'] = $this->m_tabel->total_kecamatan();
@@ -30,9 +29,28 @@ class Admin extends CI_Controller {
 		// $data['total_perkecamatan'] = $this->m_tabel->total_perkecamatan();
 		// $data['total_jenis'] = $this->m_tabel->total_jenis();
 
+		// $query = $this->db->query("SELECT tb_kecamatan.nama_kecamatan as nama_kecamatan, count(klasifikasi='MISKIN') as miskin 
+		// FROM tb_klasifikasi_penduduk JOIN tb_kecamatan ON tb_kecamatan.kecamatan_id = tb_klasifikasi_penduduk.kecamatan 
+		// GROUP BY nama_kecamatan ORDER BY nama_kecamatan"); //ORDER BY nama_kecamatan
+		// $data['viewer'] = json_encode(array_column($query->result(), 'miskin'));
+
+		//coba
+		$this->load->library('leaflet');
+		$config = array(
+			'center'         => '-6.9741651,109.139655', // Center of the map -7.099529908714814,109.17594909667969
+			'zoom'           => 12, // Map zoom
+			);
+		$this->leaflet->initialize($config);
+
+		$data['map'] =  $this->leaflet->create_map();
+
 		$this->load->view('templates/header');
 		$this->load->view('admin/dashboard',$data);
 		$this->load->view('templates/footer');
+	}
+
+	function visualisasi_get_kecamatan(){
+		$this->db->query('SELECT * FROM tb_kecamatan')->get()->result();
 	}
 
 	/** EXAMPLE MAPS */
@@ -60,7 +78,7 @@ class Admin extends CI_Controller {
 	public function visualisasi(){
 		$this->load->library('leaflet');
 		$config = array(
-			'center'         => '-6.879704, 109.125595', // Center of the map
+			'center'         => '-7.099529908714814,109.17594909667969', // Center of the map
 			'zoom'           => 12, // Map zoom
 			);
 		$this->leaflet->initialize($config);
@@ -110,5 +128,6 @@ class Admin extends CI_Controller {
      $this->m_tabel->update_profil($where,$data,'tb_admin');
      redirect('admin/profil');
 
-    }
+	}
+
 }

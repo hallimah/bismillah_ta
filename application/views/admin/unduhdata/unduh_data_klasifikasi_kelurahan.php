@@ -25,9 +25,9 @@
                         <th>Tahun Klasifikasi</th>
                         <th>Kecamatan</th>
                         <th>Desa</th>
-                          <th>Total Penduduk Kesejahteraan Rendah</th>
-                          <th>Total Penduduk Kesejahteraan Sedang</th>
-                          <th>Total Penduduk Kesejahteraan Tinggi</th>
+                        <th>Total Penduduk Hampir Miskin</th>
+                          <th>Total Penduduk Miskin</th>
+                          <th>Total Penduduk Sangat Miskin</th>
                           <th>Cetak</th>
                           
                         </tr>

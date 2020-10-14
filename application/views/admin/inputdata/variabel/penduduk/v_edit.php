@@ -65,7 +65,7 @@
                       <input type="hidden" class="form-control 0" value="<?php echo $key->sub_variabel_id ?>" name="sub_variabel_id[]" required>
                       <input type="hidden" class="form-control 0" value="<?php echo $key->sub_id ?>" name="sub_id[]" required>
                       <input type="text"  class="form-control 0" value="<?php echo $key->nama ?>" name="nama[]" required></td>
-                    <td><input type="number" pattern="[0-9]+"  class="form-control 0" value="<?php echo $key->skor ?>" name="skor[]" required></td>
+                    <td><input type="text" pattern="[0-9]+"  class="form-control 0" value="<?php echo $key->skor ?>" name="skor[]" required></td>
                   </tr>
                   <?php }?>
                 </tbody>                

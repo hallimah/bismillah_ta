@@ -320,6 +320,7 @@ class mamdani extends CI_Model{
   ->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan')
   ->join('tb_desa','tb_desa.id_desa=tb_klasifikasi_penduduk.kelurahan')
   ->join('tb_penduduk_pengenalan_tempat','tb_penduduk_pengenalan_tempat.id=tb_klasifikasi_penduduk.tempat_id')
+  ->order_by('klasifikasi_id','desc')
   ->get()->result();
   }
 
@@ -341,12 +342,12 @@ class mamdani extends CI_Model{
 
   function total_bobot(){
     $this->db->query("UPDATE tb_klasifikasi_penduduk kp JOIN(
-			SELECT id, sum(total_bobot) total_bobot FROM(
-			SELECT id,bobot_tanggungan total_bobot FROM tb_klasifikasi_penduduk UNION ALL
-			SELECT id,bobot_keterangan_rumah FROM tb_klasifikasi_penduduk UNION ALL 
-			SELECT id,bobot_jumlah_aset FROM tb_klasifikasi_penduduk UNION ALL
-			SELECT id,bobot_program_sosial FROM tb_klasifikasi_penduduk 
-		)g GROUP BY id)a ON kp.id=a.id SET kp.total_bobot=a.total_bobot");
+			SELECT klasifikasi_id, sum(total_bobot) total_bobot FROM(
+			SELECT klasifikasi_id,bobot_tanggungan total_bobot FROM tb_klasifikasi_penduduk UNION ALL
+			SELECT klasifikasi_id,bobot_keterangan_rumah FROM tb_klasifikasi_penduduk UNION ALL 
+			SELECT klasifikasi_id,bobot_jumlah_aset FROM tb_klasifikasi_penduduk UNION ALL
+			SELECT klasifikasi_id,bobot_program_sosial FROM tb_klasifikasi_penduduk 
+		)g GROUP BY klasifikasi_id)a ON kp.klasifikasi_id=a.klasifikasi_id SET kp.total_bobot=a.total_bobot");
   }
 
 
@@ -396,13 +397,18 @@ class mamdani extends CI_Model{
     foreach ($penduduk as $pend) {
       foreach ($klasifikasi as $klas) {
         if (($klas->min <= $pend->total_bobot) && ($pend->total_bobot <= $klas->max)) {
-          $post= $this->db->query("UPDATE tb_klasifikasi_penduduk SET klasifikasi='$klas->nama' WHERE id = '$pend->id'");
+          $post= $this->db->query("UPDATE tb_klasifikasi_penduduk SET klasifikasi='$klas->nama' WHERE klasifikasi_id = '$pend->klasifikasi_id'");
         }
+
+        // $this->db->query("UPDATE tb_klasifikasi_penduduk SET klasifikasi=(CASE 
+        // WHEN '$klas->min' <= '$pend->total_bobot' AND '$pend->total_bobot'<= '$klas->max' THEN '$klas->nama' ELSE 'tidak' END) WHERE klasifikasi_id='$pend->klasifikasi_id' ");
+
       }
     }
 
     $this->db->trans_complete();
-    print_r($post);
+    // print_r($post);
+    return $post;
   }
   
 }

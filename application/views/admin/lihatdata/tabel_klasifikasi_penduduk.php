@@ -65,7 +65,7 @@
                           <td><?php echo $ct->nama_krt ?></td>
                           <td><?php echo $ct->nama_kecamatan ?></td>
                           <td><?php echo $ct->nama_desa ?></td>
-                          <td><?php echo $ct->jumlah_art ?></td>
+                          <td><?php echo $ct->jumlah_tanggungan ?></td>
                           <td><?php echo $ct->keterangan_rumah ?></td>
                           <td><?php echo $ct->jumlah_kepemilikan_aset ?></td>
                           <td><?php echo $ct->program_sosial ?></td>

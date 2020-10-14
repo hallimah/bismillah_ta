@@ -139,9 +139,9 @@ public function laporan_klasifikasi_kecamatan($id){
   
   $data['tahun']=$this->m_report->get_tahun_klasifikasi_select_kecamatan($id);
   $data['sum_kemiskinan']=$this->m_report->count_kemiskinan_select($id);
-  $data['sum_ketelantaran']=$this->m_report->count_ketelantaran_select($id);
-  $data['sum_kecacatan']=$this->m_report->count_kecacatan_select($id);
-  $data['sum_kecamatan']=$this->m_report->count_kecamatan_select($id);
+  // $data['sum_ketelantaran']=$this->m_report->count_ketelantaran_select($id);
+  // $data['sum_kecacatan']=$this->m_report->count_kecacatan_select($id);
+   $data['sum_kecamatan']=$this->m_report->count_kecamatan_select($id);
 
   $data['total_penduduk']= $this->m_report->total_penduduk($id);
 
@@ -715,6 +715,30 @@ $this->dompdf->load_html($html);
 $this->dompdf->render();
 $this->dompdf->stream("LaporanKlasifikasiPenduduk.pdf",array('Attachment'=>0));
 }
+
+
+//__________ CETAK LAPORAN DETAIL PENDUDUK____________________________________//
+public function laporan_detail_penduduk($id){
+  $this->load->library('dompdf_gen');
+
+  $this->load->model('m_tabel');
+  $data['detail'] = $this->m_tabel->detail_tabel($id);
+  $data['rumah'] = $this->m_tabel->get_sub_variabel();
+  $data['aset'] = $this->m_tabel->get_sub_variabel_aset();
+  $data['program'] = $this->m_tabel->get_sub_variabel_program();
+
+  $this->load->view('admin/lihatdata/laporan_detail_penduduk',$data);
+
+  $paper_size = 'A4';
+  $orientation = 'portrait';
+  $html = $this->output->get_output();
+  $this->dompdf->set_paper($paper_size, $orientation);
+
+  $this->dompdf->load_html($html);
+  $this->dompdf->render();
+  $this->dompdf->stream("LaporanDetailPenduduk.pdf",array('Attachment'=>0));
+}
+
 
 }
     ?>

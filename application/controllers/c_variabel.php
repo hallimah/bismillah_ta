@@ -24,6 +24,8 @@ public function bobot_Penduduk(){
    $data['c_variabel']=$this->m_variabel->pembobotan_penduduk();
    $data['kesejahteraan']=$this->m_variabel->tb_tingkat_kesejahteraan();
     $data['kriteria'] = $this->m_variabel->tabel_variabel();
+    $data['aset'] = $this->m_variabel->tabel_variabel_aset();
+    $data['program'] = $this->m_variabel->tabel_variabel_program();
     $this->load->view('templates/header');
     $this->load->view('admin/inputdata/variabel/penduduk/input_bobot',$data); //
     $this->load->view('templates/footer');
@@ -71,44 +73,84 @@ function insert_var_penduduk(){
         $this->load->view('templates/footer');
     }
 
+    public function edit_variabel_aset($id){
+      $data['c_variabel'] = $this->m_variabel->edit_variabel_aset($id);
+      $data['sub_variabel'] = $this->m_variabel->edit_sub_variabel_aset($id);
+
+       $this->load->view('templates/header');
+       $this->load->view('admin/inputdata/variabel/penduduk/v_edit_aset',$data); //
+       $this->load->view('templates/footer');
+   }
+
+   public function edit_variabel_program($id){
+    $data['c_variabel'] = $this->m_variabel->edit_variabel_program($id);
+    $data['sub_variabel'] = $this->m_variabel->edit_sub_variabel_program($id);
+
+     $this->load->view('templates/header');
+     $this->load->view('admin/inputdata/variabel/penduduk/v_edit_program',$data); //
+     $this->load->view('templates/footer');
+ }
+
     /**update variabel penduduk */
     function update_variabel_penduduk(){
-      // $variabel_id = $this->input->post('variabel_id');
-      // $nama_variabel = $this->input->post('nama_variabel');
-      // $jenis_io = $this->input->post('jenis_io');
-      
+  
       $dt=$this->input->post();
-
-      // $nama = $this->input->post('nama');
-      // $skor = $this->input->post('skor');
-      // $sub_variabel_id = $this->input->post('sub_variabel_id');
-      // $sub_id = $this->input->post('sub_id');
 
       $array=array('nama_variabel'=>$dt['nama_variabel']);
       $where=array('variabel_id'=>$dt['variabel_id']);
       $p=$this->m_variabel->update_variabel_penduduk($where,$array,'tb_variabel');
-     
-    //   $i = $sub_variabel_id;
-    //   foreach($sub_id as $key) {
-    //     $this->m_variabel->update_sub_variabel_penduduk($sub_variabel_id, $key, $nama[$key], $skor[$key]);
-    //     $i;
-    // }
-
     
-    for ($i=0; $i<count($dt['sub_id']) ; $i++) { 
+      for ($i=0; $i<count($dt['sub_id']) ; $i++) {
+        $batch[] = array('sub_id'=>$dt['sub_id'][$i],
+        'sub_variabel_id'=>$dt['sub_variabel_id'][$i],
+        'nama'=>$dt['nama'][$i],
+        'skor'=>$dt['skor'][$i]
+      );
+    }
+    $q=$this->db->update_batch('tb_sub_variabel', $batch, 'sub_id');
+    
+    redirect('c_variabel/bobot_Penduduk');
+  }
+
+  function update_variabel_penduduk_aset(){
+  
+    $dt=$this->input->post();
+
+    $array=array('nama_variabel'=>$dt['nama_variabel']);
+    $where=array('variabel_id'=>$dt['variabel_id']);
+    $p=$this->m_variabel->update_variabel_penduduk_aset($where,$array,'tb_variabel_aset');
+  
+    for ($i=0; $i<count($dt['sub_id']) ; $i++) {
       $batch[] = array('sub_id'=>$dt['sub_id'][$i],
       'sub_variabel_id'=>$dt['sub_variabel_id'][$i],
       'nama'=>$dt['nama'][$i],
       'skor'=>$dt['skor'][$i]
-
-);
+    );
   }
+  $q=$this->db->update_batch('tb_sub_variabel_aset', $batch, 'sub_id');
+  
+  redirect('c_variabel/bobot_Penduduk');
+}
 
-  $q=$this->db->update_batch('tb_sub_variabel', $batch, 'sub_id');
-      // $this->m_variabel->update_variabel_penduduk($where,$array1);
+function update_variabel_penduduk_program(){
+  
+  $dt=$this->input->post();
 
-      redirect('c_variabel/bobot_Penduduk');
-    }
+  $array=array('nama_variabel'=>$dt['nama_variabel']);
+  $where=array('variabel_id'=>$dt['variabel_id']);
+  $p=$this->m_variabel->update_variabel_penduduk_program($where,$array,'tb_variabel_program_sosial');
+
+  for ($i=0; $i<count($dt['sub_id']) ; $i++) {
+    $batch[] = array('sub_id'=>$dt['sub_id'][$i],
+    'sub_variabel_id'=>$dt['sub_variabel_id'][$i],
+    'nama'=>$dt['nama'][$i],
+    'skor'=>$dt['skor'][$i]
+  );
+}
+$q=$this->db->update_batch('tb_sub_variabel_program_sosial', $batch, 'sub_id');
+
+redirect('c_variabel/bobot_Penduduk');
+}
 
     /**tabel variabel kategori kecamatan */
     public function VariabelKecamatan(){
