@@ -5,12 +5,13 @@ class m_report extends CI_Model{
   function data_pmks_perkecamatan($limit, $start){
     $this->db->limit($limit, $start);
     $this->db->select("tb_kecamatan.nama_kecamatan as nama_kecamatan,  tahun_input,
-    COUNT(IF(tb_penduduk_pengenalan_tempat.jenis_kelamin='P',1,0)) as perempuan,
-    COUNT(IF(tb_penduduk_pengenalan_tempat.jenis_kelamin='L',1,0)) as lakilaki");
+    SUM(IF(tb_penduduk_pengenalan_tempat.jenis_kelamin='P',1,0)) as perempuan,
+    SUM(IF(tb_penduduk_pengenalan_tempat.jenis_kelamin='L',1,0)) as lakilaki");
     $this->db->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_penduduk_pengenalan_tempat.kecamatan','left');
     $this->db->group_by('nama_kecamatan,tahun_input');
   //  $this->db->from('tb_penduduk_pengenalan_tempat');
    $q= $this->db->get('tb_penduduk_pengenalan_tempat');
+
 
  $r=$q->result_array();
  return $r;
@@ -20,8 +21,8 @@ class m_report extends CI_Model{
   function laporan_data_pmks_perkecamatan($id){
   //  $this->db->limit($limit, $start);
     $this->db->select('tb_kecamatan.nama_kecamatan as nama_kecamatan, tb_desa.nama_desa as nama_desa, tahun_input,
-    COUNT(IF(tb_penduduk_pengenalan_tempat.jenis_kelamin="P",1,0)) as perempuan,
-    COUNT(IF(tb_penduduk_pengenalan_tempat.jenis_kelamin="L",1,0)) as lakilaki');
+    SUM(IF(tb_penduduk_pengenalan_tempat.jenis_kelamin="P",1,0)) as perempuan,
+    SUM(IF(tb_penduduk_pengenalan_tempat.jenis_kelamin="L",1,0)) as lakilaki');
     $this->db->from('tb_penduduk_pengenalan_tempat');
     $this->db->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_penduduk_pengenalan_tempat.kecamatan');
     $this->db->join('tb_desa','tb_desa.id_desa=tb_penduduk_pengenalan_tempat.kelurahan');
@@ -52,7 +53,7 @@ class m_report extends CI_Model{
     $this->db->join('tb_penduduk_kepemilikan_aset','tb_penduduk_kepemilikan_aset.id=tb_klasifikasi_penduduk.aset_id');
     $this->db->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan');
     $this->db->join('tb_desa','tb_desa.id_desa=tb_klasifikasi_penduduk.kelurahan');
-    $this->db->group_by('tb_klasifikasi_penduduk.id,nama_kecamatan,nama_desa');
+    $this->db->group_by('tb_klasifikasi_penduduk.klasifikasi_id,nama_kecamatan,nama_desa');
     $this->db->from('tb_klasifikasi_penduduk');
     $this->db->where_in('nama_kecamatan',$id);
     $this->db->where_in('tahun_input',$p);
@@ -280,6 +281,7 @@ public function count_kecamatan_select($id){
   return $total;
 }
 
+
 public function count_kemiskinan_select($id){
 // $this->db->select_sum('klasifikasi','sedikit');
 // $this->db->where('tahun_klasifikasi',$id);
@@ -387,17 +389,27 @@ public function get_tahun_pmks_select($id){
 }
 
 function count_laki_laki($id){
-  $q=$this->db->query("SELECT COUNT(jenis_kelamin) as sum_laki_laki
-  FROM tb_penduduk_pengenalan_tempat GROUP BY tahun_input='$id' HAVING (sum_laki_laki='L')");
-    $total = $q->num_rows();
+  // $q=$this->db->query("SELECT SUM(jenis_kelamin) as sum_laki_laki
+  // FROM tb_penduduk_pengenalan_tempat GROUP BY tahun_input='$id' HAVING (sum_laki_laki='L')");
+
+  $q =$this->db->query("SELECT COUNT(jenis_kelamin) as laki
+   FROM tb_penduduk_pengenalan_tempat WHERE jenis_kelamin='L' ");
+  $total= $q->num_rows();
 return $total;
+
 }
 
 function count_perempuan($id){
-  $q=$this->db->query("SELECT COUNT(jenis_kelamin) as sum_perempuan
-  FROM tb_penduduk_pengenalan_tempat GROUP BY tahun_input='$id' HAVING (sum_perempuan='P')");
+//   $q=$this->db->query("SELECT SUM(jenis_kelamin) as sum_perempuan
+//   FROM tb_penduduk_pengenalan_tempat  GROUP BY tahun_input='$id' HAVING (sum_perempuan='P')");
+//     $total = $q->num_rows();
+// return $total;
+
+$q=$this->db->query("SELECT count(jenis_kelamin) as sum_perempuan
+FROM tb_penduduk_pengenalan_tempat WHERE tahun_input='$id' AND jenis_kelamin='P'"); //HAVING (sum_perempuan='P')
     $total = $q->num_rows();
 return $total;
+
 }
 
 function count_pmks_kecamatan_select($id){
@@ -449,31 +461,65 @@ public function excel_klasifikasi_kelurahan($id){
 }
 /**EXPORT EXCEL KLASIFIKASI UNDUH DATA KLASIFIKASI */
 
-function select_untuk_laporan_klasifikasi_kecamatan($id){
-  //   $this->db->select('*');
-  //   $this->db->join('tb_penduduk_pengenalan_tempat','tb_penduduk_pengenalan_tempat.id=tb_klasifikasi_penduduk.tempat_id');
-  //   $this->db->join('tb_penduduk_keterangan_rumah','tb_penduduk_keterangan_rumah.id=tb_klasifikasi_penduduk.rumah_id');
-  //   $this->db->join('tb_penduduk_kepemilikan_aset','tb_penduduk_kepemilikan_aset.id=tb_klasifikasi_penduduk.aset_id');
-  //   $this->db->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan');
-  //  // $this->db->join('tb_desa','tb_desa.id_desa=tb_klasifikasi_penduduk.kelurahan');
-  //   $this->db->group_by('tb_klasifikasi_penduduk.id,nama_kecamatan');
-  //   $this->db->from('tb_klasifikasi_penduduk');
-  //   $this->db->where('nama_kecamatan',$id);
-  //   $q= $this->db->get()->result();
-  //   return $q;
+function select_untuk_laporan_klasifikasi_kecamatan($id,$kecamatan){ //
 
-  $this->db->select('nama_kecamatan,
-      sum(if(klasifikasi="Hampir Miskin",1,0)) as rendah, sum(if(klasifikasi="Miskin",1,0)) as sedang,
-      sum(if(klasifikasi="Sangat Miskin",1,0)) as tinggi, tahun_klasifikasi'); //,tahun_masuk as tahun_klasifikasi
-        $this->db->from('tb_klasifikasi_penduduk');
-        $this->db->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan');
-        $this->db->where('tahun_klasifikasi',$id);
-        $this->db->group_by('nama_kecamatan, tahun_klasifikasi'); //,tahun_klasifikasi
-        return $query=$this->db->get()->result();
+      //   $this->db->select('nama_kecamatan,
+      // sum(if(klasifikasi="Hampir Miskin",1,0)) as rendah, sum(if(klasifikasi="Miskin",1,0)) as sedang,
+      // sum(if(klasifikasi="Sangat Miskin",1,0)) as tinggi, tahun_klasifikasi'); //,tahun_masuk as tahun_klasifikasi
+      //   $this->db->from('tb_klasifikasi_penduduk');
+      //   $this->db->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan');
+      //   $this->db->where_in('nama_kecamatan',$kecamatan);
+      //   $this->db->where_in('tahun_klasifikasi',$id);
+      //   $this->db->group_by('nama_kecamatan, tahun_klasifikasi'); //,tahun_klasifikasi
+      //   return $query=$this->db->get()->result();
+
+      $this->db->select('*')->from('tb_klasifikasi_penduduk')
+      ->join('tb_penduduk_pengenalan_tempat','tb_penduduk_pengenalan_tempat.id=tb_klasifikasi_penduduk.tempat_id')
+      ->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan')
+      ->join('tb_desa','tb_desa.id_desa=tb_klasifikasi_penduduk.kelurahan')
+      ->where_in('nama_kecamatan', $kecamatan)
+      ->where_in('tahun_klasifikasi',$id);
+      return $query = $this->db->get()->result();
 
 }
 
-function select_untuk_laporan_klasifikasi_kelurahan($id, $kec, $kel){
+function laporan_klasifikasi_kecamatan($id){ //
+
+  $this->db->select('nama_kecamatan,
+sum(if(klasifikasi="Hampir Miskin",1,0)) as rendah, sum(if(klasifikasi="Miskin",1,0)) as sedang,
+sum(if(klasifikasi="Sangat Miskin",1,0)) as tinggi, tahun_klasifikasi'); //,tahun_masuk as tahun_klasifikasi
+  $this->db->from('tb_klasifikasi_penduduk');
+  $this->db->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan');
+  $this->db->where('tahun_klasifikasi',$id);
+  $this->db->group_by('nama_kecamatan, tahun_klasifikasi'); //,tahun_klasifikasi
+  return $query=$this->db->get()->result();
+
+}
+
+function select_untuk_laporan_klasifikasi_kelurahan($id,$kec,$kel){
+  // $this->db->select('nama_kecamatan, nama_desa,
+  // sum(if(klasifikasi="Hampir Miskin",1,0)) as rendah, sum(if(klasifikasi="Miskin",1,0)) as sedang,
+  // sum(if(klasifikasi="Sangat Miskin",1,0)) as tinggi,tahun_klasifikasi'); //,tahun_masuk as tahun_klasifikasi
+  //   $this->db->from('tb_klasifikasi_penduduk');
+  //   $this->db->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan');
+  //   $this->db->join('tb_desa','tb_desa.id_desa=tb_klasifikasi_penduduk.kelurahan');
+  //   $this->db->where_in('tahun_klasifikasi',$id);
+  //   $this->db->where_in('nama_kecamatan',$kec);
+  //   $this->db->where_in('nama_desa',$kel);
+  //   $this->db->group_by('nama_kecamatan, nama_desa,tahun_klasifikasi'); //,tahun_klasifikasi
+  //   return $query=$this->db->get()->result();
+
+    $this->db->select('*')->from('tb_klasifikasi_penduduk')
+    ->join('tb_penduduk_pengenalan_tempat','tb_penduduk_pengenalan_tempat.id=tb_klasifikasi_penduduk.tempat_id')
+    ->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan')
+    ->join('tb_desa','tb_desa.id_desa=tb_klasifikasi_penduduk.kelurahan')
+    ->where_in('nama_kecamatan', $kec)
+    ->where_in('nama_desa',$kel)
+    ->where_in('tahun_klasifikasi',$id);
+    return $query = $this->db->get()->result();
+}
+
+function laporan_klasifikasi_desa($id){
   $this->db->select('nama_kecamatan, nama_desa,
   sum(if(klasifikasi="Hampir Miskin",1,0)) as rendah, sum(if(klasifikasi="Miskin",1,0)) as sedang,
   sum(if(klasifikasi="Sangat Miskin",1,0)) as tinggi,tahun_klasifikasi'); //,tahun_masuk as tahun_klasifikasi
@@ -481,8 +527,6 @@ function select_untuk_laporan_klasifikasi_kelurahan($id, $kec, $kel){
     $this->db->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan');
     $this->db->join('tb_desa','tb_desa.id_desa=tb_klasifikasi_penduduk.kelurahan');
     $this->db->where_in('tahun_klasifikasi',$id);
-    $this->db->where_in('nama_kecamatan',$kec);
-    $this->db->where_in('nama_desa',$kel);
     $this->db->group_by('nama_kecamatan, nama_desa,tahun_klasifikasi'); //,tahun_klasifikasi
     return $query=$this->db->get()->result();
 }
@@ -508,10 +552,61 @@ function select_untuk_laporan_klasifikasi_penduduk($id){
   return $query = $this->db->get()->result();
 }
 
-function total_penduduk(){
-  $query = $this->db->query('SELECT * FROM tb_klasifikasi_penduduk');
-return $query->num_rows();
-}
+  function total_penduduk($id){
+    $query = $this->db->query("SELECT * FROM tb_klasifikasi_penduduk WHERE tahun_klasifikasi='$id'");
+  return $query->num_rows();
+  }
 
-    }
+  function total_penduduk_kecamatan_tahun($id){
+    $query = $this->db->query("SELECT * FROM tb_klasifikasi_penduduk WHERE tahun_klasifikasi='$id' ");
+    return $query->num_rows();
+  }
+
+  function select_laporan_pertahun_perkecamatan($kecamatan,$tahun){
+    $this->db->select('*')->from('tb_klasifikasi_penduduk')
+  ->join('tb_penduduk_pengenalan_tempat','tb_penduduk_pengenalan_tempat.id=tb_klasifikasi_penduduk.tempat_id')
+  ->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan')
+  ->join('tb_desa','tb_desa.id_desa=tb_klasifikasi_penduduk.kelurahan')
+  ->where_in('nama_kecamatan', $kecamatan)
+  ->where_in('tahun_klasifikasi',$tahun);
+  return $query = $this->db->get()->result();
+  }
+
+  function total_penduduk_pertahun_perkecamatan($kecamatan,$tahun){
+    $query = $this->db->query("SELECT * FROM tb_klasifikasi_penduduk 
+    JOIN tb_kecamatan ON tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan
+    WHERE nama_kecamatan='$kecamatan' AND tahun_klasifikasi='$tahun'");
+  return $query->num_rows();
+  }
+
+  public function count_kecamatan_select_pertahun_perkecamatan($kecamatan,$tahun){
+    $query =$this->db->distinct()->select('nama_kecamatan')->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan')
+    ->where_in('nama_kecamatan',$kecamatan)->where_in('tahun_klasifikasi',$tahun)->get('tb_klasifikasi_penduduk');
+    $total = $query->num_rows();
+    return $total;
+  }
+
+  function count_kelurahan_select_kel_pertahun_perkecamatan($kecamatan,$tahun){
+    $query =$this->db->distinct()->select('nama_desa')->join('tb_desa','tb_desa.id_desa=tb_klasifikasi_penduduk.kelurahan')
+    ->join('tb_kecamatan', 'tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan')
+    ->where_in('nama_kecamatan',$kecamatan)->where_in('tahun_klasifikasi',$tahun)->get('tb_klasifikasi_penduduk');
+    $total = $query->num_rows();
+    return $total;
+  }
+
+  function get_tahun_klasifikasi_select_kecamatan_pertahun_perkecamatan($tahun){
+    $this->db->select('tahun_klasifikasi');
+    $this->db->where('tahun_klasifikasi',$tahun);
+    $q=$this->db->get('tb_klasifikasi_penduduk')->row();
+    return $q->tahun_klasifikasi;
+  }
+
+  function select_laporan_klasifikasi_pertahun_perkecamatan($id, $kecamatan){
+    $query = $this->db->query("SELECT * FROM tb_klasifikasi_penduduk 
+    JOIN tb_kecamatan ON tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan
+    WHERE tahun_klasifikasi='$id' AND nama_kecamatan='$kecamatan'");
+  return $query->num_rows();
+  }
+
+}
 ?>

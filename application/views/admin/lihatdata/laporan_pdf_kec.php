@@ -4,6 +4,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document - Tingkat Kesejahteraan</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
     <style>
 body{
     font-family:"Times New Roman"Arial, Helvetica, sans-serif;
@@ -136,8 +138,20 @@ hr{
 
 </style>
 </head><body>
-<div class="container">
-    <div id="left">
+<div class="container-fluid">
+<div class="row">
+        <div class="col-md-4">
+        <img src="assets/production/images/logoo.png" alt="..." class="imgs">
+        </div>
+        <div class="text-center">
+            <div class="col-md-8">
+                <h5>PEMERINTAH KABUPATEN TEGAL</h5>
+                <h3>DINAS SOSIAL</h3>
+                <span>Alamat: Jl.A.Yani No. 3 Slawi Kode Pos 52412 <br>Telp/Fax(0283) 491379 email: dinsos@tegalkab.go.id</span>
+            </div>
+        </div>
+    </div>
+    <!-- <div id="left">
         <img src="assets/production/images/logoo.png" alt="..." class="imgs">
     </div>
     <div id="splitter"></div>
@@ -148,7 +162,7 @@ hr{
             <span>Alamat: Jl.A.Yani No. 3 Slawi Kode Pos 52412</span> <br>
             <span>Telp/Fax(0283) 491379 email: dinsos@tegalkab.go.id</span>
         </div>
-    </div>
+    </div> -->
     <?php date_default_timezone_set('Asia/Jakarta');
     // $tahun=date('Y');
         $dates=date('d  F Y');
@@ -164,7 +178,7 @@ hr{
                 <div class="col30">
                 <label>: 28</label><br>
                 <label>: Kabupaten Tegal</label><br>
-                <label>: <?php echo $sum_kecamatan ?></label><br>
+                <label>: <?php echo $sum_kecamatan ?> Kecamatan</label><br>
                 </div>
                 <div class="col50">
                     <label for="">Tahun </label><br>

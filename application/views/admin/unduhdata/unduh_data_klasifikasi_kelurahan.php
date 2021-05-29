@@ -48,7 +48,7 @@
                        <td><?php echo $row->tinggi ?></td>
                        <td>
                           <a class="btn btn-danger btn-xs" title="Lihat Data" href="<?php echo base_url('c_report/export_pdf_select_kelurahan/'.$row->tahun_klasifikasi.'/'.$row->nama_kecamatan.'/'.$row->nama_desa) ?>"><i class="fa fa-file-pdf-o"></i></a>
-                          <a class="btn btn-success btn-xs" title="Lihat Data" href="<?php echo base_url('c_report/export_excel_klasifikasi_kel_per_tahun/'.$row->tahun_klasifikasi) ?>"><i class="fa fa-file-excel-o"></i></a>
+                          <!-- <a class="btn btn-success btn-xs" title="Lihat Data" href="<php echo base_url('c_report/export_excel_klasifikasi_kel_per_tahun/'.$row->tahun_klasifikasi) ?>"><i class="fa fa-file-excel-o"></i></a> -->
                         </td>
                       </tr>
                        <?php endforeach;  ?>

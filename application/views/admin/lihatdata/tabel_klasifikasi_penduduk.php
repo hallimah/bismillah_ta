@@ -23,8 +23,8 @@
           <?php endforeach;?>
                           </ul>
                         </div>
-                    <a class="btn btn-success" href="<?php echo base_url('c_report/excel/') ?>" title="Unduh Excel">
-                    <i class="fa fa-file-excel-o" ></i></a>
+                    <!-- <a class="btn btn-success" href="<php echo base_url('c_report/excel/') ?>" title="Unduh Excel">
+                    <i class="fa fa-file-excel-o" ></i></a> -->
                      <!-- <a class="btn btn-warning" href="<php echo base_url('c_report/laporan/') ?>" title="Export PDF">
                     <i class="fa fa-file-pdf-o"></i></a> -->
                     </div>

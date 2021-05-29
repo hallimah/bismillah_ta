@@ -158,24 +158,28 @@ hr{
                 <div class="col50">
                     <label for="">Kode Kota </label><br>
                     <label for="">Kota </label><br>
-                    <label for="">Total Kecamatan </label><br>
-                    <label for="">Total Desa </label><br>
+                <label for="">Tahun </label><br>
                 </div>
                 <div class="col30">
                 <label>: 28</label><br>
                 <label>: Kabupaten Tegal</label><br>
-                <label>: <?php echo $sum_kecamatan ?></label><br>
-                <label>: <?php echo $sum_kelurahan ?></label><br>
+                <label>: <?php echo $tahun ?></label><br>
                 </div>
                 <div class="col50">
-                    <label for="">Tahun </label><br>
-                    <label for="">Jumlah Laki-Laki</label><br>
-                    <label for="">Jumlah Perempuan</label><br>
+                    
+                    <!-- <label for="">Jumlah Laki-Laki</label><br>
+                    <label for="">Jumlah Perempuan</label><br> -->
+                    <label for="">Total Kecamatan </label><br>
+                    <label for="">Total Desa </label><br>
+                    <label for="">Total Penduduk</label><br>
                 </div>
                 <div class="col30">
-                <label>: <?php echo $tahun ?></label><br>
-               <label>: <?php echo $sum_laki_laki ?> Jiwa</label><br>
-                <label> : <?php echo $sum_perempuan ?> Jiwa</label><br>
+                
+               <!-- <label>: <php echo $sum_laki_laki ?> Jiwa</label><br> -->
+                <!-- <label> : <php echo $sum_perempuan ?> Jiwa</label><br> -->
+                    <label>: <?php echo $sum_kecamatan ?> Kecamatan</label><br>
+                <label>: <?php echo $sum_kelurahan ?> Desa</label><br>
+                <label> : <?php echo $sum_penduduk ?> Jiwa</label><br>
                 </div>
             </div>  
         </div>
@@ -187,7 +191,6 @@ hr{
                 <th class="th2">Nama Desa </th>
                 <th class="th5">Total Laki-Laki</th>
                 <th class="th6">Total Perempuan</th>
-                <!-- <th class="th7">Tingkat Kesejahteraan</th> -->
             </tr>
             <?php $no=1;
             foreach ($report as $f) : ?>
@@ -197,8 +200,8 @@ hr{
                 <td class="th2"><?php echo $f->nama_desa ?></td>
                 <td class="th5"><?php echo $f->perempuan ?></td>
                 <td class="th6"><?php echo $f->lakilaki ?></td>
-                <!-- <td class="th7"><php echo $f->keterangan ?></td> -->
             </tr>
+            
             <?php endforeach; ?>
         </table>        
     <!-- /Tabel--><br><br>

@@ -1,6 +1,6 @@
- <?php
+<?php
 
-class M_Tabel extends CI_Model{
+class M_tabel extends CI_Model{
 
     /**prfil admin */
     public function profil(){

@@ -4,10 +4,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document - Tingkat Kesejahteraan</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <style>
-body{
-    font-family:"Times New Roman"Arial, Helvetica, sans-serif;
-    font-size:11px;
+*{
+    font-family:"Tahoma",Arial, Helvetica, sans-serif;
+    font-size:15px;
     
 }
 
@@ -43,7 +45,7 @@ hr{
     /* background-color:#000000; */
     color:black;
 }
-.container {
+.container-fluid {
     word-wrap:break-word;
     background:white;
     display:block;
@@ -51,11 +53,11 @@ hr{
    margin-bottom:0.5cm;
    margin-top:0.5cm;
 }
-.container[size="4A"]{
+.container-fluid[size="4A"]{
     width:21cm;
     height:21.7cm;
 }
-.container[size="4A"][layout="landscape"]{
+.container-fluid[size="4A"][layout="landscape"]{
     width:29.7cm;
     height:21cm;
 }
@@ -131,8 +133,20 @@ hr{
 
 </style>
 </head><body>
-<div class="container">
-    <div id="left">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+        <img src="assets/production/images/logoo.png" alt="..." class="imgs">
+        </div>
+        <div class="text-center">
+            <div class="col-md-8">
+                <h5>PEMERINTAH KABUPATEN TEGAL</h5>
+                <h3>DINAS SOSIAL</h3>
+                <span>Alamat: Jl.A.Yani No. 3 Slawi Kode Pos 52412 <br>Telp/Fax(0283) 491379 email: dinsos@tegalkab.go.id</span>
+            </div>
+        </div>
+    </div>
+    <!-- <div id="left">
         <img src="assets/production/images/logoo.png" alt="..." class="imgs">
     </div>
     <div id="splitter"></div>
@@ -143,13 +157,13 @@ hr{
             <span>Alamat: Jl.A.Yani No. 3 Slawi Kode Pos 52412</span> <br>
             <span>Telp/Fax(0283) 491379 email: dinsos@tegalkab.go.id</span>
         </div>
-    </div>
+    </div> -->
     <?php date_default_timezone_set('Asia/Jakarta');
     // $tahun=date('Y');
         $dates=date('d  F Y');
     ?><br><hr><br>
     <label for="">Laporan Detail Penduduk Miskin</label><br><br>
-    <h3>1. Keterangan Tempat</h3>
+    <h5>1. Keterangan Tempat</h5>
 
     <div class="kiri">
     <table>
@@ -200,7 +214,7 @@ hr{
     <br>
     <br>
     <br>
-    <h3>2.Pengenalan Rumah</h3>
+    <h5>2.Pengenalan Rumah</h5>
     <div class="">
         <table id="table">
             <tr>
@@ -342,7 +356,7 @@ hr{
             </tr>
         </table>
     </div>
-    <h3>3. Kepemilikan Aset & Keikutsertaan Program</h3>
+    <h5>3. Kepemilikan Aset & Keikutsertaan Program</h5>
     <div class="kiri">
                           <table  id="table">
                           
@@ -457,7 +471,7 @@ hr{
         <div class="kiri">
             <label for="">KEPALA DINAS SOSIAL</label><br>
             <label for="">KABUPATEN TEGAL</label><br><br><br><br><br><br>
-            <label for="">( _________________________ )</label><br>
+            <label for="">( _______________________ )</label><br>
             <label for="">Pembina Utama Muda</label><br>
             <label for="">NIP.</label><br>
         </div>

@@ -13,7 +13,7 @@
                     <h2>Detail <small>Penduduk Miskin</small></h2>
 
                     <div class="pull-right">
-                    <a class="btn btn-danger" href="<?php echo base_url('c_report/laporan_detail_penduduk/'.$detail->id) ?>">
+                    <a class="btn btn-danger" href="<?php echo base_url('print_pdf/lp_detail_penduduk/'.$detail->id) ?>">
                     <i class="fa fa-file-pdf-o" ></i></a>
                     <a class="btn btn-primary" href="<?php echo base_url('c_tabel/tabel') ?>">Kembali</a>
                     </div>

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class c_report extends CI_Controller{
+class C_report extends CI_Controller{
 
 public function __construct(){
   parent::__construct();
@@ -80,16 +80,6 @@ public function dataklasifikasiKelurahan(){
 #PDF
 public function laporan_klasifikasi_kelurahan($id){
   $this->load->library('dompdf_gen');
-//   $where = array('tahun_klasifikasi' => $id );
-//   $data['report'] = $this->db->query("SELECT * FROM mamdani WHERE 
-//   tahun_klasifikasi ='$id'")->result();
- 
-//  // $data['tahun']=$this->m_report->get_tahun_klasifikasi_kelurahan($id);
-//   $data['sum_kemiskinan']=$this->m_report->count_kemiskinan($id);
-//   $data['sum_ketelantaran']=$this->m_report->count_ketelantaran($id);
-//   $data['sum_kecacatan']=$this->m_report->count_kecacatan($id);
-//   $data['sum_kecamatan']=$this->m_report->count_kecamatan($id);
-//   $data['sum_kelurahan']=$this->m_report->count_kelurahan($id);
 
 $data['report']=$this->m_report->select_untuk_laporan_klasifikasi_kelurahan($id);
 
@@ -118,49 +108,49 @@ $data['total_penduduk']= $this->m_report->total_penduduk($id);
 }
 
 public function laporan_klasifikasi_kecamatan($id){
-  $this->load->library('dompdf_gen');
- 
- // $where = array('tahun_klasifikasi' => $id );
-  // $data['report'] = $this->db->query("SELECT * FROM mamdani_kecamatan WHERE 
-  // tahun_klasifikasi ='$id'")->result();
-
-  // $data['report']= $this->m_report->select_untuk_laporan_klasifikasi_kecamatan($id);
-  
-  // //$data['tahun']=$this->m_report->get_tahun_klasifikasi_kecamatan($id);
-  // $data['sum_kemiskinan']=$this->m_report->count_kemiskinan_kec($id);
-  // $data['sum_ketelantaran']=$this->m_report->count_ketelantaran_kec($id);
-  // $data['sum_kecacatan']=$this->m_report->count_kecacatan_kec($id);
-  // $data['sum_kecamatan']=$this->m_report->count_kecamatan_kec($id);
-
-  $data['report']=$this->m_report->select_untuk_laporan_klasifikasi_kecamatan($id);
+  // $this->load->library('dompdf_gen');
+  $data['report']=$this->m_report->laporan_klasifikasi_kecamatan($id);
 
   $data['tingkat']= $this->mamdani->klasifikasi_wilayah();
 	$data['kali_kec']=$this->mamdani->get_total_penduduk_kecamatan();
   
   $data['tahun']=$this->m_report->get_tahun_klasifikasi_select_kecamatan($id);
   $data['sum_kemiskinan']=$this->m_report->count_kemiskinan_select($id);
-  // $data['sum_ketelantaran']=$this->m_report->count_ketelantaran_select($id);
-  // $data['sum_kecacatan']=$this->m_report->count_kecacatan_select($id);
    $data['sum_kecamatan']=$this->m_report->count_kecamatan_select($id);
 
-  $data['total_penduduk']= $this->m_report->total_penduduk($id);
+  $data['total_penduduk']= $this->m_report->total_penduduk_kecamatan_tahun($id);
 
-  $this->load->view('admin/lihatdata/laporan_pdf_kec',$data);
+  // $this->load->view('admin/lihatdata/laporan_pdf_kec',$data);
 
-  $paper_size = 'A4';
-  $orientation = 'portrait';
-  $html = $this->output->get_output();
-  $this->dompdf->set_paper($paper_size, $orientation);
+  // $paper_size = 'A4';
+  // $orientation = 'portrait';
+  // $html = $this->output->get_output();
+  // $this->dompdf->set_paper($paper_size, $orientation);
 
-  $this->dompdf->load_html($html);
-  $this->dompdf->render();
-  $this->dompdf->stream("LaporanKlasifikasiPMKSperKecamatan.pdf",array('Attachment'=>0));
+  // $this->dompdf->load_html($html);
+  // $this->dompdf->render();
+  // $this->dompdf->stream("LaporanKlasifikasiPMKSperKecamatan.pdf",array('Attachment'=>0));
+
+   // panggil library yang kita buat sebelumnya yang bernama pdfgenerator
+   $this->load->library('pdfgenerator');
+   
+   // filename dari pdf ketika didownload
+   $file_pdf = 'laporan';
+   // setting paper
+   $paper = 'A4';
+   //orientasi paper potrait / landscape
+   $orientation = "portrait";
+   
+   $html = $this->load->view('admin/lihatdata/laporan_pdf_kec',$data, true);	    
+   
+   // run dompdf
+   $this->pdfgenerator->generate($html, $file_pdf,$paper,$orientation);
 
 }
 
 #EXCEL
 public function excel(){
-  $fuzzy['fuzzy']= $this->mamdani->fuzzy('mamdani');
+  $fuzzy['fuzzy']= $this->mamdani->fuzzy();
 
   require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel.php');
   require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php');
@@ -201,10 +191,10 @@ public function excel(){
       $object->getActiveSheet()->setCellValue('A'.$baris, $no++);
       $object->getActiveSheet()->setCellValue('B'.$baris, $key->nama_kecamatan);
       $object->getActiveSheet()->setCellValue('C'.$baris, $key->nama_desa);
-      $object->getActiveSheet()->setCellValue('D'.$baris, $key->kemiskinan);
-      $object->getActiveSheet()->setCellValue('E'.$baris, $key->ketelantaran);
-      $object->getActiveSheet()->setCellValue('F'.$baris, $key->kecacatan);
-      $object->getActiveSheet()->setCellValue('G'.$baris, $key->keterangan);
+      $object->getActiveSheet()->setCellValue('D'.$baris, $key->rendah);
+      $object->getActiveSheet()->setCellValue('E'.$baris, $key->sedang);
+      $object->getActiveSheet()->setCellValue('F'.$baris, $key->tinggi);
+      $object->getActiveSheet()->setCellValue('G'.$baris, $key->klasifikasi);
 
       $baris++;
   }
@@ -223,7 +213,12 @@ public function excel(){
 }
 
 public function excel_kecamatan(){
-  $fuzzy['fuzzy']= $this->mamdani->excel_kecamatan('mamdani_kecamatan');
+ // $fuzzy['fuzzy']= $this->mamdani->excel_kecamatan('tb_klasifikasi_penduduk');
+
+// $fuzzy['fuzzy']= $this->mamdani->fuzzy('tb_klasifikasi_penduduk');
+$fuzzy['fuzzy']= $this->mamdani->viewKecamatan();
+$fuzzy['tingkat']= $this->mamdani->klasifikasi_wilayah();
+$fuzzy['kali_kec']=$this->mamdani->get_total_penduduk_kecamatan();
 
   require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel.php');
   require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php');
@@ -242,30 +237,30 @@ public function excel_kecamatan(){
   $object->getActiveSheet()->setCellValue('A5','Kota');
   $object->getActiveSheet()->setCellValue('A7','NO');
   $object->getActiveSheet()->setCellValue('B7','Kecamatan');
-  $object->getActiveSheet()->setCellValue('C7','Total Kemiskinan');
-  $object->getActiveSheet()->setCellValue('D7','Total Ketelantaran');
-  $object->getActiveSheet()->setCellValue('E7','Total Kecacatan');
-  $object->getActiveSheet()->setCellValue('F7','Tingkat Kesejahteraan');
+  $object->getActiveSheet()->setCellValue('C7','Total rendah');
+  $object->getActiveSheet()->setCellValue('D7','Total sedang');
+  $object->getActiveSheet()->setCellValue('E7','Total berat');
+ // $object->getActiveSheet()->setCellValue('F7','Tingkat Kesejahteraan');
 
   $baris_date=3;
   $baris_kode=4;
   $baris_kota=5;
-  $baris = 8;
+  $baris = 7;
   $no = 1;
 
   date_default_timezone_set('Asia/Jakarta');
   $date= date('Y');
 
-  $object->getActiveSheet()->setCellValue('B'.$baris_date, $date);
-  $object->getActiveSheet()->setCellValue('B'.$baris_kode, '28');
-  $object->getActiveSheet()->setCellValue('B'.$baris_kota, 'Kabupaten Tegal');
+  // $object->getActiveSheet()->setCellValue('B'.$baris_date, $date);
+  // $object->getActiveSheet()->setCellValue('B'.$baris_kode, '28');
+  // $object->getActiveSheet()->setCellValue('B'.$baris_kota, 'Kabupaten Tegal');
   foreach ($fuzzy['fuzzy'] as $key) {
       $object->getActiveSheet()->setCellValue('A'.$baris, $no++);
       $object->getActiveSheet()->setCellValue('B'.$baris, $key->nama_kecamatan);
-      $object->getActiveSheet()->setCellValue('C'.$baris, $key->kemiskinan);
-      $object->getActiveSheet()->setCellValue('D'.$baris, $key->ketelantaran);
-      $object->getActiveSheet()->setCellValue('E'.$baris, $key->kecacatan);
-      $object->getActiveSheet()->setCellValue('F'.$baris, $key->keterangan);
+      $object->getActiveSheet()->setCellValue('C'.$baris, $key->rendah);
+      $object->getActiveSheet()->setCellValue('D'.$baris, $key->sedang);
+      $object->getActiveSheet()->setCellValue('E'.$baris, $key->tinggi);
+    //  $object->getActiveSheet()->setCellValue('F'.$baris, $key->keterangan);
 
       $baris++;
   }
@@ -287,40 +282,41 @@ public function excel_kecamatan(){
 
 /**PDF DAN EXCEL UNDUH DATA, UNDUH DATA KLASIFIKASI SELECT TAHUN */
 #PDF KECAMATAN SELECT TAHUN
-function export_pdf_select_kecamatan($id){
-  $this->load->library('dompdf_gen');
+function export_pdf_select_kecamatan($id,$kecamatan){
+  $this->load->library('pdfgenerator');
 
-  // $where = array('tahun_klasifikasi' => $id );
-  // $data['report'] = $this->db->query("SELECT * FROM tb_klasifikasi_penduduk WHERE 
-  // tahun_klasifikasi ='$id'")->result();
-  
-  $data['report']=$this->m_report->select_untuk_laporan_klasifikasi_kecamatan($id);
+  $data['report']=$this->m_report->select_untuk_laporan_klasifikasi_kecamatan($id, $kecamatan);
 
   $data['tingkat']= $this->mamdani->klasifikasi_wilayah();
 	$data['kali_kec']=$this->mamdani->get_total_penduduk_kecamatan();
   
-  $data['tahun']=$this->m_report->get_tahun_klasifikasi_select_kecamatan($id);
-  $data['sum_kemiskinan']=$this->m_report->count_kemiskinan_select($id);
-  $data['sum_ketelantaran']=$this->m_report->count_ketelantaran_select($id);
-  $data['sum_kecacatan']=$this->m_report->count_kecacatan_select($id);
-  $data['sum_kecamatan']=$this->m_report->count_kecamatan_select($id);
+  $data['tahun']=$this->m_report->get_tahun_klasifikasi_select_kecamatan($id, $kecamatan);
+  $data['sum_penduduk']=$this->m_report->select_laporan_klasifikasi_pertahun_perkecamatan($id, $kecamatan);
+  $data['sum_kemiskinan']=$this->m_report->count_kemiskinan_select($id, $kecamatan);
+  $data['sum_ketelantaran']=$this->m_report->count_ketelantaran_select($id, $kecamatan);
+  $data['sum_kecacatan']=$this->m_report->count_kecacatan_select($id, $kecamatan);
+  $data['sum_kecamatan']=$this->m_report->count_kecamatan_select($id, $kecamatan);
+
+
+  // $this->load->view('admin/unduhdata/laporan_pdf_kec_select',$data);
+  $this->load->library('pdfgenerator');
+   
+  // filename dari pdf ketika didownload
+  $file_pdf = 'laporan';
+  // setting paper
+  $paper = 'A4';
+  //orientasi paper potrait / landscape
+  $orientation = "portrait";
   
-  $this->load->view('admin/unduhdata/laporan_pdf_kec_select',$data);
-
-  $paper_size = 'A4';
-  $orientation = 'portrait';
-  $html = $this->output->get_output();
-  $this->dompdf->set_paper($paper_size, $orientation);
-
-  $this->dompdf->load_html($html);
-  $this->dompdf->render();
-  $this->dompdf->stream("LaporanKlasifikasiPMKStiapKecamatan$id.pdf",array('Attachment'=>0));
+  $html = $this->load->view('admin/lihatdata/laporan_pdf_kec_select',$data, true);	    
+  
+  // run dompdf
+  $this->pdfgenerator->generate($html, $file_pdf,$paper,$orientation);
 
 }
 
 #PDF KELURAHAN SELECT TAHUN
 function export_pdf_select_kelurahan($id, $kec, $kel){
-  $this->load->library('dompdf_gen');
 
   // $where = array('tahun_klasifikasi' => $id );
   // $data['report'] = $this->db->query("SELECT * FROM mamdani WHERE 
@@ -347,16 +343,21 @@ function export_pdf_select_kelurahan($id, $kec, $kel){
 
   $data['sum_kelurahan']=$this->m_report->count_kelurahan_select_kel($id);
 
-  $this->load->view('admin/unduhdata/laporan_pdf_kel_select',$data);
+  // $this->load->view('admin/unduhdata/laporan_pdf_kel_select',$data);
 
-  $paper_size = 'A4';
-  $orientation = 'portrait';
-  $html = $this->output->get_output();
-  $this->dompdf->set_paper($paper_size, $orientation);
-
-  $this->dompdf->load_html($html);
-  $this->dompdf->render();
-  $this->dompdf->stream("LaporanKlasifikasiPMKStiapKelurahan$id.pdf",array('Attachment'=>0));
+  $this->load->library('pdfgenerator');
+   
+  // filename dari pdf ketika didownload
+  $file_pdf = 'laporan';
+  // setting paper
+  $paper = 'A4';
+  //orientasi paper potrait / landscape
+  $orientation = "portrait";
+  
+  $html = $this->load->view('admin/unduhdata/laporan_pdf_kel_select',$data, true);	    
+  
+  // run dompdf
+  $this->pdfgenerator->generate($html, $file_pdf,$paper,$orientation);
 
 }
 
@@ -494,8 +495,10 @@ function export_pdf_pmks_kec_pertahun($id){
   $data['tahun']=$this->m_report->get_tahun_pmks_select($id);
   $data['sum_laki_laki']=$this->m_report->count_laki_laki($id);
   $data['sum_perempuan']=$this->m_report->count_perempuan($id);
+  $data['sum_penduduk']=$this->m_report->total_penduduk_kecamatan_tahun($id);
   $data['sum_kecamatan']=$this->m_report->count_pmks_kecamatan_select($id);
   $data['sum_kelurahan']=$this->m_report->count_pmks_kelurahan_select($id);
+
   
   $this->load->view('admin/unduhdata/laporan_pmks_kec_select',$data);
 
@@ -646,35 +649,35 @@ public function export_data_pmks_per_kecamatan($id, $p){
   $object->getActiveSheet()->setCellValue('B'.$baris_kode, '28');
   $object->getActiveSheet()->setCellValue('B'.$baris_kota, 'Kabupaten Tegal');
   foreach ($fuzzy['fuzzy'] as $key) {
-    $object->getActiveSheet()->setCellValue('A'.$baris, $no++);
-    $object->getActiveSheet()->setCellValue('B'.$baris, $key->nama_kecamatan);
-    $object->getActiveSheet()->setCellValue('C'.$baris, $key->nama_desa);
-    $object->getActiveSheet()->setCellValue('D'.$baris, $key->kk);
-    $object->getActiveSheet()->setCellValue('E'.$baris, $key->nik);
-    $object->getActiveSheet()->setCellValue('F'.$baris, $key->nama_art);
-    $object->getActiveSheet()->setCellValue('G'.$baris, $key->jenis_kelamin);
-    $object->getActiveSheet()->setCellValue('H'.$baris, $key->jumlah_art);
-    $object->getActiveSheet()->setCellValue('I'.$baris, $key->status_tempat_tinggal);
-    $object->getActiveSheet()->setCellValue('J'.$baris, $key->status_lahan_tempat_tinggal);
-    $object->getActiveSheet()->setCellValue('K'.$baris, $key->luas_lantai);
-    $object->getActiveSheet()->setCellValue('L'.$baris, $key->jenis_lantai_terluas);
-    $object->getActiveSheet()->setCellValue('M'.$baris, $key->jenis_dinding_terluas);
-    $object->getActiveSheet()->setCellValue('N'.$baris, $key->kondisi_dinding);
-    $object->getActiveSheet()->setCellValue('O'.$baris, $key->jenis_atap_terluas);
-    $object->getActiveSheet()->setCellValue('P'.$baris, $key->kondisi_atap);
-    $object->getActiveSheet()->setCellValue('Q'.$baris, $key->sumber_air_minum);
-    $object->getActiveSheet()->setCellValue('R'.$baris, $key->cara_memperoleh_air_minum);
-    $object->getActiveSheet()->setCellValue('S'.$baris, $key->sumber_penerangan_utama);
-    $object->getActiveSheet()->setCellValue('T'.$baris, $key->daya_terpasang);
-    $object->getActiveSheet()->setCellValue('U'.$baris, $key->bahan_bakar_memasak);
-    $object->getActiveSheet()->setCellValue('V'.$baris, $key->penggunaan_fasilitas_bab);
-    $object->getActiveSheet()->setCellValue('W'.$baris, $key->jenis_kloset);
-    $object->getActiveSheet()->setCellValue('X'.$baris, $key->tempat_pembuangan_akhir_tinja);
-    $object->getActiveSheet()->setCellValue('Y'.$baris, $key->total_aset);
-    $object->getActiveSheet()->setCellValue('Z'.$baris, $key->pekerjaan);
-    $object->getActiveSheet()->setCellValue('AA'.$baris, $key->omset);
-    $object->getActiveSheet()->setCellValue('AB'.$baris, $key->total_jamianan_sosial);
-    $object->getActiveSheet()->setCellValue('AC'.$baris, $key->tahun_input);
+    // $object->getActiveSheet()->setCellValue('A'.$baris, $no++);
+    // $object->getActiveSheet()->setCellValue('B'.$baris, $key->nama_kecamatan);
+    // $object->getActiveSheet()->setCellValue('C'.$baris, $key->nama_desa);
+    // $object->getActiveSheet()->setCellValue('D'.$baris, $key->kk);
+    // $object->getActiveSheet()->setCellValue('E'.$baris, $key->nik);
+    // $object->getActiveSheet()->setCellValue('F'.$baris, $key->nama_art);
+    // $object->getActiveSheet()->setCellValue('G'.$baris, $key->jenis_kelamin);
+    // $object->getActiveSheet()->setCellValue('H'.$baris, $key->jumlah_art);
+    // $object->getActiveSheet()->setCellValue('I'.$baris, $key->status_tempat_tinggal);
+    // $object->getActiveSheet()->setCellValue('J'.$baris, $key->status_lahan_tempat_tinggal);
+    // $object->getActiveSheet()->setCellValue('K'.$baris, $key->luas_lantai);
+    // $object->getActiveSheet()->setCellValue('L'.$baris, $key->jenis_lantai_terluas);
+    // $object->getActiveSheet()->setCellValue('M'.$baris, $key->jenis_dinding_terluas);
+    // $object->getActiveSheet()->setCellValue('N'.$baris, $key->kondisi_dinding);
+    // $object->getActiveSheet()->setCellValue('O'.$baris, $key->jenis_atap_terluas);
+    // $object->getActiveSheet()->setCellValue('P'.$baris, $key->kondisi_atap);
+    // $object->getActiveSheet()->setCellValue('Q'.$baris, $key->sumber_air_minum);
+    // $object->getActiveSheet()->setCellValue('R'.$baris, $key->cara_memperoleh_air_minum);
+    // $object->getActiveSheet()->setCellValue('S'.$baris, $key->sumber_penerangan_utama);
+    // $object->getActiveSheet()->setCellValue('T'.$baris, $key->daya_terpasang);
+    // $object->getActiveSheet()->setCellValue('U'.$baris, $key->bahan_bakar_memasak);
+    // $object->getActiveSheet()->setCellValue('V'.$baris, $key->penggunaan_fasilitas_bab);
+    // $object->getActiveSheet()->setCellValue('W'.$baris, $key->jenis_kloset);
+    // $object->getActiveSheet()->setCellValue('X'.$baris, $key->tempat_pembuangan_akhir_tinja);
+    // $object->getActiveSheet()->setCellValue('Y'.$baris, $key->total_aset);
+    // $object->getActiveSheet()->setCellValue('Z'.$baris, $key->pekerjaan);
+    // $object->getActiveSheet()->setCellValue('AA'.$baris, $key->omset);
+    // $object->getActiveSheet()->setCellValue('AB'.$baris, $key->total_jamianan_sosial);
+    // $object->getActiveSheet()->setCellValue('AC'.$baris, $key->tahun_input);
 
 
     
@@ -697,23 +700,35 @@ public function export_data_pmks_per_kecamatan($id, $p){
 /**UNDUH DATA-> DATA PMKS-> LAPORAN DATA PMKS PERTAHUN */
 
 function unduh_laporan_klasifikasi_penduduk($id){
-  $this->load->library('dompdf_gen');
+  $this->load->library('pdfgenerator');
 $data['report']=$this->m_report->select_untuk_laporan_klasifikasi_penduduk($id);
 $data['total_penduduk']= $this->m_report->total_penduduk($id);
 $data['sum_kecamatan']=$this->m_report->count_kecamatan_select($id);
 $data['sum_kelurahan']=$this->m_report->count_kelurahan_select_kel($id);
 $data['tahun']=$this->m_report->get_tahun_klasifikasi_select_kecamatan($id);
 
-$this->load->view('admin/lihatdata/laporan_klasifikasi_penduduk',$data);
+// $this->load->view('admin/lihatdata/laporan_klasifikasi_penduduk',$data);
 
-$paper_size = 'A4';
-$orientation = 'portrait';
-$html = $this->output->get_output();
-$this->dompdf->set_paper($paper_size, $orientation);
+// $paper_size = 'A4';
+// $orientation = 'portrait';
+// $html = $this->output->get_output();
+// $this->dompdf->set_paper($paper_size, $orientation);
 
-$this->dompdf->load_html($html);
-$this->dompdf->render();
-$this->dompdf->stream("LaporanKlasifikasiPenduduk.pdf",array('Attachment'=>0));
+// $this->dompdf->load_html($html);
+// $this->dompdf->render();
+// $this->dompdf->stream("LaporanKlasifikasiPenduduk.pdf",array('Attachment'=>0));
+
+// filename dari pdf ketika didownload
+$file_pdf = 'laporan';
+// setting paper
+$paper = 'A4';
+//orientasi paper potrait / landscape
+$orientation = "portrait";
+
+$html = $this->load->view('admin/lihatdata/laporan_klasifikasi_penduduk',$data, true);	    
+
+// run dompdf
+$this->pdfgenerator->generate($html, $file_pdf,$paper,$orientation);
 }
 
 
@@ -737,8 +752,32 @@ public function laporan_detail_penduduk($id){
   $this->dompdf->load_html($html);
   $this->dompdf->render();
   $this->dompdf->stream("LaporanDetailPenduduk.pdf",array('Attachment'=>0));
+
+  
 }
 
+
+function export_data_pmks_per_kecamatan_pdf($nama_kecamatan, $tahun){
+  $this->load->library('pdfgenerator');
+$data['report']=$this->m_report->select_laporan_pertahun_perkecamatan($nama_kecamatan, $tahun);
+$data['total_penduduk']= $this->m_report->total_penduduk_pertahun_perkecamatan($nama_kecamatan, $tahun);
+$data['sum_kecamatan']=$this->m_report->count_kecamatan_select_pertahun_perkecamatan($nama_kecamatan, $tahun);
+$data['sum_kelurahan']=$this->m_report->count_kelurahan_select_kel_pertahun_perkecamatan($nama_kecamatan, $tahun);
+$data['tahun']=$this->m_report->get_tahun_klasifikasi_select_kecamatan_pertahun_perkecamatan($tahun);
+
+// $this->load->view('admin/lihatdata/laporan_klasifikasi_penduduk_pertahun_perkecamatan',$data);
+
+$file_pdf = 'laporan';
+// setting paper
+$paper = 'A4';
+//orientasi paper potrait / landscape
+$orientation = "portrait";
+
+$html = $this->load->view('admin/lihatdata/laporan_klasifikasi_penduduk_pertahun_perkecamatan',$data, true);	    
+
+// run dompdf
+$this->pdfgenerator->generate($html, $file_pdf,$paper,$orientation);
+}
 
 }
     ?>

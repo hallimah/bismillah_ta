@@ -93,9 +93,9 @@ class mamdani extends CI_Model{
 //      }
  
      public function viewKecamatan(){
-      $this->db->select('nama_kecamatan,
-      sum(if(klasifikasi="Hampir Miskin",1,0)) as rendah, sum(if(klasifikasi="Miskin",1,0)) as sedang,
-      sum(if(klasifikasi="Sangat Miskin",1,0)) as tinggi'); //,tahun_masuk as tahun_klasifikasi
+      $this->db->select('tb_kecamatan.nama_kecamatan,
+      sum(if(tb_klasifikasi_penduduk.klasifikasi="Hampir Miskin",1,0)) as rendah, sum(if(tb_klasifikasi_penduduk.klasifikasi="Miskin",1,0)) as sedang,
+      sum(if(tb_klasifikasi_penduduk.klasifikasi="Sangat Miskin",1,0)) as tinggi'); //,tahun_masuk as tahun_klasifikasi
         $this->db->from('tb_klasifikasi_penduduk');
         $this->db->join('tb_kecamatan','tb_kecamatan.kecamatan_id=tb_klasifikasi_penduduk.kecamatan');
         $this->db->group_by('nama_kecamatan, tahun_klasifikasi'); //,tahun_klasifikasi
@@ -139,7 +139,7 @@ class mamdani extends CI_Model{
 
  
      public function excel_kecamatan(){
-       return $this->db->get('mamdani_kecamatan')->result();
+       return $this->db->get('tb_klasifikasi_penduduk')->result();
        }
  
      public function proses_fuzzy_mamdani(){

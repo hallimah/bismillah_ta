@@ -4,6 +4,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document - Tingkat Kesejahteraan</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
     <style>
 body{
     font-family:"Times New Roman"Arial, Helvetica, sans-serif;
@@ -136,17 +139,17 @@ hr{
 
 </style>
 </head><body>
-<div class="container">
-    <div id="left">
+<div class="container-fluid">
+<div class="row">
+        <div class="col-md-4">
         <img src="assets/production/images/logoo.png" alt="..." class="imgs">
-    </div>
-    <div id="splitter"></div>
-    <div id="right">
-        <div class="center">
-            <span class="font20">PEMERINTAH KABUPATEN TEGAL</span><br>
-            <span class="font30">DINAS SOSIAL</span><br>
-            <span>Alamat: Jl.A.Yani No. 3 Slawi Kode Pos 52412</span> <br>
-            <span>Telp/Fax(0283) 491379 email: dinsos@tegalkab.go.id</span>
+        </div>
+        <div class="text-center">
+            <div class="col-md-8">
+                <h5>PEMERINTAH KABUPATEN TEGAL</h5>
+                <h3>DINAS SOSIAL</h3>
+                <span>Alamat: Jl.A.Yani No. 3 Slawi Kode Pos 52412 <br>Telp/Fax(0283) 491379 email: dinsos@tegalkab.go.id</span>
+            </div>
         </div>
     </div>
     <?php date_default_timezone_set('Asia/Jakarta');
@@ -181,35 +184,27 @@ hr{
         <table id="table">
             <tr>
                 <th class="th1">No</th>
+                <th class="th2">Nama</th>
                 <th class="th2">Nama Kecamatan </th>
-                <th class="th3">Nama Desa </th>
-                <th>Total Penduduk Hampir Miskin</th>
-                          <th>Total Penduduk Miskin</th>
-                          <th>Total Penduduk Sangat Miskin</th>
+                <th class="th3">Nama Kelurahan</th>
+                <th class="th4">Jumlah Tanggungan</th>
+                <th class="th5">Nilai Keterangan Rumah</th>
+                <th class="th6">Nilai Kepemilikan Aset</th>
+                <th class="th6">Nilai Program Sosial</th>
                 <th class="th7">Tingkat Kesejahteraan</th>
             </tr>
             <?php $no=1;
             foreach ($report as $f) : ?>
             <tr>
-                <td class="th1"><?php echo $no++ ?></td>
-                <td class="th2"><?php echo $f->nama_kecamatan ?></td>
-                <td class="th2"><?php echo $f->nama_desa ?></td>
-                <td><?php echo $f->rendah ?></td>
-                <td><?php echo $f->sedang ?></td>
-                <td><?php echo $f->tinggi ?></td>
-                <td class="th7">
-                <?php foreach ($kali_kec as $kec) {
-                    if ($f->nama_kecamatan==$kec->nama_kecamatan) {
-                        // if( <= )
-                        foreach ($tingkat as $data) {
-                            if (($f->rendah + $f->sedang + $f->tinggi) <= ($data->persen*$kec->total_penduduk)) {
-                                echo $data->nama_variabel;
-                                // echo $data->persen*$kec->total_penduduk;
-                            break;
-                        }
-                    }
-                }
-            } ?></td>
+                <td><?php echo $no++ ?></td>
+                <td><?php echo $f->nama_krt ?></td>
+                <td><?php echo $f->nama_kecamatan ?></td>
+                <td><?php echo $f->nama_desa ?></td>
+                <td><?php echo $f->jumlah_tanggungan ?></td>
+                <td><?php echo $f->keterangan_rumah ?></td>
+                <td><?php echo $f->jumlah_kepemilikan_aset ?></td>
+                <td><?php echo $f->program_sosial ?></td>
+                <td><?php echo $f->klasifikasi ?></td>
             </tr>
             <?php endforeach; ?>
         </table>        

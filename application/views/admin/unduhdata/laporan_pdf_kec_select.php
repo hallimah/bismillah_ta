@@ -167,15 +167,12 @@ hr{
                 </div>
                 <div class="col50">
                     <label for="">Tahun </label><br>
-                    <label for="">Kemiskinan </label><br>
-                    <label for="">Ketelantaran</label><br>
-                    <label for="">Kecacatan </label><br>
+                    <label for="">Total Penduduk </label><br>
+                    
                 </div>
                 <div class="col30">
                 <label>: <?php echo $tahun ?></label><br>
-                <label>: <?php echo $sum_kemiskinan ?> Jiwa</label><br>
-                <label> : <?php echo $sum_ketelantaran ?> Jiwa</label><br>
-                <label>: <?php echo $sum_kecacatan ?> Jiwa</label><br>
+                <label>: <?php echo $sum_penduduk ?> Jiwa</label><br>
                 </div>
             </div>  
         </div>
